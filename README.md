@@ -4,5 +4,5 @@ Samuel Roland
 
 ## Documentations
 - **[Documentation du projet](/docs/podz-docs.md)**
-- **[Journal de travail](/docs/JournalDeTravail.md)**
+- **[Journal de travail](/docs/podz-journal.md)**
 
