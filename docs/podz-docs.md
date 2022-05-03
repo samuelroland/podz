@@ -13,11 +13,11 @@ todo: import sections du canva.
       - [MCD](#mcd)
       - [MLD](#mld)
 
-
 ### Base de données
 #### MCD
 ![MCD](MCD.png)
 En dehors des champs évidents qui n'ont pas besoin d'explications, voici quelques aspects techniques demandant des explications.
+
 **Dans Episodes**:
 - Les combinaisons du Numéro et du podcast, ainsi que le titre et le podcast, sont uniques (exemple: on ne peut pas avoir 2 fois l'épisode 4 du podcast "Summer stories", et on ne peut pas avoir 2 fois un épisode nommé "Summer 2020 review" du podcast "Summer stories").
 - La date de création est définie par la date de création de l'épisode sur la plateforme (avec l'upload du fichier), peu importe ses autres informations (la publication ou l'état caché n'a pas d'influence sur la date). Cette date ne change jamais.
