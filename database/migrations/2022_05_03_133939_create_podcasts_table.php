@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('description', 2000);
             $table->timestamps();
             $table->foreignId('user_id')->constrained();
+            $table->unique(['title', 'user_id']);
         });
     }
 

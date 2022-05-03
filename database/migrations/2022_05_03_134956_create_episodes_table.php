@@ -21,6 +21,9 @@ return new class extends Migration
             $table->timestamps();
             $table->date('released_at')->nullable();
             $table->string('filename');
+            $table->foreignId('podcast_id')->constrained();
+            $table->unique(['number', 'podcast_id']);
+            $table->unique(['title', 'podcast_id']);
         });
     }
 
