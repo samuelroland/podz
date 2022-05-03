@@ -17,3 +17,4 @@ yarn-error.log
 /public/js
 /public/mix-manifest.json
 *.bak
+*.bkp
