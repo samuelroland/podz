@@ -21,6 +21,7 @@
   - [Planification initiale](#planification-initiale)
 - [Analyse / Conception](#analyse--conception)
   - [Concept](#concept)
+    - [Technologies utilisées](#technologies-utilisées)
     - [Base de données: MCD](#base-de-données-mcd)
     - [Base de données: MLD](#base-de-données-mld)
   - [Stratégie de test](#stratégie-de-test)
@@ -68,6 +69,13 @@ Ces éléments peuvent être repris des spécifications de départ.
 -->
 ## Analyse / Conception
 ### Concept
+
+#### Technologies utilisées
+J'ai choisi la stack TALL (TailwindCSS - AlpineJS - Livewire - Laravel) pour ce projet, car je suis à l'aise avec ces 4 frameworks et qu'ils permettent d'être très productif pour développer une application web.
+
+Petits aperçus de ce que sont ces frameworks:
+- **Laravel**: un framework PHP
+TODO
 
 #### Base de données: MCD
 ![MCD](MCD.png)
