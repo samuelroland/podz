@@ -1,5 +1,16 @@
-# Documentation de Podz
-Projet de TPI de Samuel Roland.
+
+<div style="text-align: center; padding: 150px 0px;">
+<p style="text-align: center; border: none; font-size: 3rem;">Documentation de Podz</p>
+<p style="text-align: center; border: none; font-size: 2rem;">Application web de publication de podcasts</p>
+<div style="display:flex; padding: 50px 100px; justify-content: center; font-family: Fira Code;">
+<img src="logo.png" style="">
+</div>
+<h2 style="text-align: center; font-size: 1.6rem;">Projet TPI - 2022</h2>
+<h2 style="text-align: center; font-size: 1.3rem;">Samuel Roland</h2>
+
+</div>
+
+<div class="page"/> 
 
 ## Analyse préliminaire
 ### Introduction
