@@ -24,6 +24,7 @@
     - [Technologies utilisées](#technologies-utilisées)
     - [Base de données: MCD](#base-de-données-mcd)
     - [Base de données: MLD](#base-de-données-mld)
+    - [Maquettes](#maquettes)
   - [Stratégie de test](#stratégie-de-test)
   - [Risques techniques](#risques-techniques)
   - [Planification](#planification)
@@ -91,7 +92,9 @@ En dehors des champs évidents qui n'ont pas besoin d'explications, voici quelqu
 - La combinaison du titre et de l'auteur est unique. Exemple: Michelle ne peut pas publier 2 podcasts s'appelant "My story", par contre Michelle et Bob peuvent chacun publier 1 podcast nommé "My story".
 
 #### Base de données: MLD
-todo
+![MLD](MLD.png)
+
+todo: documenter spécificités.
 todo: tables et champs gérés par Laravel...
  
 <!--
@@ -103,6 +106,42 @@ Par exemple :
 •	Programmation: interfaces graphiques, maquettes, analyse fonctionnelle…
 •	…
 -->
+
+#### Maquettes
+Pour pouvoir utiliser les fonctionnalités requises, voici la liste complète des pages existantes et leur maquette.
+
+- Page Connexion
+- Page Inscription
+- Page Liste des podcasts
+- Page Détails d'un podcast (visiteur)
+- Page Détails d'un podcast (auteur)
+- Page Edition des détails d'un podcast (auteur)
+- Page Création d'un podcast
+
+**Page Connexion**  
+![page](models/Connexion.png)
+
+**Page Inscription**  
+![page](models/Inscription.png)
+
+**Page Liste des podcasts**  
+![page](models/Podcasts_page.png)
+
+**Page Détails d'un podcast (visiteur)**  
+![page](models/Page_d%C3%A9tails_podcast_visiteur.png)
+
+**Page Edition des détails d'un podcast (auteur)**  
+Nous sommes le 06.05.2022 dans cette maquette, l'épisode 4 est caché et le 5 est planifié pour le 08.05.2022.
+![page](models/Page_d%C3%A9tails_podcast_panneaux_%C3%A9dition.png)
+
+**Page Détails d'un podcast (auteur)**  
+Nous sommes le 06.05.2022 dans cette maquette, l'épisode 4 est caché et le 5 est planifié pour le 08.05.2022.
+![page](models/Page_d%C3%A9tails_podcast_auteur.png)
+
+**Page Création d'un podcast**  
+![page](models/Page_cr%C3%A9er_podcast.png)
+
+
 
 ### Stratégie de test
 
