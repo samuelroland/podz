@@ -12,4 +12,9 @@ class PodcastController extends Controller
         $podcasts = Podcast::all();
         return view('podcasts.index', ['podcasts' => $podcasts]);
     }
+
+    public function show(Podcast $podcast)
+    {
+        //
+    }
 }
