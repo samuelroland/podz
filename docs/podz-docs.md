@@ -25,6 +25,7 @@
     - [Base de données: MCD](#base-de-données-mcd)
     - [Base de données: MLD](#base-de-données-mld)
     - [Maquettes](#maquettes)
+    - [Choix de conception](#choix-de-conception)
   - [Stratégie de test](#stratégie-de-test)
   - [Risques techniques](#risques-techniques)
   - [Planification](#planification)
@@ -144,6 +145,10 @@ L'auteur voit évidemment toutes les informations de ses podcasts contrairement 
 Simple formulaire pour créer un nouveau podcast, avec affichage des erreurs en dessous des champs si jamais les valeurs rentrées sont invalides.
 ![page](models/Page_cr%C3%A9er_podcast.png)
 
+#### Choix de conception
+<!-- question: check section ok -->
+
+- Sur la page Podcasts, il y a un résumé des descriptions des podcasts, qui se limitent à 130 charactères (+3 petits points), puisque la description est trop longue pour être affichée entièrement et l'utilisation de `text-overflow: ellipsis` en CSS sur plusieurs lignes n'est pas très simple. Raccourcir en PHP était donc l'autre solution. Un attribute `summary` de la classe `Podcast` permet de récuperer ce résumé. Si la description est plus courte que 130 caractères, la description est utilisée.
 
 ### Stratégie de test
 
