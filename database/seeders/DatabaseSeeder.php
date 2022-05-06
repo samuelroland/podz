@@ -9,13 +9,8 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     *
-     * @return void
-     */
     public function run()
     {
-        $users = User::factory(3)->has(Podcast::factory(rand(1, 3)))->create();
+        $users = User::factory(3)->has(Podcast::factory(2))->create();
     }
 }
