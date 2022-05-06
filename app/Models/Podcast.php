@@ -21,7 +21,7 @@ class Podcast extends Model
     }
 
     //Get a short version (only the start) of the description limited to $limit chars (+3 dots)
-    public function getResumeAttribute()
+    public function getSummaryAttribute()
     {
         $limit = 150;
         if (Str::length($this->description) <= $limit) {
