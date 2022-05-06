@@ -32,9 +32,9 @@ class PodcastsTest extends TestCase
 
         foreach ($podcasts as $podcast) {
             $response->assertSee($podcast->title);
-            $response->assertSee($podcast->description);
+            $response->assertSee($podcast->resume); //this will not match the description as it contains 3 dots when necessary
             $response->assertSee($podcast->author->name);
-            $response->assertSee($podcast->episodes->count());
+            $response->assertSee($podcast->episodes->count() . " épisode" .  ($podcast->episodes->count() > 1 ? 's' : ''));
         }
     }
 }
