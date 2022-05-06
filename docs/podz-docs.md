@@ -114,8 +114,8 @@ Pour pouvoir utiliser les fonctionnalités requises, voici la liste complète de
 - Page Inscription
 - Page Liste des podcasts
 - Page Détails d'un podcast (visiteur)
-- Page Détails d'un podcast (auteur)
 - Page Edition des détails d'un podcast (auteur)
+- Page Détails d'un podcast (auteur)
 - Page Création d'un podcast
 
 **Page Connexion**  
@@ -125,22 +125,24 @@ Pour pouvoir utiliser les fonctionnalités requises, voici la liste complète de
 ![page](models/Inscription.png)
 
 **Page Liste des podcasts**  
+Cette page est visible publiquement et est la page par défaut de l'application, on y accède également via le bouton Podcasts en haut à gauche. On peut cliquer sur un podcast pour accéder à ses détails.
 ![page](models/Podcasts_page.png)
 
 **Page Détails d'un podcast (visiteur)**  
+Les visiteurs ne voient que les épisodes qui sont visibles et qu'une partie de leurs informations. Ils ne voient que le numéro, le titre, la description, l'audio et le date (arrondie au jour).
 ![page](models/Page_d%C3%A9tails_podcast_visiteur.png)
 
 **Page Edition des détails d'un podcast (auteur)**  
-Nous sommes le 06.05.2022 dans cette maquette, l'épisode 4 est caché et le 5 est planifié pour le 08.05.2022.
+L'auteur d'un podcast peut gérer les détails de son podcast, autant le titre et la description que les détails et la liste des épisodes. Nous sommes le 09.05.2022 dans cette maquette, l'épisode 4 est caché et le 5 est planifié pour le 10.05.2022. Ici l'auteur crée un 5 ème épisode planifiée qui ne sera publié que le lendemain à 15h08. Il peut aussi éditer les anciens épisodes en cliquant sur l'icône de stylo, ce qui passe l'épisode en mode édition (et permet ainsi de modifier).
 ![page](models/Page_d%C3%A9tails_podcast_panneaux_%C3%A9dition.png)
 
 **Page Détails d'un podcast (auteur)**  
-Nous sommes le 06.05.2022 dans cette maquette, l'épisode 4 est caché et le 5 est planifié pour le 08.05.2022.
+L'auteur voit évidemment toutes les informations de ses podcasts contrairement au visiteur. (Pour les podcasts d'autres auteurs, il voit la vue visiteur). Nous sommes le 10.05.2022 dans cette maquette, l'épisode 4 est caché et le 5 est planifié pour le 10.05.2022. L'épisode 4 est caché parce que l'auteur a décidé après coup de le remettre en privé.
 ![page](models/Page_d%C3%A9tails_podcast_auteur.png)
 
 **Page Création d'un podcast**  
+Simple formulaire pour créer un nouveau podcast, avec affichage des erreurs en dessous des champs si jamais les valeurs rentrées sont invalides.
 ![page](models/Page_cr%C3%A9er_podcast.png)
-
 
 
 ### Stratégie de test
