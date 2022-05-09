@@ -15,7 +15,7 @@ class PodcastFactory extends Factory
 
     public function definition()
     {
-        $title = $this->faker->text(35);
+        $title = $this->faker->text(36);    //35 + a dot (that will be removed)
         $title = Str::substr($title, 0, Str::length($title) - 1);   //remove the last "." at the end
         return [
             'title' => $title,
