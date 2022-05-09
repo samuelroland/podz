@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('number');
             $table->boolean('hidden')->default(false);
             $table->timestamps();
-            $table->date('released_at')->nullable();
+            $table->date('released_at');
             $table->string('filename');
             $table->foreignId('podcast_id')->constrained();
             $table->unique(['number', 'podcast_id']);
