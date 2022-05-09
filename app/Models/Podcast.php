@@ -17,7 +17,7 @@ class Podcast extends Model
 
     public function episodes()
     {
-        return $this->hasMany(Episode::class);
+        return $this->hasMany(Episode::class)->orderByDesc('number');
     }
 
     //Get a short version (only the start) of the description limited to $limit chars (+3 dots)
