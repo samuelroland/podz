@@ -25,10 +25,10 @@ class PodcastsDetailsTest extends TestCase
 
         //Make sure podcast info are present
         $response->assertSee($podcast->title);
-        $response->assertSee("par " . $podcast->author);
+        $response->assertSee("par " . $podcast->author->name);
         $response->assertSee($podcast->description);
 
-        $this->assertNotEmpty($podcast->episodes);  //question: is it ok ?
+        $this->assertNotEmpty($podcast->episodes);  //question: is it ok ? always true if seeder doesn't change
 
         //Make sure episodes info are present
         foreach ($podcast->episodes as $episode) {
@@ -36,8 +36,8 @@ class PodcastsDetailsTest extends TestCase
             $response->assertSee($episode->title);
             $response->assertSee($episode->description);
             $response->assertSee($episode->path);
-            $response->assertSee("Publié le " . $episode->released_at->format("d.m.Y H:i"));
-            $response->assertSee("Créé le " . $episode->released_at->format("d.m.Y à H:i"));
+            $response->assertSee("Publié le " . $episode->released_at->format("d.m.Y à H:i"));
+            $response->assertSee("Créé le " . $episode->created_at->format("d.m.Y à H:i"));
         }
     }
 
