@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('description', 2000);
             $table->boolean('hidden')->default(false);
             $table->timestamps();
-            $table->date('released_at');
+            $table->dateTime('released_at');
             $table->string('filename');
             $table->foreignId('podcast_id')->constrained();
             $table->unique(['number', 'podcast_id']);
