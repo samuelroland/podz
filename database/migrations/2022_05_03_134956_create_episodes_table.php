@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('episodes', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 60);
             $table->integer('number');
+            $table->string('title', 60);
+            $table->string('description', 2000);
             $table->boolean('hidden')->default(false);
             $table->timestamps();
             $table->date('released_at');
