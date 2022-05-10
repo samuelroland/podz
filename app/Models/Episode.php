@@ -15,6 +15,6 @@ class Episode extends Model
 
     public function getPathAttribute()
     {
-        return "/podcasts/" . $this->filename;
+        return "/episodes/" . $this->filename;
     }
 }
