@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Episode;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -30,5 +32,13 @@ class EpisodeFactory extends Factory
             'filename' => Str::random(50),
             'created_at' => rand(0, 1) == 0 ? $releaseDate : $releaseDate->subHours(rand(0, 12))
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (Episode $episode) {
+            Storage::disk('public')->delete("podcasts/" . $episode->path);  //delete just in case it already exists
+            Storage::copy('testing/audio-sample.m4a', "public/" . $episode->path);
+        });
     }
 }
