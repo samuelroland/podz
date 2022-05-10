@@ -10,10 +10,10 @@
 
         <div class="flex flex-wrap">
             @foreach($podcast->episodes as $episode)
-            <div class="border-l border-blue p-2 pl-3 my-2">
-                <div class="flex">
+            <div class="border-l border-blue px-2 pl-3 my-5 w-full">
+                <div class="flex w-full">
                     <h2 class="flex-1">{{ "#" . $episode->number }} {{ $episode->title }}</h2>
-                    <div>
+                    <div class="text-gray-600 italic">
                         <span class="mr-3">Créé le {{ $episode->created_at->format('d.m.Y à H:i') }}</span>
                         <span class="mr-3">Publié le {{ $episode->released_at->format('d.m.Y à H:i') }}</span>
                     </div>
@@ -22,7 +22,9 @@
                     <div class="flex-1 font-semibold">{{ $podcast->author->name }}</div>
                 </div>
                 <div class="mt-1 text-sm italic text-gray-700 overflow-hidden text-ellipsis">{{ $episode->description }}</div>
-                <audio src="{{ $episode->path }}"></audio>
+                <audio controls class="w-full my-2">
+                    <source src="{{ $episode->path }}" />
+                </audio>
             </div>
             @endforeach
         </div>
