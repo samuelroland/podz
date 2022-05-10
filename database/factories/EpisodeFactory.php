@@ -29,7 +29,7 @@ class EpisodeFactory extends Factory
             'number' => $this->number++,
             'hidden' => rand(0, 10) == 10 ? true : false,
             'released_at' => $releaseDate,
-            'filename' => Str::random(50),
+            'filename' => Str::random(50) . "." . (['mp3', 'ogg', 'opus'])[rand(0, 2)], //choose a random format among available ones
             'created_at' => rand(0, 1) == 0 ? $releaseDate : $releaseDate->subHours(rand(0, 12))
         ];
     }
@@ -37,8 +37,16 @@ class EpisodeFactory extends Factory
     public function configure()
     {
         return $this->afterCreating(function (Episode $episode) {
-            Storage::disk('public')->delete("podcasts/" . $episode->path);  //delete just in case it already exists
-            Storage::copy('testing/audio-sample.m4a', "public/" . $episode->path);
+            Storage::disk('public')->delete("episodes/" . $episode->path);  //delete just in case it already exists
+
+            //Formats and testing files names
+            $sampleFiles = [
+                'mp3' => 'audio-sample.mp3',
+                'ogg' => 'audio-sample.ogg',
+                'opus' => 'audio-sample.opus'
+            ];
+            //Copy file associated with the extension chosen in the filename
+            Storage::copy('testing/' . ($sampleFiles[Str::afterLast($episode->filename, ".")]), "public/" . $episode->path);
         });
     }
 }
