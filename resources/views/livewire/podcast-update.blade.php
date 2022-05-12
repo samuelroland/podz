@@ -1,6 +1,6 @@
 <div>
-    <x-field wire:keyup.enter="update" label="Title" name="title" wire:model.lazy="podcast.title"></x-field>
-    <x-field label="Description" type="textarea" name="description" wire:model.lazy="podcast.description">
+    <x-field wire:keyup.enter="update" label="Title" name="podcast.title" wire:model.lazy="podcast.title"></x-field>
+    <x-field label="Description" type="textarea" name="podcast.description" wire:model.lazy="podcast.description">
     </x-field>
     @csrf
     <button wire:click.prevent="update" class="btn mt-1">Enregistrer</button>
