@@ -1,6 +1,15 @@
 <x-app-layout>
-    <h1>Podcasts</h1>
-    <p>Parcourez et découvrez tous les podcasts publiés sur Podz.</p>
+    <div class="flex items-end">
+        <div class="flex-1">
+            <h1>Podcasts</h1>
+            <p>Parcourez et découvrez tous les podcasts publiés sur Podz.</p>
+        </div>
+        @if(auth()->check())
+        <div>
+            <a href="{{ route('podcasts.create') }}"><button class="btn">Créer un podcast</button></a>
+        </div>
+        @endif
+    </div>
     <hr class="border-blue my-3">
     <div class="flex flex-wrap">
         @foreach($podcasts as $podcast)
