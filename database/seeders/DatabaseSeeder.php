@@ -16,6 +16,8 @@ class DatabaseSeeder extends Seeder
         //Delete all episodes files before creating new ones
         Storage::deleteDirectory('public/episodes');
 
-        $users = User::factory(3)->has(Podcast::factory(2)->has(Episode::factory(3)))->create();
+        User::factory(3)->has(Podcast::factory(2)->has(Episode::factory(3)))->create();
+
+        User::factory()->create(['name' => "sam", 'email' => 'sam@example.com', 'password' => bcrypt('password')]);
     }
 }
