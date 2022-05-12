@@ -31,3 +31,6 @@ h4 {
 .text-info {
     @apply italic text-sm text-gray-700
 }
+.btn {
+    @apply bg-green text-white px-2 py-1 rounded-sm
+}
