@@ -27,3 +27,7 @@ h3 {
 h4 {
     @apply text-lg
 }
+
+.text-info {
+    @apply italic text-sm text-gray-700
+}

@@ -41,17 +41,22 @@ class PodcastsDetailsTest extends TestCase
         }
     }
 
-    public function test_make_sure_icons_are_present()
+    public function test_a_message_is_displayed_when_no_episodes_are_published()
     {
-        $podcast = Podcast::first();
+        $podcast = Podcast::factory()->create(['user_id' => User::first()->id]);
 
         $response = $this->actingAs($podcast->author)->get(route('podcasts.show', $podcast->id));
 
-        $response->assertSee("");
+        $response->assertSee("Pas d'épisode dans ce podcast pour le moment.", false);
     }
 
     public function test_release_date_in_futur_is_displayed_correctly()
     {
-        //todo
+        $podcast = Podcast::factory()->create(['user_id' => User::first()->id]);
+        $episode = Episode::factory()->create(['podcast_id' => $podcast->id, 'released_at' => now()->addDays(5)]);
+
+        $response = $this->actingAs($podcast->author)->get(route('podcasts.show', $podcast->id));
+
+        $response->assertSee("Publication planifiée pour le " . $episode->released_at->format("d.m.Y à H:i"));
     }
 }
