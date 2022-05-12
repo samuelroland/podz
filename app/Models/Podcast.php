@@ -10,6 +10,11 @@ class Podcast extends Model
 {
     use HasFactory;
 
+    public $fillable = [
+        'title',
+        'description',
+    ];
+
     public function author()
     {
         return $this->belongsTo(User::class, 'user_id');
