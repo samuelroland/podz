@@ -30,6 +30,7 @@
   - [Risques techniques](#risques-techniques)
   - [Planification](#planification)
   - [Dossier de conception](#dossier-de-conception)
+    - [Composants réutilisables](#composants-réutilisables)
 - [Réalisation](#réalisation)
   - [Dossier de réalisation](#dossier-de-réalisation)
   - [Description des tests effectués](#description-des-tests-effectués)
@@ -193,6 +194,44 @@ Fournir tous les document de conception:
 
 Le dossier de conception devrait permettre de sous-traiter la réalisation du projet !
 -->
+
+#### Composants réutilisables
+
+**Le composant Field**
+Un composant blade permettant d'abstraire les éléments communs de tous les champs de formulaire, avec quelques réglages possibles. L'affichage du label, le design basique, l'affichage des erreurs de validations.
+
+Propriétés du composant
+| Nom           | Type   | Requis | Description                                                                                                       |
+|---------------|--------|--------|-------------------------------------------------------------------------------------------------------------------|
+| `name`        | String | X      | Le nom technique du champ, utilisé pour le `name` de l'input et par le `@error()`                                 |
+| `label`       | String |        | Nom du label au dessus du champ                                                                                   |
+| `type`        | String |        | Type de l'`<input>`. Par défaut `text`. Si `textarea` est donné, une balise `<textarea>` est utilisée à la place. |
+| `placeholder` | String |        | Un placeholder qui est ajouté directement sur le champ                                                            |
+| `cssOnField`  | String |        | Des classes CSS qui sont ajoutées directement sur le champ                                                        |
+
+Tous les autres attributs non reconnus sont transférés à la `div` racine du composant, ce qui permet d'ajouter du style ou d'autres attributs HTML. Tous les attributs commençant par `wire:model` sont ajoutés au champ pour permettre l'utilisation de ce composant avec Livewire.
+
+Exemple d'utilisation:
+```php
+<form action="{{ route('podcasts.index') }}" method="POST">
+<x-field label="Title" name="title"></x-field>
+<x-field label="Description" type="textarea" name="description"></x-field>
+<x-field label="Date de naissance" type="date" name="user.date"></x-field>
+[...]
+</form>
+```
+
+Un autre exemple d'utilisation dans le cas d'un formulaire géré par Livewire:
+```php
+<div>
+    <x-field wire:keyup.enter="update" placeholder="Rentrez un titre court et marquant." label="Title" name="podcast.title" wire:model.lazy="podcast.title"></x-field>
+    <x-field label="Description" type="textarea" name="podcast.description" wire:model.lazy="podcast.description">
+    </x-field>
+    @csrf
+    <button wire:click.prevent="update" class="btn mt-1">Enregistrer</button>
+</div>
+```
+
 ## Réalisation
 ### Dossier de réalisation
 <!--
