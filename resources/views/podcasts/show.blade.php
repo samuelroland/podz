@@ -1,14 +1,21 @@
 <x-app-layout>
+    {{-- Podcast info section (title and description) --}}
     @livewire('podcast-info', ['podcast' => $podcast])
 
     <hr class="border-blue my-3">
 
+    {{-- Episode creation section --}}
+    @if(auth()->check() && $podcast->author->is(auth()->user()))
+    @livewire('episode-creation', ['podcast' => $podcast])
+    @endif
+
+    {{-- Episodes section --}}
     <div>
         <h2>Episodes</h2>
 
         <div class="flex flex-wrap">
             @forelse($podcast->episodes as $episode)
-            <div class="border-l border-blue px-2 pl-3 my-5 w-full  {{ $episode->hidden ? 'opacity-75' : '' }}">
+            <div class="border-l border-blue px-2 pl-3 my-5 w-full {{ $episode->hidden ? 'opacity-75' : '' }}">
                 <div class="flex w-full">
                     <h2 class="flex-1">{{ "#" . $episode->number }} {{ $episode->title }}</h2>
                     <div class="text-gray-600 italic flex items-center">
