@@ -77,8 +77,10 @@ Ces éléments peuvent être repris des spécifications de départ.
 J'ai choisi la stack TALL (TailwindCSS - AlpineJS - Livewire - Laravel) pour ce projet, car je suis à l'aise avec ces 4 frameworks et qu'ils permettent d'être très productif pour développer une application web.
 
 Petits aperçus de ce que sont ces frameworks:
-- **Laravel**: un framework PHP
-TODO
+- **[Laravel](https://laravel.com/)**: un framework PHP basé sur le modèle MVC et en POO.
+- **[Livewire](https://laravel-livewire.com/)**: un framework pour Laravel permettant de faire des composants fullstack réactifs. L'idée est d'utiliser la puissance de Blade et du PHP pour gérer des interactions frontend (écrites normalement en Javascript).
+- **[AlpineJS](https://alpinejs.dev/)**: un petit framework Javascript relativement simple à apprendre, utilisée ici pour gérer certaines interactions que Livewire ne permet pas, ou qui ne concernent des états d'affichage (là où des requêtes sur le backend serait inutile notamment). Les composants s'écrivent inline (sur les balises HTML directement).
+- **[TailwindCSS](https://tailwindcss.com/)**: un framework CSS, semblable à Bootstrap mais centré autour des propriétés CSS (en ayant des classes utilitaires - "utility-first") au lieu de tourner autour de composants. C'est très puissant pour construire rapidement des interfaces, en écrivant quasiment jamais de CSS pur, et pour faire du responsive c'est très pratique.
 
 #### Base de données: MCD
 ![MCD](MCD.png)
