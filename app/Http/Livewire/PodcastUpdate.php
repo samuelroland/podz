@@ -26,4 +26,9 @@ class PodcastUpdate extends Component
 
         session()->flash("podcastUpdated", "Le podcast a bien été mis à jour.");
     }
+
+    public function refreshParent()
+    {
+        $this->emit('podcast-info-updated');
+    }
 }
