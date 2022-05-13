@@ -293,6 +293,8 @@ Développez en tous cas les points suivants:
 ### Résumé du rapport du TPI / version succincte de la documentation
 
 ### Sources – Bibliographie
+- Icônes: les icônes ont été copié-collées (en SVG) depuis [heroicons.com](https://heroicons.com/), elle sont publiées sous licence MIT.
+
 <!--
 
 Liste des livres utilisés (Titre, auteur, date), des sites Internet (URL) consultés, des articles (Revue, date, titre, auteur)… Et de toutes les aides externes (noms)   
