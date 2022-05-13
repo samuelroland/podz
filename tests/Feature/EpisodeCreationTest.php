@@ -4,6 +4,8 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Models\User;
+use Livewire\Livewire;
+use App\Models\Episode;
 use App\Models\Podcast;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -34,4 +36,39 @@ class EpisodeCreationTest extends TestCase
 
         $response->assertDontSeeLivewire('episode-creation');
     }
+
+    //Question: utile ?
+    public function test_component_contains_required_texts()
+    {
+        $podcast = Podcast::first();
+        $author = $podcast->author;
+
+        $response = $this->actingAs($author)->get(route('podcasts.show', $podcast->id));
+
+        $response->assertSee('Nouvel épisode');
+        $response->assertSee('Caché');
+        $response->assertSee('Publier');
+        $response->assertSee('Fichier audio (.mp3, .ogg ou .opus)');
+    }
+
+    public function test_episode_creation_works()
+    {
+        $podcast = Podcast::first();
+        $author = $podcast->author;
+        $this->actingAs($author);
+        $episode = Episode::factory()->make(['podcast_id' => $podcast->id]);
+
+        Livewire::test('episode-creation', ['podcast' => $podcast])
+            ->set('episode.title', $episode->title)
+            ->set('episode.description', $episode->description)
+            ->set('episode.hidden', $episode->hidden)
+            ->set('datetime', $episode->released_at)
+            ->call('publish');
+
+        $this->assertModelExists($episode);
+    }
+
+    //todo: test episode->getNextId()
+
+    //todo: tests for data validation and security validation
 }
