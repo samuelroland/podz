@@ -16,6 +16,13 @@ class PodcastsDetailsTest extends TestCase
         $response->assertStatus(200);
     }
 
+    public function test_podcast_info_component_is_included_in_the_page()
+    {
+        $response = $this->get(route('podcasts.show', Podcast::first()->id));
+
+        $response->assertSeeLivewire('podcast-info');
+    }
+
     //Author view
     public function test_all_information_are_displayed()
     {
@@ -41,7 +48,7 @@ class PodcastsDetailsTest extends TestCase
         }
     }
 
-    public function test_a_message_is_displayed_when_no_episodes_are_published()
+    public function test_a_message_is_displayed_when_no_episode_is_published()
     {
         $podcast = Podcast::factory()->create(['user_id' => User::first()->id]);
 
