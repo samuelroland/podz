@@ -26,7 +26,7 @@ class PodcastCreationTest extends TestCase
 
     public function test_store_route_is_guarded()
     {
-        $response = $this->get(route('podcasts.create'));
+        $response = $this->post(route('podcasts.store'), []);
 
         $response->assertRedirect(route('login'));
     }
