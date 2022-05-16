@@ -107,7 +107,22 @@ class EpisodeCreationTest extends TestCase
             ->assertSet('episode.number', 3, true);
     }
 
-    //todo: test episode->getNextId()
+    public function test_publishing_fails_as_non_author_of_the_podcast()
+    {
+        $user = User::first();
+        $podcast = Podcast::factory()->create(['user_id' => $user->id]);
+        $otherUser = User::factory()->create();
+        $episode = Episode::factory()->make(['podcast_id' => $podcast->id]);
 
+        $this->actingAs($otherUser);
+        Livewire::test('episode-creation', ['podcast' => $podcast])
+            ->set('episode.title', $episode->title)
+            ->set('episode.description', $episode->description)
+            ->set('episode.hidden', $episode->hidden)
+            ->set('datetime', $episode->released_at)
+            ->call('publish');
+
+        $this->assertDatabaseMissing('episodes', $episode->only(['title', 'description', 'hidden', 'released_at', 'podcast_id']));
+    }
     //todo: tests for data validation and security validation
 }
