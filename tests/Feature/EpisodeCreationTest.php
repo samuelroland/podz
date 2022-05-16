@@ -7,6 +7,7 @@ use App\Models\User;
 use Livewire\Livewire;
 use App\Models\Episode;
 use App\Models\Podcast;
+use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -65,7 +66,41 @@ class EpisodeCreationTest extends TestCase
             ->set('datetime', $episode->released_at)
             ->call('publish');
 
-        $this->assertModelExists($episode);
+        $this->assertDatabaseHas('episodes', $episode->only(['title', 'description', 'hidden', 'released_at', 'podcast_id']));
+    }
+
+    public function test_data_are_correctly_validated()
+    {
+        $podcast = Podcast::first();
+        $author = $podcast->author;
+        $this->actingAs($author);
+
+        $response = Livewire::test('episode-creation', ['podcast' => $podcast])
+            ->set('episode.title', '')
+            ->set('episode.description', '   ')
+            ->set('datetime', null)
+            ->call('publish');
+
+        $response->assertHasErrors(['episode.title', 'episode.description', 'datetime']);
+
+        $response = Livewire::test('episode-creation', ['podcast' => $podcast])
+            ->set('episode.title', Str::random(70)) //above 60
+            ->set('episode.description', Str::random(2500)) //above 2000
+            ->set('datetime', 'not a datetime')
+            ->call('publish');
+
+        $response->assertHasErrors(['episode.title', 'episode.description', 'datetime']);
+    }
+
+    public function test_episode_is_hidden_by_default()
+    {
+        $podcast = Podcast::first();
+        $author = $podcast->author;
+        $this->actingAs($author);
+        $episode = Episode::factory()->make(['podcast_id' => $podcast->id]);
+
+        $response = Livewire::test('episode-creation', ['podcast' => $podcast, 'episode' => $episode])
+            ->assertSet('episode.hidden', false, true);
     }
 
     //todo: test episode->getNextId()
