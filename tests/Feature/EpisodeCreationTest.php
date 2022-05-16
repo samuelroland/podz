@@ -85,6 +85,7 @@ class EpisodeCreationTest extends TestCase
         $podcast = Podcast::first();
         $author = $podcast->author;
         $this->actingAs($author);
+        Storage::fake('public');
 
         $response = Livewire::test('episode-creation', ['podcast' => $podcast])
             ->set('episode.title', '')
@@ -98,9 +99,55 @@ class EpisodeCreationTest extends TestCase
             ->set('episode.title', Str::random(70)) //above 60
             ->set('episode.description', Str::random(2500)) //above 2000
             ->set('datetime', 'not a datetime')
+            ->set('file', UploadedFile::fake()->create('audio.m4a', 10))
             ->call('publish');
 
-        $response->assertHasErrors(['episode.title', 'episode.description', 'datetime']);
+        $response->assertHasErrors(['episode.title', 'episode.description', 'datetime', 'file']);
+    }
+
+    //TODO: reformat the test
+    public function test_audio_file_is_validated()
+    {
+        $podcast = Podcast::first();
+        $author = $podcast->author;
+        $this->actingAs($author);
+        Storage::fake('public');
+
+        //Valid MIME types
+        //MP3
+        $response = Livewire::test('episode-creation', ['podcast' => $podcast])
+            ->set('file', UploadedFile::fake()->create('audio.mp3', 20, 'audio/mpeg'))
+            ->call('publish');
+        $response->assertHasNoErrors(['file']);
+        //OGG
+        $response = Livewire::test('episode-creation', ['podcast' => $podcast])
+            ->set('file', UploadedFile::fake()->create('audio.ogg', 10, 'audio/ogg'))
+            ->call('publish');
+        $response->assertHasNoErrors(['file']);
+        //OPUS
+        $response = Livewire::test('episode-creation', ['podcast' => $podcast])
+            ->set('file', UploadedFile::fake()->create('audio.opus', 10, 'audio/opus'))
+            ->call('publish');
+        $response->assertHasNoErrors(['file']);
+
+        //A few invalid MIME types
+        //FLAC
+        $response = Livewire::test('episode-creation', ['podcast' => $podcast])
+            ->set('file', UploadedFile::fake()->create('audio.flac', 10, 'audio/flac'))
+            ->call('publish');
+        $response->assertHasErrors(['file']);
+        //PDF
+        $response = Livewire::test('episode-creation', ['podcast' => $podcast])
+            ->set('file', UploadedFile::fake()->create('document.pdf', 10, 'application/pdf'))
+            ->call('publish');
+        $response->assertHasErrors(['file']);
+
+        //Maximum size
+        // $response = Livewire::test('episode-creation', ['podcast' => $podcast])
+        //     ->set('file', UploadedFile::fake()->create('audio.mp3', 1500, 'audio/mpeg'))
+        //     ->call('publish');
+        // $response->assertHasErrors(['file']);
+        //TODO
     }
 
     public function test_default_value_of_the_episode_are_set()

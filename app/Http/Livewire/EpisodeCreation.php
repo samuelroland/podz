@@ -23,7 +23,7 @@ class EpisodeCreation extends Component
         'episode.hidden' => 'boolean',
         'episode.number' => 'integer',
         'datetime' => 'required|date',
-        'file' => ''
+        'file' => 'file|mimetypes:audio/mpeg,audio/ogg,audio/opus'
     ];
 
     public function mount()
