@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class EpisodeFactory extends Factory
 {
     private $number = 1;
-    private $onlyPlannedEpisodes = false;
 
     public function definition()
     {
@@ -39,7 +38,7 @@ class EpisodeFactory extends Factory
         return $this->afterCreating(function (Episode $episode) {
             Storage::disk('public')->delete("episodes/" . $episode->path);  //delete just in case it already exists
 
-            //Formats and testing files names
+            //Names of formats and testing files
             $sampleFiles = [
                 'mp3' => 'audio-sample.mp3',
                 'ogg' => 'audio-sample.ogg',
