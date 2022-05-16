@@ -51,7 +51,7 @@ class EpisodeCreation extends Component
         $this->validate();
 
         //TODO: security validations of ownership
-        $this->episode->number = 8; //$this->episode->getNextId();
+        $this->episode->number = Episode::getNextNumber($this->podcast->id);
         $this->episode->podcast_id = $this->podcast->id;
         $this->episode->released_at = Carbon::parse($this->datetime);
         $this->episode->filename = "asdfasf";    //temporary
