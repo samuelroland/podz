@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Carbon\Carbon;
 use App\Models\Episode;
 use Livewire\Component;
+use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
 
 class EpisodeCreation extends Component
@@ -53,10 +54,14 @@ class EpisodeCreation extends Component
         $this->validate();
 
         if ($this->podcast->author->is(auth()->user())) {
+
+            $path = $this->file->store('episodes', 'public');
+            $filename = Str::afterLast($path, "/");
+
             $this->episode->number = Episode::getNextNumber($this->podcast->id);
             $this->episode->podcast_id = $this->podcast->id;
             $this->episode->released_at = Carbon::parse($this->datetime);
-            $this->episode->filename = "asdfasf";    //temporary
+            $this->episode->filename = $filename;
             $this->episode->save();
         }
     }

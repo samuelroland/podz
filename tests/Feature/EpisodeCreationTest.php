@@ -8,8 +8,10 @@ use Livewire\Livewire;
 use App\Models\Episode;
 use App\Models\Podcast;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 
 class EpisodeCreationTest extends TestCase
 {
@@ -55,19 +57,27 @@ class EpisodeCreationTest extends TestCase
 
     public function test_episode_creation_works()
     {
-        $podcast = Podcast::first();
-        $author = $podcast->author;
-        $this->actingAs($author);
+        $user = User::first();
+        $podcast = Podcast::factory()->create(['user_id' => $user->id]);
+        $this->actingAs($user);
         $episode = Episode::factory()->make(['podcast_id' => $podcast->id]);
+        Storage::fake('public');
+        $fakeFile = UploadedFile::fake()->create('audio.mp3');
 
         Livewire::test('episode-creation', ['podcast' => $podcast])
             ->set('episode.title', $episode->title)
             ->set('episode.description', $episode->description)
             ->set('episode.hidden', $episode->hidden)
             ->set('datetime', $episode->released_at)
+            ->set('file', $fakeFile)
             ->call('publish');
 
+        //Make sure the episode is in the database
         $this->assertDatabaseHas('episodes', $episode->only(['title', 'description', 'hidden', 'released_at', 'podcast_id']));
+
+        //Make sure file is present on disk
+        $finalEpisode = $podcast->episodes()->first();
+        Storage::disk('public')->assertExists('episodes/' . $finalEpisode->filename);
     }
 
     public function test_data_are_correctly_validated()
@@ -107,7 +117,7 @@ class EpisodeCreationTest extends TestCase
             ->assertSet('episode.number', 3, true);
     }
 
-    public function test_publishing_fails_as_non_author_of_the_podcast()
+    public function test_publishing_fails_silently_as_non_author_of_the_podcast()
     {
         $user = User::first();
         $podcast = Podcast::factory()->create(['user_id' => $user->id]);
@@ -123,6 +133,6 @@ class EpisodeCreationTest extends TestCase
             ->call('publish');
 
         $this->assertDatabaseMissing('episodes', $episode->only(['title', 'description', 'hidden', 'released_at', 'podcast_id']));
+        $this->assertTrue(Storage::disk('public')->missing('episodes/' . $episode->filename));
     }
-    //todo: tests for data validation and security validation
 }
