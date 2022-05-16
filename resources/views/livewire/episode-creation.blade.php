@@ -5,7 +5,7 @@
         <div class="flex items-center">
             <span class="text-2xl mr-2 mt-3">{{ '#' . 4 /*$episode->getNextNumber()*/ }}</span>
             <x-field wire:model.lazy="episode.title" name="episode.title" placeholder="Titre de l'épisode"></x-field>
-            <x-field wire:model.lazy="episode.hidden" name="episode.hidden" cssOnField="ml-2 block" label="Caché" class="flex mx-2" type="checkbox"></x-field>
+            <x-field wire:model="episode.hidden" name="episode.hidden" cssOnField="ml-2 block" label="Caché" class="flex mx-2" type="checkbox"></x-field>
             <x-field wire:model.defer="datetime" name="datetime" type="datetime-local" class="flex"></x-field>
         </div>
 
@@ -26,7 +26,7 @@
                     <source src="/episodes" />
                 </audio>
                 @endif
-                <button class="btn" wire:click="save()">Publier</button>
+                <button class="btn" wire:click="publish()">Publier</button>
             </div>
         </div>
     </div>

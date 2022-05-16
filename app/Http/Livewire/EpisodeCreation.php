@@ -17,21 +17,27 @@ class EpisodeCreation extends Component
     public $file;
 
     protected $rules = [
-        'episode.title' => '',
-        'episode.hidden' => '',
-        'datetime' => '',
-        'episode.description' => '',
+        'episode.title' => 'required|max:60',
+        'episode.description' => 'required|max:2000',
+        'episode.hidden' => 'boolean',
+        'datetime' => 'required|date',
         'file' => ''
     ];
 
     public function mount()
     {
         $this->episode = new Episode();
+        $this->episode->hidden = false; //false by default
     }
 
     public function render()
     {
         return view('livewire.episode-creation');
+    }
+
+    public function updated($field)
+    {
+        $this->validateOnly($field);
     }
 
     public function updatingDatetime()
@@ -45,9 +51,9 @@ class EpisodeCreation extends Component
         $this->validate();
 
         //TODO: security validations of ownership
-        $this->episode->number = 3; //$this->episode->getNextId();
+        $this->episode->number = 8; //$this->episode->getNextId();
         $this->episode->podcast_id = $this->podcast->id;
-        $this->episode->released_at = now();    //temporary
+        $this->episode->released_at = Carbon::parse($this->datetime);
         $this->episode->filename = "asdfasf";    //temporary
         $this->episode->save();
     }

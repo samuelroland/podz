@@ -10,7 +10,8 @@ class Episode extends Model
     use HasFactory;
 
     protected $casts = [
-        'released_at' => 'datetime'
+        'released_at' => 'datetime',
+        'hidden' => 'boolean'
     ];
 
     public function getPathAttribute()
