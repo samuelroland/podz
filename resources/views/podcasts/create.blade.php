@@ -9,9 +9,4 @@
         </form>
     </div>
 
-    <div class="whitespace-pre">
-        ajskdflsjakldfésda
-        asdf
-        sad
-    </div>
 </x-app-layout>
