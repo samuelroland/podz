@@ -16,6 +16,9 @@ class EpisodeTest extends TestCase
         $podcast = Podcast::factory()->create(['user_id' => $user->id]);
         $podcast2 = Podcast::factory()->create(['user_id' => $user->id]);
 
+        //Make sure is 1 when there is no episode
+        $this->assertEquals(Episode::getNextNumber($podcast->id), 1);
+
         //Make sure number is 5 after creating 4 episodes
         $episodes = Episode::factory(4)->create(['podcast_id' => $podcast->id]);
 
