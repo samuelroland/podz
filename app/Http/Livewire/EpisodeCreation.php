@@ -20,14 +20,16 @@ class EpisodeCreation extends Component
         'episode.title' => 'required|max:60',
         'episode.description' => 'required|max:2000',
         'episode.hidden' => 'boolean',
+        'episode.number' => 'integer',
         'datetime' => 'required|date',
         'file' => ''
     ];
 
     public function mount()
     {
-        $this->episode = new Episode();
+        $this->episode = Episode::make();
         $this->episode->hidden = false; //false by default
+        $this->episode->number = Episode::getNextNumber($this->podcast->id); //false by default
     }
 
     public function render()

@@ -41,15 +41,16 @@ class EpisodeCreationTest extends TestCase
     //Question: utile ?
     public function test_component_contains_required_texts()
     {
-        $podcast = Podcast::first();
-        $author = $podcast->author;
+        $user = User::first();
+        $podcast = Podcast::factory()->create(['user_id' => $user->id]);
+        Episode::factory(3)->create(['podcast_id' => $podcast->id]);
 
-        $response = $this->actingAs($author)->get(route('podcasts.show', $podcast->id));
-
+        $response = Livewire::test('episode-creation', ['podcast' => $podcast]);
         $response->assertSee('Nouvel épisode');
         $response->assertSee('Caché');
         $response->assertSee('Publier');
         $response->assertSee('Fichier audio (.mp3, .ogg ou .opus)');
+        $response->assertSee("#" . 4);
     }
 
     public function test_episode_creation_works()
@@ -92,15 +93,18 @@ class EpisodeCreationTest extends TestCase
         $response->assertHasErrors(['episode.title', 'episode.description', 'datetime']);
     }
 
-    public function test_episode_is_hidden_by_default()
+    public function test_default_value_of_the_episode_are_set()
     {
-        $podcast = Podcast::first();
-        $author = $podcast->author;
-        $this->actingAs($author);
+        $user = User::first();
+        $podcast = Podcast::factory()->create(['user_id' => $user->id]);
+        $this->actingAs($user);
+        Episode::factory(2)->create(['podcast_id' => $podcast->id]);
         $episode = Episode::factory()->make(['podcast_id' => $podcast->id]);
 
-        $response = Livewire::test('episode-creation', ['podcast' => $podcast, 'episode' => $episode])
-            ->assertSet('episode.hidden', false, true);
+        //Make sure hidden and number are set
+        $response = Livewire::test('episode-creation', ['podcast' => $podcast])
+            ->assertSet('episode.hidden', false, true)
+            ->assertSet('episode.number', 3, true);
     }
 
     //todo: test episode->getNextId()
