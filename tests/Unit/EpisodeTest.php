@@ -9,8 +9,7 @@ use App\Models\Podcast;
 
 class EpisodeTest extends TestCase
 {
-    //question: name and pieces
-    public function test_get_next_number_method_works_well()
+    public function test_get_next_number_really_gives_next_number()
     {
         $user = User::factory()->create();
         $podcast = Podcast::factory()->create(['user_id' => $user->id]);

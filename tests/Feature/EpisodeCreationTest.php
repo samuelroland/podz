@@ -40,21 +40,6 @@ class EpisodeCreationTest extends TestCase
         $response->assertDontSeeLivewire('episode-creation');
     }
 
-    //Question: utile ?
-    public function test_component_contains_required_texts()
-    {
-        $user = User::first();
-        $podcast = Podcast::factory()->create(['user_id' => $user->id]);
-        Episode::factory(3)->create(['podcast_id' => $podcast->id]);
-
-        $response = Livewire::test('episode-creation', ['podcast' => $podcast]);
-        $response->assertSee('Nouvel épisode');
-        $response->assertSee('Caché');
-        $response->assertSee('Publier');
-        $response->assertSee('Fichier audio (.mp3, .ogg ou .opus)');
-        $response->assertSee("#" . 4);
-    }
-
     public function test_episode_creation_works()
     {
         $user = User::first();
