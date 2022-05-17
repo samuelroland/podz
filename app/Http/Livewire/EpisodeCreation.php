@@ -63,6 +63,8 @@ class EpisodeCreation extends Component
             $this->episode->released_at = Carbon::parse($this->datetime);
             $this->episode->filename = $filename;
             $this->episode->save();
+
+            $this->emit('episodesListUpdate');
         }
     }
 }
