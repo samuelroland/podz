@@ -14,15 +14,10 @@
         </div>
 
         <div class="flex items-center">
-            <x-field wire:model="file" name="file" cssOnField="ml-3" label="Fichier audio (.mp3, .ogg ou .opus)" class="flex items-center" type="file"></x-field>
+            <x-field wire:model="file" name="file" cssOnField="ml-3 max-w-lg" label="Fichier audio (.mp3, .ogg ou .opus). Pas plus de 150MB." class="flex items-center" type="file"></x-field>
         </div>
         <div>
             <div class="flex">
-                @if($file != null)
-                <audio class="flex-1">
-                    <source src="/episodes" />
-                </audio>
-                @endif
                 <button class="btn" wire:click="publish()">Publier</button>
             </div>
         </div>
