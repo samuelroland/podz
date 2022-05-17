@@ -30,7 +30,7 @@ class EpisodeCreation extends Component
     {
         $this->episode = Episode::make();
         $this->episode->hidden = false; //false by default
-        $this->episode->number = Episode::getNextNumber($this->podcast->id); //false by default
+        $this->episode->number = $this->podcast->getNextEpisodeNumber();    //already set the number for the display
     }
 
     public function render()
@@ -58,7 +58,7 @@ class EpisodeCreation extends Component
             $path = $this->file->store('episodes', 'public');
             $filename = Str::afterLast($path, "/");
 
-            $this->episode->number = Episode::getNextNumber($this->podcast->id);
+            $this->episode->number = $this->podcast->getNextEpisodeNumber();
             $this->episode->podcast_id = $this->podcast->id;
             $this->episode->released_at = Carbon::parse($this->datetime);
             $this->episode->filename = $filename;

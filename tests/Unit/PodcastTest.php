@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\Episode;
 use App\Models\Podcast;
 use Illuminate\Support\Str;
 
@@ -25,5 +26,25 @@ class PodcastTest extends TestCase
         $podcast = Podcast::factory()->create(['description' => $description, 'user_id' => User::first()->id]);
 
         $this->assertEquals($podcast->summary, $podcast->description);
+    }
+
+    public function test_get_next_number_really_gives_next_number()
+    {
+        $user = User::factory()->create();
+        $podcast = Podcast::factory()->create(['user_id' => $user->id]);
+        $podcast2 = Podcast::factory()->create(['user_id' => $user->id]);
+
+        //Make sure is 1 when there is no episode
+        $this->assertEquals($podcast->getNextEpisodeNumber(), 1);
+
+        //Make sure number is 5 after creating 4 episodes
+        $episodes = Episode::factory(4)->create(['podcast_id' => $podcast->id]);
+
+        $this->assertEquals($podcast->getNextEpisodeNumber(), 5);
+
+        //Make sure this is really the maximum and not just based on a count
+        $episodes = Episode::factory()->create(['podcast_id' => $podcast2->id, 'number' => 15]);
+
+        $this->assertEquals($podcast2->getNextEpisodeNumber(), 16);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -33,5 +34,11 @@ class Podcast extends Model
             return $this->description;
         }
         return Str::substr($this->description, 0, $limit) . "...";
+    }
+
+    public function getNextEpisodeNumber()
+    {
+        $result = DB::table(with(new Episode)->getTable())->selectRaw('max(number) as max')->where('podcast_id', $this->id)->first();
+        return $result->max + 1;
     }
 }
