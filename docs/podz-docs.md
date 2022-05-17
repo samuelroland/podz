@@ -30,6 +30,7 @@
   - [Risques techniques](#risques-techniques)
   - [Planification](#planification)
   - [Dossier de conception](#dossier-de-conception)
+    - [Upload d'un fichier audio d'épisode](#upload-dun-fichier-audio-dépisode)
     - [Composants réutilisables](#composants-réutilisables)
 - [Réalisation](#réalisation)
   - [Dossier de réalisation](#dossier-de-réalisation)
@@ -196,6 +197,9 @@ Fournir tous les document de conception:
 
 Le dossier de conception devrait permettre de sous-traiter la réalisation du projet !
 -->
+#### Upload d'un fichier audio d'épisode
+J'ai décidé de fixer la taille maximum d'upload de fichiers à 150MB. Cette limite est fixée dans l'application, au niveau de la validation à la création d'un épisode.
+Les 2 valeurs dans la configuration de PHP (fichier `php.ini`) doivent être augmentées au dessus de 150MB: `upload_max_filesize` et `post_max_size`.
 
 #### Composants réutilisables
 
