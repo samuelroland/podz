@@ -49,15 +49,33 @@
 <div class="page"/><!-- saut de page -->
 
 ### Introduction
-todo: import sections du canva.
-<!--
-1.1	Introduction 
 
-Ce chapitre décrit brièvement le projet, le cadre dans lequel il est réalisé, les raisons de ce choix et ce qu'il peut apporter à l'élève ou à l'école. Il n'est pas nécessaire de rentrer dans les détails (ceux-ci seront abordés plus loin) mais cela doit être aussi clair et complet que possible (idées de solutions). Ce chapitre contient également l'inventaire et la description des travaux qui auraient déjà été effectués pour ce projet.
-
--->
+Podz est une application web de publication de podcasts, pour le projet de TPI de Samuel Roland. Les auteurs de podcasts peuvent créer des podcasts, publier des épisodes, planifier la publication d'épisodes dans le futur et cacher des épisodes. L'application est basée sous Laravel 9 et part de zéro. TailwindCSS 3 est utilisé.
 
 ### Objectifs
+
+Voici la liste des objectifs à atteindre, tirée du cahier des charges:
+
+**Fonctionnalités générales (reprises d’un ancien projet)**
+- Création de comptes utilisateurs.
+- Authentification des utilisateurs.
+- Il n’y aura pas de partie back-office ni de rôle administrateur.
+
+<!--  bonne endroit ?-->
+Ces fonctionnalités sont implémentées par Jetstream, je n'ai donc pas eu besoin de m'en occuper.
+
+**Fonctionnalités détaillées selon le type d’utilisateur**
+- En tant que visiteur (personne non authentifiée) :
+  - Consultation de la liste des podcasts.
+  - Consultation du détail d’un podcast : épisodes
+  - Ecoute d’un épisode d’un podcast.
+- En tant qu’utilisateur authentifié, en plus des fonctionnalités accessibles à tout visiteur :
+    - Création d’un nouveau podcast, édition d’un de ses podcasts existant.  
+  - Sur l’un de ses podcasts :
+    - Affichage de la liste des épisodes avec toutes les données liées.
+    - Ajout d’un nouvel épisode.
+    - Edition d’un épisode.
+    - Suppression d’un épisode.
 <!-- 
 
 Ce chapitre énumère les objectifs du projet. L'atteinte ou non de ceux-ci devra pouvoir être contrôlée à la fin du projet. Les objectifs pourront éventuellement être revus après l'analyse. 
@@ -71,26 +89,28 @@ Ce chapitre montre la planification du projet. Celui-ci peut être découpé en 
 
 Ces éléments peuvent être repris des spécifications de départ.
 -->
+<div class="page"/><!-- saut de page -->
+
 ## Analyse / Conception
 ### Concept
 
 #### Technologies utilisées
-J'ai choisi la stack TALL (TailwindCSS - AlpineJS - Livewire - Laravel) pour ce projet, car je suis à l'aise avec ces 4 frameworks et qu'ils permettent d'être très productif pour développer une application web.
+J'ai choisi la stack **TALL** (*TailwindCSS - AlpineJS - Livewire - Laravel*) pour ce projet, car je suis à l'aise avec ces 4 frameworks et qu'ils permettent d'être assez productif pour développer une application web.
 
-Petits aperçus de ce que sont ces frameworks:
-- **[Laravel](https://laravel.com/)**: un framework PHP basé sur le modèle MVC et en POO.
-- **[Livewire](https://laravel-livewire.com/)**: un framework pour Laravel permettant de faire des composants fullstack réactifs. L'idée est d'utiliser la puissance de Blade et du PHP pour gérer des interactions frontend (écrites normalement en Javascript).
-- **[AlpineJS](https://alpinejs.dev/)**: un petit framework Javascript relativement simple à apprendre, utilisée ici pour gérer certaines interactions que Livewire ne permet pas, ou qui ne concernent des états d'affichage (là où des requêtes sur le backend serait inutile notamment). Les composants s'écrivent inline (sur les balises HTML directement).
-- **[TailwindCSS](https://tailwindcss.com/)**: un framework CSS, semblable à Bootstrap mais centré autour des propriétés CSS (en ayant des classes utilitaires - "utility-first") au lieu de tourner autour de composants. C'est très puissant pour construire rapidement des interfaces, en écrivant quasiment jamais de CSS pur, et pour faire du responsive c'est très pratique.
+**Petits aperçus de ces frameworks**
+- **[Laravel](https://laravel.com/)**: un framework PHP basé sur le modèle MVC et en POO. Cela d'être assez productif, d'avoir accès à beaucoup de classes et fonctions très pratiques, d'avoir une structure imposée... bref de simplifier énormément le développement d'applications web en PHP.
+- **[Livewire](https://laravel-livewire.com/)**: un framework pour Laravel permettant de faire des composants fullstack réactifs. L'idée est d'utiliser la puissance de Blade et du PHP pour avoir des parties réactives sur le frontend (normalement codé en Javascript) sans devoir coder des requêtes AJAX nous-mêmes.
+- **[AlpineJS](https://alpinejs.dev/)**: un petit framework Javascript relativement simple à apprendre, utilisée ici pour gérer certaines interactions que Livewire ne permet pas, ou qui ne concernent des états d'affichage (là où des requêtes sur le backend seraient inutile notamment). Les composants s'écrivent inline (sur les balises HTML directement). Très pratique pour afficher un dropdown, faire une barre de progression, ...
+- **[TailwindCSS](https://tailwindcss.com/)**: un framework CSS, semblable à Bootstrap mais centré autour des propriétés CSS (en ayant des classes utilitaires - "utility-first") au lieu de tourner autour de composants. C'est très puissant pour construire rapidement des interfaces, en écrivant quasiment jamais de CSS pur, et pour faire du responsive c'est très pratique parce qu'on peut préfixer toutes les classes par `md:` par ex. afin dire que la classe ne s'applique que sur les écrans medium et au dessus.
 
 #### Base de données: MCD
 ![MCD](MCD.png)
-En dehors des champs évidents qui n'ont pas besoin d'explications, voici quelques aspects techniques demandant des explications.
+En dehors des champs évidents, voici quelques aspects techniques qui demandent des explications.
 
 **Dans Episodes**:
-- Les combinaisons du Numéro et du podcast, ainsi que le titre et le podcast, sont uniques (exemple: on ne peut pas avoir 2 fois l'épisode 4 du podcast "Summer stories", et on ne peut pas avoir 2 fois un épisode nommé "Summer 2020 review" du podcast "Summer stories").
+- Les combinaisons du Numéro et du podcast lié, ainsi que le titre et le podcast lié, sont uniques (exemple: on ne peut pas avoir 2 fois un épisode 4 du podcast "Summer stories", et on ne peut pas avoir 2 fois un épisode nommé "Summer 2020 review" du podcast "Summer stories").
 - La date de création est définie par la date de création de l'épisode sur la plateforme (avec l'upload du fichier), peu importe ses autres informations (la publication ou l'état caché n'a pas d'influence sur cette date). Cette date ne change jamais et ne sert/est affichée qu'à l'auteur.
-- La date de publication peut être dans le passé ou mais dans le futur. Si elle est dans le futur, l'épisode n'est pas encore publié (jusqu'à la date définie). Ceci permet de programmer dans le futur une publication.
+- La date de publication peut être dans le passé ou mais aussi dans le futur. Si elle est dans le futur, l'épisode n'est pas encore publié (jusqu'à la date définie). Ceci permet de programmer dans le futur une publication.
 - Le champ Caché est par défaut à Faux et n'a pas d'effet dans ce cas. S'il est Vrai, l'épisode ne sera pas visible dans les détails du podcast.
 
 **Dans Podcasts**:
@@ -99,9 +119,10 @@ En dehors des champs évidents qui n'ont pas besoin d'explications, voici quelqu
 #### Base de données: MLD
 ![MLD](MLD.png)
 
+Certains champs sont créés par une migration générée par Jetstream, je n'en ai pas besoin mais je ne vais pas les retirer au risque de casser certaines parties existantes. Je n'ai pas créé ce MLD à la main mais je l'ai rétro-ingéniéré depuis la base de données, après avoir codé les migrations.
 todo: documenter spécificités.
 todo: tables et champs gérés par Laravel...
- 
+
 <!--
 Le concept complet avec toutes ses annexes :
 
@@ -130,20 +151,26 @@ Pour pouvoir utiliser les fonctionnalités requises, voici la liste complète de
 ![page](models/Inscription.png)
 
 **Page Liste des podcasts**  
-Cette page est visible publiquement et est la page par défaut de l'application, on y accède également via le bouton Podcasts en haut à gauche. On peut cliquer sur un podcast pour accéder à ses détails.
+Cette page est visible publiquement et c'est la page par défaut de l'application, on y accède également via le bouton Podcasts en haut à gauche. On peut cliquer sur un podcast pour accéder à ses détails.
 ![page](models/Podcasts_page.png)
 
 **Page Détails d'un podcast (visiteur)**  
 Les visiteurs ne voient que les épisodes qui sont visibles et qu'une partie de leurs informations. Ils ne voient que le numéro, le titre, la description, l'audio et le date (arrondie au jour).
 ![page](models/Page_d%C3%A9tails_podcast_visiteur.png)
 
+<div class="page"/><!-- saut de page -->
+
 **Page Edition des détails d'un podcast (auteur)**  
 L'auteur d'un podcast peut gérer les détails de son podcast, autant le titre et la description que les détails et la liste des épisodes. Nous sommes le 09.05.2022 dans cette maquette, l'épisode 4 est caché et le 5 est planifié pour le 10.05.2022. Ici l'auteur crée un 5 ème épisode planifiée qui ne sera publié que le lendemain à 15h08. Il peut aussi éditer les anciens épisodes en cliquant sur l'icône de stylo, ce qui passe l'épisode en mode édition (et permet ainsi de modifier).
 ![page](models/Page_d%C3%A9tails_podcast_panneaux_%C3%A9dition.png)
 
+<div class="page"/><!-- saut de page -->
+
 **Page Détails d'un podcast (auteur)**  
 L'auteur voit évidemment toutes les informations de ses podcasts contrairement au visiteur. (Pour les podcasts d'autres auteurs, il voit la vue visiteur). Nous sommes le 10.05.2022 dans cette maquette, l'épisode 4 est caché et le 5 est planifié pour le 10.05.2022. L'épisode 4 est caché parce que l'auteur a décidé après coup de le remettre en privé.
 ![page](models/Page_d%C3%A9tails_podcast_auteur.png)
+
+<div class="page"/><!-- saut de page -->
 
 **Page Création d'un podcast**  
 Simple formulaire pour créer un nouveau podcast, avec affichage des erreurs en dessous des champs si jamais les valeurs rentrées sont invalides.
@@ -152,7 +179,7 @@ Simple formulaire pour créer un nouveau podcast, avec affichage des erreurs en 
 #### Choix de conception
 <!-- question: check section ok -->
 
-- Sur la page Podcasts, il y a un résumé des descriptions des podcasts, qui se limitent à 130 charactères (+3 petits points), puisque la description est trop longue pour être affichée entièrement et l'utilisation de `text-overflow: ellipsis` en CSS sur plusieurs lignes n'est pas très simple. Raccourcir en PHP était donc l'autre solution. Un attribute `summary` de la classe `Podcast` permet de récuperer ce résumé. Si la description est plus courte que 130 caractères, la description est utilisée.
+- Sur la page Podcasts, il y a un résumé des descriptions des podcasts, qui se limitent à 150 charactères (+3 petits points), puisque la description est trop longue pour être affichée entièrement et l'utilisation de `text-overflow: ellipsis` en CSS sur plusieurs lignes n'est pas très simple. Raccourcir en PHP était donc l'autre solution. Un attribute `summary` de la classe `Podcast` permet de récuperer facilement ce résumé. Si la description est plus courte que la limite, la description est utilisée.
 
 ### Stratégie de test
 
@@ -207,13 +234,13 @@ Les 2 valeurs dans la configuration de PHP (fichier `php.ini`) doivent être aug
 Un composant blade permettant d'abstraire les éléments communs de tous les champs de formulaire, avec quelques réglages possibles. L'affichage du label, le design basique, l'affichage des erreurs de validations.
 
 Propriétés du composant
-| Nom           | Type   | Requis | Description                                                                                                       |
-|---------------|--------|--------|-------------------------------------------------------------------------------------------------------------------|
-| `name`        | String | X      | Le nom technique du champ, utilisé pour le `name` de l'input et par le `@error()`                                 |
-| `label`       | String |        | Nom du label au dessus du champ                                                                                   |
-| `type`        | String |        | Type de l'`<input>`. Par défaut `text`. Si `textarea` est donné, une balise `<textarea>` est utilisée à la place. |
-| `placeholder` | String |        | Un placeholder qui est ajouté directement sur le champ                                                            |
-| `cssOnField`  | String |        | Des classes CSS qui sont ajoutées directement sur le champ                                                        |
+| Nom           | Type   | Requis | Description                                                                                                          |
+|---------------|--------|--------|----------------------------------------------------------------------------------------------------------------------|
+| `name`        | String | X      | Le nom technique du champ, utilisé pour l'attribut `name` de l'input et par le `@error()` et par la fonction `old()` |
+| `label`       | String |        | Nom du label au dessus du champ                                                                                      |
+| `type`        | String |        | Type de l'`<input>`. Par défaut `text`. Si `textarea` est donné, une balise `<textarea>` est utilisée à la place.    |
+| `placeholder` | String |        | Un placeholder qui est ajouté directement sur le champ                                                               |
+| `cssOnField`  | String |        | Des classes CSS qui sont ajoutées directement sur le champ                                                           |
 
 Tous les autres attributs non reconnus sont transférés à la `div` racine du composant, ce qui permet d'ajouter du style ou d'autres attributs HTML. Tous les attributs commençant par `wire:model` sont ajoutés au champ pour permettre l'utilisation de ce composant avec Livewire.
 
@@ -237,9 +264,91 @@ Un autre exemple d'utilisation dans le cas d'un formulaire géré par Livewire:
     <button wire:click.prevent="update" class="btn mt-1">Enregistrer</button>
 </div>
 ```
+<div class="page"/><!-- saut de page -->
 
 ## Réalisation
 ### Dossier de réalisation
+
+**Structure du repository**:
+```
+podz                      Racine du repository
+├─ app                                        
+│   ├─ Actions                                        
+│   │   ├─ Fortify                                        
+│   │   └─ Jetstream                                        
+│   ├─ Console                                        
+│   ├─ Exceptions                                         
+│   ├─ Http                                         
+│   │   ├─ Controllers    Les classes contrôleurs                                    
+│   │   ├─ Livewire                                         
+│   │   └─ Middleware                                         
+│   ├─ Models             Les classes modèles                            
+│   ├─ Providers                                        
+│   └─ View               Les classes des vues, pour les composant Blade                          
+│       └─ Components                                         
+├─ bootstrap                                        
+│   └─ cache                                        
+├─ config                 Les fichiers de configuration globaux                        
+├─ database               Tout ce qui concerne la gestion de la base de données                          
+│   ├─ factories          Les factories pour créer des données fictives                              
+│   ├─ migrations         Les migrations pour définir la structure des tables                                
+│   └─ seeders            Les seeders pour remplir la base de données avec les factories                            
+├─ docs                                         
+│   ├─ imgs                                         
+│   ├─ models                                         
+│   └─ sources                                        
+├─ lang                                         
+│   ├─ en                                         
+│   └─ fr                                         
+├─ public                                         
+├─ resources              Toutes les ressources utiles à générer nos vues                          
+│   ├─ css                Style CSS global dans app.css                         
+│   ├─ js                 Javascript global dans app.js                        
+│   ├─ markdown                                         
+│   └─ views                                        
+│       ├─ api                                        
+│       ├─ auth                                         
+│       ├─ components                                         
+│       ├─ layouts                                        
+│       ├─ livewire       Les vues pour Livewire.                                  
+│       ├─ podcasts       Vues pour les podcasts                                  
+│       ├─ profile                                        
+│       └─ vendor                                         
+│           └─ jetstream  Les vues de Jetstream                                       
+│               └─ ...                                          
+├─ routes                 Configuration des routes dans web.php                        
+├─ storage                Espace de stockage dédié                        
+│   ├─ app                Dossier pointé par le disque "local"                         
+│   │   ├─ public         Dossier publiquement accessible et pointe sur le disque "public"                                
+│   │   └─ testing        Fichiers audios de tests                                
+│   ├─ clockwork                                        
+│   ├─ framework                                        
+│   │   ├─ cache                                        
+│   │   │   └─ data                                         
+│   │   ├─ sessions                                         
+│   │   ├─ testing                                        
+│   │   └─ views                                        
+│   └─ logs                                         
+├─ tests                                        
+│   ├─ Feature                                        
+│   ├─ Jetstream                                        
+│   └─ Unit                
+│                        
+│   .editorconfig                                       
+│   .env.example          Fichier .env d'exemple                              
+│   .gitattributes                                        
+│   .gitignore                                        
+│   .styleci.yml                                        
+│   artisan                                       
+│   composer.json         Liste des paquets Composer requis                              
+│   composer.lock         Liste des paquets Composer installées et leur version                             
+│   package-lock.json     Liste des paquets NPM installées et leur version
+│   package.json          Liste des paquets NPM requis                              
+│   phpunit.xml           Fichier de configuration de PhpUnit                             
+│   README.md                                        
+│   tailwind.config.js    Configuration de Tailwind                                    
+│   webpack.mix.js        Configuration du build JS et CSS avec Webpack pour Mix
+```
 <!--
 
 Décrire la réalisation "physique" de votre projet
@@ -282,6 +391,8 @@ Lister les documents fournis au client avec votre produit, en indiquant les num�
 •	le manuel d'Utilisation avec des exemples graphiques (en annexe)
 •	autres…
 -->
+
+<div class="page"/><!-- saut de page -->
 
 ## Conclusions
 <!--
