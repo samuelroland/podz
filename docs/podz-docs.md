@@ -27,6 +27,10 @@
     - [Maquettes](#maquettes)
     - [Choix de conception](#choix-de-conception)
   - [Stratégie de test](#stratégie-de-test)
+  - [Tests](#tests)
+    - [Où sont écrits les tests ?](#où-sont-écrits-les-tests-)
+    - [Couverture des tests](#couverture-des-tests)
+    - [Tests results](#tests-results)
   - [Risques techniques](#risques-techniques)
   - [Planification](#planification)
   - [Dossier de conception](#dossier-de-conception)
@@ -194,6 +198,43 @@ Décrire la stratégie globale de test:
 •	les testeurs extérieurs éventuels.
 -->
 
+
+### Tests
+Cette section concerne la manière dont est testé Podz durant le projet et à la fin. Samuel teste manuellement les fonctionnalités dans son navigateur (Firefox) et écrit aussi des tests automatisés avec PhpUnit (un framework PHP pour les tests). La plupart des fonctionnalités sont couvertes par ces tests automatisés et quand cela n'est pas le cas, Samuel regarde à la main si cela fonctionne.
+Les factories et le seeder écrits sont également très utile pour les tests. 
+
+La stratégie de développement est le BDD (Behavior Driven Development). Cela consiste à écrire des tests qui testent le comportement avant de coder, s'assurer que le test plante, puis développer jusqu'à que le test passe. Ensuite on peut refactoriser pour augmenter la qualité tout en s'assurant que cela fonctionne toujours grâce à nos tests.  
+Toute la suite de tests est lancée très fréquemment pour s'assurer qu'une nouvelle fonctionnalité n'a pas cassé une autre en chemin.
+
+<!-- todo: check BDD meaning -->
+
+#### Où sont écrits les tests ?
+todos
+
+#### Couverture des tests
+Comme les tests sont écrits et exécutés en PHP, les tests ne peuvent que tester le comportement backend. les interractions frontend ne peuvent pas être testées avec les outils actuels (il faudrait d'autres outils comme Laravel Dusk, Selenium, ...).
+
+Pour la plupart des fonctionnalités, j'ai suivi cette ordre pour décider des tests à écrire et de leur contenu:
+1. D'abord écrire un test pour vérifier que la page existe ou que le composant testé est bien chargé dans une des pages
+2. Ensuite tester le comportement idéal (toutes les données valides) pour s'assurer que les données gérées ont bien été modifiées
+3. Ensuite tester les validations des données
+4. Et finalement si cela est app 
+
+<!-- check order and reorder if needed -->
+
+todo
+
+<!-- todo: check selenium and testing tools -->
+Voici la liste complète des tests, les noms devraient permettre d'avoir une idée de ce qui est testé et quels cas sont couverts.
+
+<!-- todo: update the list and names -->
+**Tests\Feature\YYY**
+- podcasts page exists
+
+#### Tests results
+
+todos
+
 ### Risques techniques
 <!--
 
@@ -270,6 +311,8 @@ Un autre exemple d'utilisation dans le cas d'un formulaire géré par Livewire:
 ### Dossier de réalisation
 
 **Structure du repository**:
+Certains dossiers de Laravel moins pertinents ont été remplacés par des `...`. Seulement les dossiers sont affichés et seulement que j'ai utilisé (travaillé dedans) sont définis.
+
 ```
 podz                      Racine du repository
 ├─ app                                        
@@ -284,37 +327,37 @@ podz                      Racine du repository
 │   │   └─ Middleware                                         
 │   ├─ Models             Les classes modèles                            
 │   ├─ Providers                                        
-│   └─ View               Les classes des vues, pour les composant Blade                          
+│   └─ View               Les classes des vues, pour les composants Blade                          
 │       └─ Components                                         
 ├─ bootstrap                                        
 │   └─ cache                                        
 ├─ config                 Les fichiers de configuration globaux                        
 ├─ database               Tout ce qui concerne la gestion de la base de données                          
 │   ├─ factories          Les factories pour créer des données fictives                              
-│   ├─ migrations         Les migrations pour définir la structure des tables                                
-│   └─ seeders            Les seeders pour remplir la base de données avec les factories                            
-├─ docs                                         
-│   ├─ imgs                                         
-│   ├─ models                                         
-│   └─ sources                                        
-├─ lang                                         
-│   ├─ en                                         
-│   └─ fr                                         
-├─ public                                         
+│   ├─ migrations         Les migrations pour définir la structure des tables
+│   └─ seeders            Les seeders pour remplir la base de données avec les factories
+├─ docs                   Dossier pour stocker les éléments de documentations (notamment MCD, MLD)
+│   ├─ imgs               Les images utilisant dans cette documentation
+│   ├─ models             Les exports des maquettes
+│   └─ sources            Les fichiers source binaires des maquettes, MCD et MLD
+├─ lang                   Les fichiers de langues                      
+│   ├─ en                 
+│   └─ fr                 Certaines traductions en français                         
+├─ public                 
 ├─ resources              Toutes les ressources utiles à générer nos vues                          
 │   ├─ css                Style CSS global dans app.css                         
 │   ├─ js                 Javascript global dans app.js                        
-│   ├─ markdown                                         
-│   └─ views                                        
-│       ├─ api                                        
-│       ├─ auth                                         
-│       ├─ components                                         
-│       ├─ layouts                                        
-│       ├─ livewire       Les vues pour Livewire.                                  
-│       ├─ podcasts       Vues pour les podcasts                                  
-│       ├─ profile                                        
-│       └─ vendor                                         
-│           └─ jetstream  Les vues de Jetstream                                       
+│   ├─ markdown           
+│   └─ views              
+│       ├─ api            
+│       ├─ auth           
+│       ├─ components     
+│       ├─ layouts        
+│       ├─ livewire       Les vues pour Livewire.
+│       ├─ podcasts       Vues pour les podcasts 
+│       ├─ profile                               
+│       └─ vendor                                
+│           └─ jetstream  Les vues de Jetstream  
 │               └─ ...                                          
 ├─ routes                 Configuration des routes dans web.php                        
 ├─ storage                Espace de stockage dédié                        
@@ -322,12 +365,8 @@ podz                      Racine du repository
 │   │   ├─ public         Dossier publiquement accessible et pointe sur le disque "public"                                
 │   │   └─ testing        Fichiers audios de tests                                
 │   ├─ clockwork                                        
-│   ├─ framework                                        
-│   │   ├─ cache                                        
-│   │   │   └─ data                                         
-│   │   ├─ sessions                                         
-│   │   ├─ testing                                        
-│   │   └─ views                                        
+│   ├─ framework                                                                           
+│   │   └─ ...                                        
 │   └─ logs                                         
 ├─ tests                                        
 │   ├─ Feature                                        
@@ -341,7 +380,7 @@ podz                      Racine du repository
 │   .styleci.yml                                        
 │   artisan                                       
 │   composer.json         Liste des paquets Composer requis                              
-│   composer.lock         Liste des paquets Composer installées et leur version                             
+│   composer.lock         Liste des paquets Composer installées et leur version
 │   package-lock.json     Liste des paquets NPM installées et leur version
 │   package.json          Liste des paquets NPM requis                              
 │   phpunit.xml           Fichier de configuration de PhpUnit                             
