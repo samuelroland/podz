@@ -30,7 +30,9 @@
   - [Tests](#tests)
     - [Où sont écrits les tests ?](#où-sont-écrits-les-tests-)
     - [Couverture des tests](#couverture-des-tests)
-    - [Tests results](#tests-results)
+    - [Résultats des tests](#résultats-des-tests)
+    - [Prérequis pour lancer les tests](#prérequis-pour-lancer-les-tests)
+    - [Comment lancer les tests ?](#comment-lancer-les-tests-)
   - [Risques techniques](#risques-techniques)
   - [Planification](#planification)
   - [Dossier de conception](#dossier-de-conception)
@@ -209,16 +211,18 @@ Toute la suite de tests est lancée très fréquemment pour s'assurer qu'une nou
 <!-- todo: check BDD meaning -->
 
 #### Où sont écrits les tests ?
-todos
+Tous les tests se trouve dans le dossier `tests` à la racine du repository. Le dossier `Feature` contient les tests fonctionnels, `Unit` les tests unitaires et `Jetstream` les tests créé par Jetstream (ces derniers ont été déplacé de `Feature` afin de ne pas les exécuter constamment).
+
+<!-- Check "test fonctionnel" -->
 
 #### Couverture des tests
 Comme les tests sont écrits et exécutés en PHP, les tests ne peuvent que tester le comportement backend. les interractions frontend ne peuvent pas être testées avec les outils actuels (il faudrait d'autres outils comme Laravel Dusk, Selenium, ...).
 
 Pour la plupart des fonctionnalités, j'ai suivi cette ordre pour décider des tests à écrire et de leur contenu:
-1. D'abord écrire un test pour vérifier que la page existe ou que le composant testé est bien chargé dans une des pages
-2. Ensuite tester le comportement idéal (toutes les données valides) pour s'assurer que les données gérées ont bien été modifiées
-3. Ensuite tester les validations des données
-4. Et finalement si cela est app 
+1. D'abord écrire un test pour vérifier que la page existe ou que le composant testé est bien chargé dans une des pages.
+2. Ensuite tester le comportement idéal (toutes les données valides) pour s'assurer que les données gérées ont bien été modifiées.
+3. Ensuite tester les validations des données.
+4. Et finalement valider les permissions de visibilité ou d'accès (ex: être sûr qu'un visiteur ne peut pas modifier un épisode).
 
 <!-- check order and reorder if needed -->
 
@@ -231,9 +235,51 @@ Voici la liste complète des tests, les noms devraient permettre d'avoir une id�
 **Tests\Feature\YYY**
 - podcasts page exists
 
-#### Tests results
+#### Résultats des tests
+
+Cette capture montre le résultat des tests exécutés le YYY à YYY. Tous les tests passent.
+![img](imgs/running-tests.png)
 
 todos
+
+#### Prérequis pour lancer les tests
+Il est nécessaire d'avoir mis en place le projet et d'avoir l'extension PHP SQLite.
+
+Avant l'exécution de chaque test, on retourne à l'état d'avant l'exécution du test (grâce au trait `RefreshDatabase`) et le seeder `DatabaseSeeder` s'exécute (`$seed` défini à `true`). Ces 2 configurations sont faites dans `tests/TestCase.php`, ce qui permet au final que tous les tests sont lancées sur une base de données propre et remplie.
+
+Afin de ne pas impacter la base de données de développement, les tests sont lancés sur une base de données SQLite en mémoire. Voici les lignes en bas du fichier de configuration de PhpUnit `phpunit.xml`, qui redéfinit 2 variables d'environnement permettant d'avoir une base de données en RAM.
+```xml
+<env name="DB_DATABASE" value=":memory:"/>
+<env name="DB_CONNECTION" value="sqlite"/>
+```
+
+#### Comment lancer les tests ?
+Il y a différentes manières de lancer les tests dans un terminal:
+- `./vendor/bin/phpunit`
+- `php artisan test`
+
+Les tests en dehors du dossier `tests/Unit` et `tests/Feature` ne seront pas lancés. Pour lancer les tests de Jetstream si besoin, il faut lancer `php artisan test tests/Jetstream`.
+
+Vous pouvez passer des paramètres à `phpunit` (idem pour la commande `php artisan test`).
+
+**Exemples**:
+- pour exécuter seulement 1 test:  
+`php artisan test --filter podcasts_page_exists`
+- pour exécuter une classe de tests donnée:  
+`php artisan test tests/Feature/PodcastsTest.php`
+- pour exécuter les tests d'un dossier:  
+`php artisan test tests/Unit`
+
+Je recommande de configurer un raccourci dans votre IDE pour lancer les tests. J'ai utilisé ce réglage de raccourci dans VSCode pour lancer `php artisan test tests/Feature` lors d'un `ctrl+t ctrl+t`
+```json
+{
+    "key": "ctrl+t ctrl+t",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+        "text": "php artisan test tests/Feature\u000D"
+    }
+}
+```
 
 ### Risques techniques
 <!--
@@ -368,10 +414,10 @@ podz                      Racine du repository
 │   ├─ framework                                                                           
 │   │   └─ ...                                        
 │   └─ logs                                         
-├─ tests                                        
-│   ├─ Feature                                        
-│   ├─ Jetstream                                        
-│   └─ Unit                
+├─ tests                  Tests automatisés                      
+│   ├─ Feature            Tests fonctionnels                            
+│   ├─ Jetstream          Tests créés par Jetstream                              
+│   └─ Unit               Tests unitaires 
 │                        
 │   .editorconfig                                       
 │   .env.example          Fichier .env d'exemple                              
