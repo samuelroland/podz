@@ -31,7 +31,6 @@ class EpisodeCreation extends Component
         $this->setupNewEpisode();
     }
 
-
     public function setupNewEpisode()
     {
         $this->reset(['episode', 'datetime', 'file']);
@@ -73,6 +72,7 @@ class EpisodeCreation extends Component
 
             $this->emit('episodesListUpdate');
 
+            session()->flash('newEpisode', "#" . $this->episode->number . " " . $this->episode->title);
             $this->setupNewEpisode();
         }
     }

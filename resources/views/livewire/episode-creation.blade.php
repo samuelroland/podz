@@ -17,7 +17,12 @@
             <x-field wire:model="file" name="file" cssOnField="max-w-lg" label="Fichier audio (.mp3, .ogg ou .opus). Pas plus de 150MB." type="file"></x-field>
         </div>
         <div class="mt-2">
-            <button class="btn" wire:click="publish()">Publier</button>
+            <button class="btn" wire:click="publish()">Sauver</button>
+            @if(session()->has('newEpisode'))
+            <span class="text-green">
+                L'épisode '{{ session('newEpisode') }}' a bien été publié.
+            </span>
+            @endif
         </div>
     </div>
 </div>
