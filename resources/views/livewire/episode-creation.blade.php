@@ -14,12 +14,10 @@
         </div>
 
         <div class="flex items-center">
-            <x-field wire:model="file" name="file" cssOnField="ml-3 max-w-lg" label="Fichier audio (.mp3, .ogg ou .opus). Pas plus de 150MB." class="flex items-center" type="file"></x-field>
+            <x-field wire:model="file" name="file" cssOnField="max-w-lg" label="Fichier audio (.mp3, .ogg ou .opus). Pas plus de 150MB." type="file"></x-field>
         </div>
-        <div>
-            <div class="flex">
-                <button class="btn" wire:click="publish()">Publier</button>
-            </div>
+        <div class="mt-2">
+            <button class="btn" wire:click="publish()">Publier</button>
         </div>
     </div>
 </div>
