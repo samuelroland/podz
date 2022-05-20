@@ -49,7 +49,6 @@
   - [Sources – Bibliographie](#sources--bibliographie)
   - [Journal de travail](#journal-de-travail)
   - [Manuel d'Installation](#manuel-dinstallation)
-  - [Manuel d'Utilisation](#manuel-dutilisation)
   - [Archives du projet](#archives-du-projet)
 
 <div class="page"/><!-- saut de page -->
@@ -322,7 +321,7 @@ Un composant blade permettant d'abstraire les éléments communs de tous les cha
 
 Propriétés du composant
 | Nom           | Type   | Requis | Description                                                                                                          |
-|---------------|--------|--------|----------------------------------------------------------------------------------------------------------------------|
+| ------------- | ------ | ------ | -------------------------------------------------------------------------------------------------------------------- |
 | `name`        | String | X      | Le nom technique du champ, utilisé pour l'attribut `name` de l'input et par le `@error()` et par la fonction `old()` |
 | `label`       | String |        | Nom du label au dessus du champ                                                                                      |
 | `type`        | String |        | Type de l'`<input>`. Par défaut `text`. Si `textarea` est donné, une balise `<textarea>` est utilisée à la place.    |
@@ -493,6 +492,7 @@ Développez en tous cas les points suivants:
 ## Annexes
 
 ### Résumé du rapport du TPI / version succincte de la documentation
+<!-- todo: sur une page dédiée -->
 
 ### Sources – Bibliographie
 - Icônes: les icônes ont été copié-collées (en SVG) depuis [heroicons.com](https://heroicons.com/), elle sont publiées sous licence MIT.
@@ -505,8 +505,6 @@ Liste des livres utilisés (Titre, auteur, date), des sites Internet (URL) consu
 ### Journal de travail
 
 ### Manuel d'Installation
-
-### Manuel d'Utilisation
 
 ### Archives du projet 
 
