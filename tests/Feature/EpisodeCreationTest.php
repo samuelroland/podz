@@ -167,4 +167,23 @@ class EpisodeCreationTest extends TestCase
         $this->assertDatabaseMissing('episodes', $episode->only(['title', 'description', 'hidden', 'released_at', 'podcast_id']));
         $this->assertTrue(Storage::disk('public')->missing('episodes/' . $episode->filename));
     }
+
+    public function test_publishing_2_episodes_with_same_title_in_a_podcast_is_not_possible()
+    {
+        $user = User::first();
+        $podcast = Podcast::factory()->create(['user_id' => $user->id]);
+        $episode = Episode::factory()->create(['podcast_id' => $podcast->id, 'title' => 'great title']);
+        $episode = Episode::factory()->make(['podcast_id' => $podcast->id]);
+
+        $this->actingAs($user);
+        $response = Livewire::test('episode-creation', ['podcast' => $podcast])
+            ->set('episode.title', 'great title')
+            ->set('episode.description', $episode->description)
+            ->set('episode.hidden', $episode->hidden)
+            ->set('datetime', $episode->released_at)
+            ->call('publish');
+
+        $this->assertDatabaseMissing('episodes', $episode->only(['description', 'hidden', 'released_at', 'podcast_id']));
+        $response->assertHasErrors(['episode.title' => 'unique']);
+    }
 }
