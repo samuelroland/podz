@@ -7,6 +7,7 @@ use App\Models\Episode;
 use Livewire\Component;
 use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
+use Illuminate\Validation\Rule;
 
 class EpisodeCreation extends Component
 {
@@ -17,13 +18,25 @@ class EpisodeCreation extends Component
     public $datetime;   //bridge between episode.released_at and the view to manage format change
     public $file;
 
-    protected $rules = [
-        'episode.title' => 'required|max:60',
-        'episode.description' => 'required|max:2000',
-        'episode.hidden' => 'boolean',
-        'episode.number' => 'integer',
-        'datetime' => 'required|date',
-        'file' => 'required|file|max:150000|mimetypes:audio/mpeg,audio/ogg,audio/opus'
+    //As the rules are dynamically generated (contains an ID here), we need to wrap them in this function instead of $rules
+    protected function rules()
+    {
+        return [
+            'episode.title' => [
+                'required',
+                'max:60',
+                Rule::unique(with(new Episode)->getTable(), 'title')->where(fn ($query) => $query->where('podcast_id', $this->podcast->id)),
+            ],
+            'episode.description' => 'required|max:2000',
+            'episode.hidden' => 'boolean',
+            'episode.number' => 'integer',
+            'datetime' => 'required|date',
+            'file' => 'required|file|max:150000|mimetypes:audio/mpeg,audio/ogg,audio/opus'
+        ];
+    }
+
+    protected $messages = [
+        'episode.title.unique' => 'Ce nom est déjà utilisé pour un autre épisode de ce podcast.',
     ];
 
     public function mount()
