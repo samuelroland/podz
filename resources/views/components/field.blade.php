@@ -8,10 +8,8 @@
         @if($type == 'file')
         {{-- Progress bar code taken from the Livewire docs: https://laravel-livewire.com/docs/2.x/file-uploads#js-hooks --}}
 
-        <div x-data="{ isUploading: false, progress: 0 }" x-on:livewire-upload-start="isUploading = true" x-on:livewire-upload-error="isUploading = false" x-on:livewire-upload-progress="progress = $event.detail.progress">
-
+        <div x-data="{ isUploading: false, progress: 0, failed: false }" x-on:livewire-upload-start="isUploading = true; uploadCompleted = false" x-on:livewire-upload-error="isUploading = false" x-on:livewire-upload-progress="progress = $event.detail.progress" x-on:livewire-upload-finish="uploadCompleted = true">
             @endif
-
 
             @if ($type != 'textarea')
             <input {{ $attributes->whereStartsWith('wire:model') }} placeholder="{{ $placeholder }}" type="{{ $type }}" value="{{ old($name) }}" class="{{ $cssOnField }} rounded-md px-1 border border-gray-400 {{ in_array($type, ['checkbox']) ? '' : 'h-8' }}" name="{{ $name }}" {{ $type=='file' ? '\@change="isUploading = false"' : '' }} />
@@ -22,7 +20,9 @@
             @if($type == 'file')
             <!-- Progress Bar -->
             <div x-show="isUploading" x-cloak>
-                Progression: <progress max="100" x-bind:value="progress" class="w-full">asd</progress>
+                Progression: <span class="text-green" x-text="uploadCompleted ? 'Téléversé!' : 'En cours'"></span>
+                <span class="text-red-500" x-show="failed">Erreur...</span>
+                <br><progress max="100" x-bind:value="progress" class="w-full"></progress>
             </div>
         </div>
         @endif
