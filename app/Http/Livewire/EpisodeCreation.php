@@ -28,6 +28,13 @@ class EpisodeCreation extends Component
 
     public function mount()
     {
+        $this->setupNewEpisode();
+    }
+
+
+    public function setupNewEpisode()
+    {
+        $this->reset(['episode', 'datetime', 'file']);
         $this->episode = Episode::make();
         $this->episode->hidden = false; //false by default
         $this->episode->number = $this->podcast->getNextEpisodeNumber();    //already set the number for the display
@@ -65,6 +72,8 @@ class EpisodeCreation extends Component
             $this->episode->save();
 
             $this->emit('episodesListUpdate');
+
+            $this->setupNewEpisode();
         }
     }
 }
