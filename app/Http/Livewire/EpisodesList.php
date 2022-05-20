@@ -6,7 +6,6 @@ use Livewire\Component;
 
 class EpisodesList extends Component
 {
-    public $episodes;
     public $podcast;
 
     protected $listeners = [
@@ -20,6 +19,6 @@ class EpisodesList extends Component
 
     public function refresh()
     {
-        $this->episodes = $this->podcast->episodes();
+        $this->podcast->refresh();
     }
 }

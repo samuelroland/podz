@@ -12,6 +12,6 @@
     {{-- Episodes section --}}
     <div>
         <h2>Episodes</h2>
-        @livewire('episodes-list', ['episodes' => $podcast->episodes, 'podcast'=>$podcast])
+        @livewire('episodes-list', ['podcast' => $podcast])
     </div>
 </x-app-layout>

@@ -1,5 +1,5 @@
 <div class="flex flex-wrap">
-    @forelse($episodes as $episode)
+    @forelse($podcast->episodes as $episode)
     <div class="border-l border-blue px-2 pl-3 my-5 w-full {{ $episode->hidden ? 'opacity-75' : '' }}">
         <div class="flex w-full">
             <h2 class="flex-1">{{ "#" . $episode->number }} {{ $episode->title }}</h2>
