@@ -18,4 +18,9 @@ class Episode extends Model
     {
         return "/episodes/" . $this->filename;
     }
+
+    public function scopePublic($query)
+    {
+        return $query->where('released_at', '<', now())->where('hidden', false);
+    }
 }
