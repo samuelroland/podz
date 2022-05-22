@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Carbon\Carbon;
 use App\Models\Episode;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
@@ -72,21 +73,23 @@ class EpisodeCreation extends Component
     {
         $this->validate();
 
-        if ($this->podcast->author->is(auth()->user())) {
+        if ($this->podcast->isAuthor()) {
 
-            $path = $this->file->store('episodes', 'public');
-            $filename = Str::afterLast($path, "/");
+            DB::transaction(function () {
+                $path = $this->file->store('episodes', 'public');
+                $filename = Str::afterLast($path, "/");
 
-            $this->episode->number = $this->podcast->getNextEpisodeNumber();
-            $this->episode->podcast_id = $this->podcast->id;
-            $this->episode->released_at = Carbon::parse($this->datetime);
-            $this->episode->filename = $filename;
-            $this->episode->save();
+                $this->episode->number = $this->podcast->getNextEpisodeNumber();
+                $this->episode->podcast_id = $this->podcast->id;
+                $this->episode->released_at = Carbon::parse($this->datetime);
+                $this->episode->filename = $filename;
+                $this->episode->save();
 
-            $this->emit('episodesListUpdate');
+                $this->emit('episodesListUpdate');
 
-            session()->flash('newEpisode', "#" . $this->episode->number . " " . $this->episode->title);
-            $this->setupNewEpisode();
+                session()->flash('newEpisode', "#" . $this->episode->number . " " . $this->episode->title);
+                $this->setupNewEpisode();
+            });
         }
     }
 }
