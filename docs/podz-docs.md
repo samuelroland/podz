@@ -186,6 +186,12 @@ Simple formulaire pour créer un nouveau podcast, avec affichage des erreurs en 
 
 - Sur la page Podcasts, il y a un résumé des descriptions des podcasts, qui se limitent à 150 charactères (+3 petits points), puisque la description est trop longue pour être affichée entièrement et l'utilisation de `text-overflow: ellipsis` en CSS sur plusieurs lignes n'est pas très simple. Raccourcir en PHP était donc l'autre solution. Un attribute `summary` de la classe `Podcast` permet de récuperer facilement ce résumé. Si la description est plus courte que la limite, la description est utilisée.
 
+<!-- random note 
+
+Pour qu'un épisode soit visible publiquement il faut que sa date de publication soit dans le passé et que son état Caché soit Faux.
+-->
+
+
 ### Stratégie de test
 
 <!--
@@ -455,6 +461,9 @@ Pour chaque partie testée de votre projet, il faut décrire:
 •	les preuves de test (papier ou fichier)
 •	tests sans preuve: fournir au moins une description 
 -->
+
+<!-- todo: tests don't cover maximum of file upload -->
+
 ### Erreurs restantes  
 <!--
 
