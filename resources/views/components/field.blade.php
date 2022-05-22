@@ -8,7 +8,7 @@
         @if($type == 'file')
         {{-- Progress bar code taken from the Livewire docs: https://laravel-livewire.com/docs/2.x/file-uploads#js-hooks --}}
 
-        <div x-data="{ isUploading: false, progress: 0, failed: false }" x-on:livewire-upload-start="isUploading = true; uploadCompleted = false" x-on:livewire-upload-error="failed = true" x-on:livewire-upload-progress="progress = $event.detail.progress" x-on:livewire-upload-finish="uploadCompleted = true">
+        <div x-data="{ isUploading: false, progress: 0, failed: false, uploadCompleted: false }" x-on:livewire-upload-start="isUploading = true; uploadCompleted = false" x-on:livewire-upload-error="failed = true" x-on:livewire-upload-progress="progress = $event.detail.progress" x-on:livewire-upload-finish="uploadCompleted = true">
             @endif
 
             @if ($type != 'textarea')
