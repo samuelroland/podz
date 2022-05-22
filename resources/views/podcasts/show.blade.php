@@ -5,8 +5,8 @@
     <hr class="border-blue my-3">
 
     {{-- Episode creation section --}}
-    @if(auth()->check() && $podcast->author->is(auth()->user()))
-    @livewire('episode-creation', ['podcast' => $podcast])
+    @if ($podcast->isAuthor())
+        @livewire('episode-creation', ['podcast' => $podcast])
     @endif
 
     {{-- Episodes section --}}

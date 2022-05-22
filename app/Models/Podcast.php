@@ -41,4 +41,13 @@ class Podcast extends Model
         $result = DB::table(with(new Episode)->getTable())->selectRaw('max(number) as max')->where('podcast_id', $this->id)->first();
         return $result->max + 1;
     }
+
+    //Is the logged user author of this podcast ?
+    public function isAuthor()
+    {
+        if (auth()->check() && $this->author != null) {
+            return $this->author->is(auth()->user());
+        }
+        return false;
+    }
 }
