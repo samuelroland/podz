@@ -16,8 +16,6 @@ class PodcastController extends Controller
 
     public function show(Podcast $podcast)
     {
-        //$isAuthor = auth()->check() && $podcast->author->is(auth()->user());
-
         return view('podcasts.show', ['podcast' => $podcast]);
     }
 
