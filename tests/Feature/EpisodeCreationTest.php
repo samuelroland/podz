@@ -26,7 +26,7 @@ class EpisodeCreationTest extends TestCase
         $response->assertSeeLivewire('episode-creation');
     }
 
-    public function test_podcast_details_page_doesnt_use_episode_creation_as_non_author_or_visitor()
+    public function test_podcast_details_page_doesnt_use_episode_creation_if_not_author()
     {
         $podcast = Podcast::first();
 
@@ -137,16 +137,15 @@ class EpisodeCreationTest extends TestCase
         $user = User::first();
         $podcast = Podcast::factory()->create(['user_id' => $user->id]);
         $this->actingAs($user);
-        Episode::factory(2)->create(['podcast_id' => $podcast->id]);
-        $episode = Episode::factory()->make(['podcast_id' => $podcast->id]);
+        Episode::factory(2)->create(['podcast_id' => $podcast->id]);    //prepare 2 episodes and then expect number to be 3
 
         //Make sure hidden and number are set
-        $response = Livewire::test('episode-creation', ['podcast' => $podcast])
+        Livewire::test('episode-creation', ['podcast' => $podcast])
             ->assertSet('episode.hidden', false, true)
             ->assertSet('episode.number', 3, true);
     }
 
-    public function test_publishing_fails_silently_as_non_author_of_the_podcast()
+    public function test_publishing_fails_silently_if_forbidden()
     {
         $user = User::first();
         $podcast = Podcast::factory()->create(['user_id' => $user->id]);
@@ -158,7 +157,6 @@ class EpisodeCreationTest extends TestCase
             ->set('episode.title', $episode->title)
             ->set('episode.description', $episode->description)
             ->set('episode.hidden', $episode->hidden)
-            ->set('datetime', $episode->released_at)
             ->call('publish');
 
         $this->assertDatabaseMissing('episodes', $episode->only(['title', 'description', 'hidden', 'released_at', 'podcast_id']));
@@ -175,9 +173,6 @@ class EpisodeCreationTest extends TestCase
         $this->actingAs($user);
         $response = Livewire::test('episode-creation', ['podcast' => $podcast])
             ->set('episode.title', 'great title')
-            ->set('episode.description', $episode->description)
-            ->set('episode.hidden', $episode->hidden)
-            ->set('datetime', $episode->released_at)
             ->call('publish');
 
         $this->assertDatabaseMissing('episodes', $episode->only(['description', 'hidden', 'released_at', 'podcast_id']));
