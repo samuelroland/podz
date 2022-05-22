@@ -4,11 +4,11 @@
             <h1>Podcasts</h1>
             <p>Parcourez et découvrez tous les podcasts publiés sur Podz.</p>
         </div>
-        @if(auth()->check())
+        @auth
         <div>
             <a href="{{ route('podcasts.create') }}"><button class="btn">Créer un podcast</button></a>
         </div>
-        @endif
+        @endauth
     </div>
     <hr class="border-blue my-3">
     <div class="flex flex-wrap">
