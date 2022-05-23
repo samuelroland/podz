@@ -87,7 +87,6 @@ class EpisodeUpdateTest extends TestCase
     public function test_datetime_value_is_set_after_mount()
     {
         $podcast = Podcast::first();
-        $episode = $podcast->episodes->first();
         $this->actingAs($podcast->author);
         $episode = $podcast->episodes->first();
 
