@@ -23,14 +23,12 @@ class Podcast extends Model
 
     public function episodes()
     {
-        $relationship = $this->hasMany(Episode::class)->orderByDesc('number');
+        return $this->hasMany(Episode::class)->orderByDesc('number')->public();
+    }
 
-        //Is not the author, use the query scope scopePublic()
-        if (!$this->isAuthor()) {
-            $relationship->public();
-        }
-
-        return $relationship;
+    public function allEpisodes()
+    {
+        return $this->hasMany(Episode::class)->orderByDesc('number');
     }
 
     //Get a short version (only the start) of the description limited to $limit chars (+3 dots)
