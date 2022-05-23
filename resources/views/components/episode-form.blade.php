@@ -18,6 +18,9 @@
     @endif
 
     @if($mode == 'update')
-    
+    <audio controls class="w-full my-2">
+        <source src="{{ $episode->path }}" />
+    </audio>
+
     @endif
-</div>
+</div></div>
