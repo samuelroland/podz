@@ -49,13 +49,12 @@ class EpisodeCreationTest extends TestCase
         $episode = Episode::factory()->make(['podcast_id' => $podcast->id]);
         Storage::fake('public');
         $fakeFile = UploadedFile::fake()->create('audio.mp3');
-        $releaseDate = rand(0, 1) ? $episode->released_at :  now()->addHours(8);
 
         Livewire::test('episode-creation', ['podcast' => $podcast])
             ->set('episode.title', $episode->title)
             ->set('episode.description', $episode->description)
             ->set('episode.hidden', $episode->hidden)
-            ->set('datetime', $releaseDate)
+            ->set('datetime', $episode->released_at)
             ->set('file', $fakeFile)
             ->call('publish');
 
