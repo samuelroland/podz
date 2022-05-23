@@ -10,7 +10,7 @@ class PodcastController extends Controller
 {
     public function index()
     {
-        $podcasts = Podcast::all();
+        $podcasts = Podcast::with(['episodes', 'author'])->get();
         return view('podcasts.index', ['podcasts' => $podcasts]);
     }
 
