@@ -6,9 +6,9 @@
     <div wire:key="episode-{{ $episode->id }}" x-data="{edition: false}" class="border-l border-blue px-2 pl-3 my-5 w-full {{ $episode->hidden ? 'opacity-75' : '' }}">
 
         <div x-show="!edition">
-            <div class="flex w-full">
+            <div class="flex flex-wrap w-full">
                 <h2 class="flex-1">{{ '#' . $episode->number }} {{ $episode->title }}</h2>
-                <div class="text-gray-600 italic flex items-center">
+                <div class="text-gray-600 italic flex flex-wrap items-center">
                     @if ($podcast->isAuthor())
                     <span class="mr-3">Créé le {{ $episode->created_at->format('d.m.Y à H:i.') }}</span>
                     @endif

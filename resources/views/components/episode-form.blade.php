@@ -1,6 +1,6 @@
 @props(['episode', 'mode'])
 <div>
-    <div class="flex items-center">
+    <div class="flex flex-wrap items-center">
         <span class="text-2xl mr-2 mt-3">{{ '#' . $episode->number }}</span>
         <x-field wire:model.lazy="episode.title" name="episode.title" placeholder="Titre de l'épisode"></x-field>
         <x-field wire:model="episode.hidden" name="episode.hidden" cssOnField="ml-2 block" label="Caché" class="flex items-center mx-2" type="checkbox"></x-field>
@@ -23,4 +23,4 @@
     </audio>
 
     @endif
-</div></div>
+</div>
