@@ -23,7 +23,7 @@ class Podcast extends Model
 
     public function episodes()
     {
-        return $this->hasMany(Episode::class)->orderByDesc('number')->public();
+        return $this->allEpisodes()->public();
     }
 
     public function allEpisodes()
@@ -50,8 +50,9 @@ class Podcast extends Model
     //Is the logged user author of this podcast ?
     public function isAuthor()
     {
-        if (auth()->check() && $this->author != null) {
-            return $this->author->is(auth()->user());
+        $user = auth()->user();
+        if ($user != null && $this->author != null) {
+            return $this->author->is($user);
         }
         return false;
     }
