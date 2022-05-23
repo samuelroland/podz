@@ -5,7 +5,7 @@
     @csrf
     <button wire:click.prevent="update" class="btn mt-1">Enregistrer</button>
     @if(session()->has('podcastUpdated'))
-    <button @click="editing = false" wire:click="refreshParent()" class="btn mt-1">Fermer</button>
+    <button @click="editing = false" wire:click="$emit('podcast-info-updated')" class="btn mt-1">Fermer</button>
     <span class="text-info">{{ session('podcastUpdated') }}</span>
     @endif
 </div>
