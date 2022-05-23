@@ -16,8 +16,10 @@ class DatabaseSeeder extends Seeder
         //Delete all episodes files before creating new ones
         Storage::deleteDirectory('public/episodes');
 
-        User::factory(2)->has(Podcast::factory(2)->has(Episode::factory(3)))->create();
+        $testing = app()->environment('testing');   //during testing, we want very little data in comparison to local env
 
-        User::factory()->has(Podcast::factory()->has(Episode::factory(2)))->create(['name' => "sam", 'email' => 'sam@example.com', 'password' => bcrypt('password')]);
+        User::factory($testing ? 1 : 3)->has(Podcast::factory($testing ? 1 : 3)->has(Episode::factory($testing ? 2 : 5)))->create();
+
+        User::factory()->has(Podcast::factory($testing ? 1 : 2)->has(Episode::factory($testing ? 2 : 3)))->create(['name' => "sam", 'email' => 'sam@example.com', 'password' => bcrypt('password')]);
     }
 }
