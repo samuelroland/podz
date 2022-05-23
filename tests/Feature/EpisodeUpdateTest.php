@@ -47,9 +47,9 @@ class EpisodeUpdateTest extends TestCase
         $podcast = Podcast::factory()->create(['user_id' => $user->id]);
         $this->actingAs($user);
         $episode = Episode::factory()->create(['podcast_id' => $podcast->id]);
-        $newEpisodeValues = Episode::factory()->create(['podcast_id' => $podcast->id]);
+        $newEpisodeValues = Episode::factory()->make(['podcast_id' => $podcast->id]);
 
-        Livewire::test('episode-update', ['episode' => $episode])
+        Livewire::test('episode-update', ['episode' => $episode, 'podcast' => $podcast])
             ->set('episode.title', $newEpisodeValues->title)
             ->set('episode.description', $newEpisodeValues->description)
             ->set('episode.hidden', $newEpisodeValues->hidden)
@@ -67,7 +67,7 @@ class EpisodeUpdateTest extends TestCase
         $this->actingAs($author);
         Storage::fake('public');
 
-        $response = Livewire::test('episode-update', ['episode' => $episode])
+        $response = Livewire::test('episode-update', ['episode' => $episode, 'podcast' => $podcast])
             ->set('episode.title', '')
             ->set('episode.description', '   ')
             ->set('datetime', null)
@@ -75,7 +75,7 @@ class EpisodeUpdateTest extends TestCase
 
         $response->assertHasErrors(['episode.title', 'episode.description', 'datetime']);
 
-        $response = Livewire::test('episode-update', ['episode' => $episode])
+        $response = Livewire::test('episode-update', ['episode' => $episode, 'podcast' => $podcast])
             ->set('episode.title', Str::random(70)) //above 60
             ->set('episode.description', Str::random(2500)) //above 2000
             ->set('datetime', 'not a datetime')
@@ -92,7 +92,7 @@ class EpisodeUpdateTest extends TestCase
         $episode = $podcast->episodes->first();
 
         //Make sure datetime is set to the released_at value
-        Livewire::test('episode-update', ['episode' => $episode])
+        Livewire::test('episode-update', ['episode' => $episode, 'podcast' => $podcast])
             ->assertSet('datetime', $episode->released_at);
     }
 
@@ -104,7 +104,7 @@ class EpisodeUpdateTest extends TestCase
         $episode = Episode::factory()->create(['podcast_id' => $podcast->id]);
 
         $this->actingAs($otherUser);
-        Livewire::test('episode-update', ['episode' => $episode])
+        Livewire::test('episode-update', ['episode' => $episode, 'podcast' => $podcast])
             ->set('episode.title', "new title set as non author")
             ->call('updateEpisode');
 
@@ -116,10 +116,10 @@ class EpisodeUpdateTest extends TestCase
         $user = User::first();
         $podcast = Podcast::factory()->create(['user_id' => $user->id]);
         $episode = Episode::factory()->create(['podcast_id' => $podcast->id, 'title' => 'great title']);
-        $episode = Episode::factory()->create(['podcast_id' => $podcast->id]);
+        $episode = Episode::factory()->create(['podcast_id' => $podcast->id, 'number' => 2]);
 
         $this->actingAs($user);
-        $response = Livewire::test('episode-update', ['episode' => $episode])
+        $response = Livewire::test('episode-update', ['episode' => $episode, 'podcast' => $podcast])
             ->set('episode.title', 'great title')
             ->call('updateEpisode');
 
