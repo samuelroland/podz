@@ -55,4 +55,11 @@ class EpisodeUpdate extends Component
             session()->flash('updatedEpisode-' . $this->episode->id, "#" . $this->episode->number . " " . $this->episode->title);
         }
     }
+
+    public function deleteEpisode()
+    {
+        if ($this->episode->podcast->isAuthor()) {
+            $this->episode->delete();
+        }
+    }
 }
