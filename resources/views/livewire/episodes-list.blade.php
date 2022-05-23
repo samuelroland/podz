@@ -1,6 +1,9 @@
 <div class="flex flex-wrap">
-    @forelse($podcast->episodes as $episode)
-    <div x-data="{edition: false}" class="border-l border-blue px-2 pl-3 my-5 w-full {{ $episode->hidden ? 'opacity-75' : '' }}">
+    @php
+    $episodes = $podcast->isAuthor() ? $podcast->allEpisodes : $podcast->episodes;
+    @endphp
+    @forelse($episodes as $episode)
+    <div wire:key="episode-{{ $episode->id }}" x-data="{edition: false}" class="border-l border-blue px-2 pl-3 my-5 w-full {{ $episode->hidden ? 'opacity-75' : '' }}">
 
         <div x-show="!edition">
             <div class="flex w-full">
@@ -42,8 +45,8 @@
         </div>
 
         @if($podcast->isAuthor())
-        <div x-show="edition">
-            @livewire('episode-update', ['episode' => $episode, 'podcast' => $podcast])
+        <div x-show="edition" x-cloak>
+            @livewire('episode-update', ['episode' => $episode, 'podcast' => $podcast], key($episode->id))
         </div>
         @endif
 

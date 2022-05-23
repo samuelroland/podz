@@ -52,9 +52,7 @@ class EpisodeUpdate extends Component
 
             $this->episode->save();
 
-            $this->emit('episodesListUpdate');
-
-            session()->flash('updatedEpisode', "#" . $this->episode->number . " " . $this->episode->title);
+            session()->flash('updatedEpisode-' . $this->episode->id, "#" . $this->episode->number . " " . $this->episode->title);
         }
     }
 }

@@ -19,6 +19,6 @@ class EpisodesList extends Component
 
     public function refresh()
     {
-        $this->podcast->refresh();
+        $this->podcast = $this->podcast->refresh();
     }
 }
