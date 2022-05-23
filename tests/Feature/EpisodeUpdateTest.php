@@ -62,7 +62,7 @@ class EpisodeUpdateTest extends TestCase
     public function test_data_are_correctly_validated()
     {
         $podcast = Podcast::first();
-        $episode = $podcast->episodes->first();
+        $episode = $podcast->allEpisodes->first();
         $author = $podcast->author;
         $this->actingAs($author);
         Storage::fake('public');

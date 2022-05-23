@@ -27,7 +27,6 @@ class PodcastDetailsTest extends TestCase
     public function test_all_information_are_displayed_for_the_author()
     {
         $podcast = Podcast::first();
-
         $response = $this->actingAs($podcast->author)->get(route('podcasts.show', $podcast->id));
 
         //Make sure podcast info are present
@@ -35,10 +34,10 @@ class PodcastDetailsTest extends TestCase
         $response->assertSee("par " . $podcast->author->name);
         $response->assertSee($podcast->description);
 
-        $this->assertNotEmpty($podcast->episodes);
+        $this->assertNotEmpty($podcast->allEpisodes);
 
         //Make sure episodes info are present
-        foreach ($podcast->episodes as $episode) {
+        foreach ($podcast->allEpisodes as $episode) {
             $response->assertSee("#" . $episode->number);
             $response->assertSee($episode->title);
             $response->assertSee($episode->description);
