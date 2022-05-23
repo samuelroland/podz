@@ -9,16 +9,11 @@ class EpisodesList extends Component
     public $podcast;
 
     protected $listeners = [
-        'episodesListUpdate' => 'refresh'
+        'episodesListUpdate' => 'render'    //calling render with rehydrate $podcast so episodes list will be up-to-date
     ];
 
     public function render()
     {
         return view('livewire.episodes-list');
-    }
-
-    public function refresh()
-    {
-        $this->podcast = $this->podcast->refresh();
     }
 }
