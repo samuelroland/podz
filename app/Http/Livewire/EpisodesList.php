@@ -14,6 +14,6 @@ class EpisodesList extends Component
 
     public function render()
     {
-        return view('livewire.episodes-list');
+        return view('livewire.episodes-list', ['isAuthor' => $this->podcast->isAuthor()]);
     }
 }

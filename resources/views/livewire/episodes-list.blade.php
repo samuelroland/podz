@@ -1,6 +1,6 @@
 <div class="flex flex-wrap">
     @php
-    $episodes = $podcast->isAuthor() ? $podcast->allEpisodes : $podcast->episodes;
+    $episodes = $isAuthor ? $podcast->allEpisodes : $podcast->episodes;
     @endphp
     @forelse($episodes as $episode)
     <div wire:key="episode-{{ $episode->id }}" x-data="{edition: false}" class="border-l border-blue px-2 pl-3 my-5 w-full {{ $episode->hidden ? 'opacity-75' : '' }}">
@@ -9,13 +9,13 @@
             <div class="flex flex-wrap w-full">
                 <h2 class="flex-1">{{ '#' . $episode->number }} {{ $episode->title }}</h2>
                 <div class="text-gray-600 italic flex flex-wrap items-center">
-                    @if ($podcast->isAuthor())
+                    @if ($isAuthor)
                     <span class="mr-3">Créé le {{ $episode->created_at->format('d.m.Y à H:i.') }}</span>
                     @endif
                     <span class="mr-3">
                         @php
-                        echo $podcast->isAuthor() ? ($episode->released_at->isPast() ? 'Publié le ' : 'Publication planifiée pour le ') : '';
-                        echo $episode->released_at->format($podcast->isAuthor() ? 'd.m.Y à H:i.' : 'd.m.Y.');
+                        echo $isAuthor ? ($episode->released_at->isPast() ? 'Publié le ' : 'Publication planifiée pour le ') : '';
+                        echo $episode->released_at->format($isAuthor ? 'd.m.Y à H:i.' : 'd.m.Y.');
                         @endphp
                     </span>
                     <span>
@@ -26,7 +26,7 @@
                         @endif
                     </span>
                     <span>
-                        @if ($podcast->isAuthor())
+                        @if ($isAuthor)
                         <svg @click="edition = true" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                         </svg>
@@ -44,7 +44,7 @@
             </audio>
         </div>
 
-        @if($podcast->isAuthor())
+        @if($isAuthor)
         <div x-show="edition" x-cloak>
             @livewire('episode-update', ['episode' => $episode, 'podcast' => $podcast], key($episode->id))
         </div>
@@ -54,7 +54,7 @@
     @empty
     <span class="text-info">Pas d'épisode dans ce podcast pour le moment.</span>
     <span>
-        @if($podcast->isAuthor())
+        @if($isAuthor)
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
         </svg>
