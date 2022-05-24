@@ -67,7 +67,6 @@ Voici la liste des objectifs à atteindre, tirée du cahier des charges:
 - Authentification des utilisateurs.
 - Il n’y aura pas de partie back-office ni de rôle administrateur.
 
-<!--  bonne endroit ?-->
 Ces fonctionnalités sont implémentées par Jetstream, je n'ai donc pas eu besoin de m'en occuper.
 
 **Fonctionnalités détaillées selon le type d’utilisateur**
@@ -95,7 +94,7 @@ Ce chapitre montre la planification du projet. Celui-ci peut être découpé en 
 
 Ces éléments peuvent être repris des spécifications de départ.
 -->
-<div class="page"/><!-- saut de page -->
+<div class="page"/>
 
 ## Analyse / Conception
 ### Concept
@@ -395,7 +394,7 @@ Un autre exemple d'utilisation dans le cas d'un formulaire géré par Livewire:
 ```
 </div>
 
-<div class="page"/><!-- saut de page -->
+<div class="page"/>
 
 ## Réalisation
 ### Dossier de réalisation
@@ -522,7 +521,7 @@ Lister les documents fournis au client avec votre produit, en indiquant les num�
 •	autres…
 -->
 
-<div class="page"/><!-- saut de page -->
+<div class="page"/>
 
 ## Conclusions
 <!--
