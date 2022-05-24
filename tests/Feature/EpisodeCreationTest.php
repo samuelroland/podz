@@ -62,7 +62,7 @@ class EpisodeCreationTest extends TestCase
         $this->assertDatabaseHas('episodes', $episode->only(['title', 'description', 'hidden', 'released_at', 'podcast_id']));
 
         //Make sure file is present on disk
-        $finalEpisode = $podcast->allEpisodes()->first();
+        $finalEpisode = $podcast->episodes->first();
         Storage::disk('public')->assertExists('episodes/' . $finalEpisode->filename);
     }
 

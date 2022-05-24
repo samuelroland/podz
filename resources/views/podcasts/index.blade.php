@@ -18,7 +18,7 @@
                 <h2>{{ $podcast->title }}</h2>
                 <div class="flex">
                     <div class="flex-1 font-semibold">{{ $podcast->author->name }}</div>
-                    <div class="text-green italic text-sm">{{ $podcast->episodes->count() . ' épisode' . ( $podcast->episodes->count() > 1 ? 's' : ' ') }}</div>
+                    <div class="text-green italic text-sm">{{ $podcast->publicEpisodes->count() . ' épisode' . ( $podcast->publicEpisodes->count() > 1 ? 's' : ' ') }}</div>
                 </div>
                 <div class="mt-1 text-sm italic text-gray-700 overflow-hidden text-ellipsis">{{ $podcast->summary }}</div>
             </div>

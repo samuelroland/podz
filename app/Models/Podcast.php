@@ -21,12 +21,12 @@ class Podcast extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function episodes()
+    public function publicEpisodes()
     {
-        return $this->allEpisodes()->public();
+        return $this->episodes()->public();
     }
 
-    public function allEpisodes()
+    public function episodes()
     {
         return $this->hasMany(Episode::class)->orderByDesc('number');
     }

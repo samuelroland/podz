@@ -34,10 +34,10 @@ class PodcastDetailsTest extends TestCase
         $response->assertSee("par " . $podcast->author->name);
         $response->assertSee($podcast->description);
 
-        $this->assertNotEmpty($podcast->allEpisodes);
+        $this->assertNotEmpty($podcast->episodes);
 
         //Make sure episodes info are present
-        foreach ($podcast->allEpisodes as $episode) {
+        foreach ($podcast->episodes as $episode) {
             $response->assertSee("#" . $episode->number);
             $response->assertSee($episode->title);
             $response->assertSee($episode->description);
@@ -72,7 +72,7 @@ class PodcastDetailsTest extends TestCase
         $episode = Episode::factory()->create(['podcast_id' => $podcast->id]);
 
         //Non author
-        $this->assertNotEmpty($podcast->episodes);
+        $this->assertNotEmpty($podcast->publicEpisodes);
         $response = $this->actingAs(User::factory()->create())->get(route('podcasts.show', $podcast->id));
         $response->assertSee($episode->released_at->format("d.m.Y."));
 
