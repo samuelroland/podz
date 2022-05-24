@@ -57,7 +57,7 @@
 
 ### Introduction
 
-Podz est une application web de publication de podcasts, pour le projet de TPI de Samuel Roland. Les auteurs de podcasts peuvent créer des podcasts, publier des épisodes, planifier la publication d'épisodes dans le futur et cacher des épisodes. L'application est basée sous Laravel 9 et part de zéro. TailwindCSS 3 est utilisé.
+Podz est une application web de publication de podcasts, pour le projet de TPI de Samuel Roland. Les auteurs de podcasts peuvent créer des podcasts, publier des épisodes, planifier la publication d'épisodes dans le futur et cacher des épisodes. L'application est basée sous Laravel 9 et part de zéro.
 
 ### Objectifs
 
@@ -102,15 +102,13 @@ Ces éléments peuvent être repris des spécifications de départ.
 ### Concept
 
 #### Technologies utilisées
-J'ai choisi la stack **TALL** (*TailwindCSS - AlpineJS - Livewire - Laravel*) pour ce projet, car je suis à l'aise avec ces 4 frameworks et qu'ils permettent d'être assez productif pour développer une application web.
+J'ai choisi la stack **TALL** (*TailwindCSS - AlpineJS - Livewire - Laravel*) pour ce projet, car je suis à l'aise avec ces 4 frameworks et parce qu'ils permettent d'être assez productif pour développer une application web.
 
 **Petits aperçus de ces frameworks**
-- **[Laravel](https://laravel.com/)**: un framework PHP basé sur le modèle MVC et en POO. Cela d'être assez productif, d'avoir accès à beaucoup de classes et fonctions très pratiques, d'avoir une structure imposée... bref de simplifier énormément le développement d'applications web en PHP.
-- **[Livewire](https://laravel-livewire.com/)**: un framework pour Laravel permettant de faire des composants fullstack réactifs. L'idée est d'utiliser la puissance de Blade et du PHP pour avoir des parties réactives sur le frontend (normalement codé en Javascript) sans devoir coder des requêtes AJAX nous-mêmes.
-- **[AlpineJS](https://alpinejs.dev/)**: un petit framework Javascript relativement simple à apprendre, utilisée ici pour gérer certaines interactions que Livewire ne permet pas, ou qui ne concernent des états d'affichage (là où des requêtes sur le backend seraient inutile notamment). Les composants s'écrivent inline (sur les balises HTML directement). Très pratique pour afficher un dropdown, faire une barre de progression, ...
-- **[TailwindCSS](https://tailwindcss.com/)**: un framework CSS, semblable à Bootstrap mais centré autour des propriétés CSS (en ayant des classes utilitaires - "utility-first") au lieu de tourner autour de composants. C'est très puissant pour construire rapidement des interfaces, en écrivant quasiment jamais de CSS pur, et pour faire du responsive c'est très pratique parce qu'on peut préfixer toutes les classes par `md:` par ex. afin dire que la classe ne s'applique que sur les écrans medium et au dessus.
-
-<div class="together">
+- **[Laravel](https://laravel.com/)**: un framework PHP basé sur le modèle MVC et en POO. Laravel donne accès à beaucoup de classes et fonctions très pratiques, d'avoir une structure imposée, d'avoir des solutions toutes faites pour beaucoup de problèmes récurrents (traductions, authentification, gestion des dates et énormément d'autres). Tout ceci simplifie énormément le développement d'applications web en PHP une fois qu'on ait à l'aise avec les bases.
+- **[Livewire](https://laravel-livewire.com/)**: un framework pour Laravel permettant de faire des composants fullstack réactifs. L'idée est d'utiliser la puissance de Blade et du PHP pour avoir des parties réactives sur le frontend (normalement codé en Javascript) sans devoir coder des requêtes AJAX.
+- **[AlpineJS](https://alpinejs.dev/)**: un petit framework Javascript relativement simple à apprendre, utilisée ici pour gérer certaines interactions que Livewire ne permet pas, ou qui concernent des états d'affichage (là où des requêtes sur le backend seraient inutiles notamment). Les composants s'écrivent inline (sur les balises HTML directement). Très pratique pour afficher un dropdown, faire une barre de progression, ...
+- **[TailwindCSS](https://tailwindcss.com/)**: un framework CSS, concurrent de Bootstrap mais centré autour des propriétés CSS (en ayant des classes utilitaires - "utility-first") au lieu de tourner autour de composants. C'est très puissant pour construire rapidement des interfaces, en écrivant quasiment jamais de CSS pur et pour faire du responsive c'est très pratique parce qu'on peut préfixer toutes les classes par `md:` par ex. afin dire que la classe ne s'applique que sur les écrans medium et au dessus.
 
 #### Base de données: MCD
 ![MCD](MCD.png)
@@ -119,7 +117,7 @@ En dehors des champs évidents, voici quelques aspects techniques qui demandent 
 
 **Dans Episodes**:
 - Les combinaisons du Numéro et du podcast lié, ainsi que le titre et le podcast lié, sont uniques (exemple: on ne peut pas avoir 2 fois un épisode 4 du podcast "Summer stories", et on ne peut pas avoir 2 fois un épisode nommé "Summer 2020 review" du podcast "Summer stories").
-- La date de création est définie par la date de création de l'épisode sur la plateforme (avec l'upload du fichier), peu importe ses autres informations (la publication ou l'état caché n'a pas d'influence sur cette date). Cette date ne change jamais et ne sert/est affichée qu'à l'auteur.
+- La date de création est définie par la date de création de l'épisode sur la plateforme (avec l'upload du fichier), peu importe ses autres informations (la publication ou l'état caché n'a pas d'influence sur cette date). Cette date ne change jamais et est affichée qu'à l'auteur.
 - La date de publication peut être dans le passé ou mais aussi dans le futur. Si elle est dans le futur, l'épisode n'est pas encore publié (jusqu'à la date définie). Ceci permet de programmer dans le futur une publication.
 - Le champ Caché est par défaut à Faux et n'a pas d'effet dans ce cas. S'il est Vrai, l'épisode ne sera pas visible dans les détails du podcast.
 
@@ -131,11 +129,10 @@ En dehors des champs évidents, voici quelques aspects techniques qui demandent 
 #### Base de données: MLD
 ![MLD](MLD.png)
 
-Certains champs sont créés par une migration générée par Jetstream, je n'en ai pas besoin mais je ne vais pas les retirer au risque de casser certaines parties existantes. Je n'ai pas créé ce MLD à la main mais je l'ai rétro-ingéniéré depuis la base de données, après avoir codé les migrations.
-todo: documenter spécificités.
-todo: tables et champs gérés par Laravel...
-</div>
+Ce MLD n'a pas été fait à la main mais a été rétro-ingéniéré depuis la base de données, après avoir codé les migrations. Certains champs sont créés par une migration générée par Jetstream, je n'en ai pas besoin mais je ne vais pas les retirer au risque de casser certaines parties existantes. Ce MLD omet volontairement les tables générées par Laravel et propres à chaque application Laravel (`sessions`, `migrations`, ...), une partie provient de migrations créées par Jetstream. Ne vous étonnez donc pas de trouver d'autres tables dans la base de données, car je ne les utilise pas directement. 
 
+todo: documenter spécificités.
+Les champs `created_at` et `updated_at` sont gérés automatiquement par Laravel, je n'utilise que le `created_at` en lecture seulement.
 
 <!--
 Le concept complet avec toutes ses annexes :
@@ -207,7 +204,10 @@ Simple formulaire pour créer un nouveau podcast, avec affichage des erreurs en 
 #### Choix de conception
 <!-- question: check section ok -->
 
-- Sur la page Podcasts, il y a un résumé des descriptions des podcasts, qui se limitent à 150 charactères (+3 petits points), puisque la description est trop longue pour être affichée entièrement et l'utilisation de `text-overflow: ellipsis` en CSS sur plusieurs lignes n'est pas très simple. Raccourcir en PHP était donc l'autre solution. Un attribute `summary` de la classe `Podcast` permet de récuperer facilement ce résumé. Si la description est plus courte que la limite, la description est utilisée.
+**Résumé des podcats**  
+Sur la page Podcasts, il y a un résumé des descriptions des podcasts, qui se limitent à 150 charactères (+3 petits points), puisque la description est trop longue pour être affichée entièrement et l'utilisation de `text-overflow: ellipsis` en CSS sur plusieurs lignes n'est pas très simple. Raccourcir en PHP était donc l'autre solution. Un attribute `summary` de la classe `Podcast` permet de récuperer facilement ce résumé. Si la description est plus courte que la limite, la description est utilisée.
+
+**Visibilité des épisodes**
 
 <!-- random note 
 
@@ -256,6 +256,10 @@ Pour la plupart des fonctionnalités, j'ai suivi cette ordre pour décider des t
 <!-- check order and reorder if needed -->
 
 todo
+
+**Ce que les tests ne couvrent pas**:
+- Validation de la taille maximale d'upload d'un fichier
+- 
 
 <!-- todo: check selenium and testing tools -->
 Voici la liste complète des tests, les noms devraient permettre d'avoir une idée de ce qui est testé et quels cas sont couverts.
@@ -442,12 +446,12 @@ podz                      Racine du repository
 │               └─ ...                                          
 ├─ routes                 Configuration des routes dans web.php                        
 ├─ storage                Espace de stockage dédié                        
-│   ├─ app                Dossier pointé par le disque "local"                         
-│   │   ├─ public         Dossier publiquement accessible et pointe sur le disque "public"                                
-│   │   └─ testing        Fichiers audios de tests                                
+│   ├─ app                Dossier ciblé par le disque "local"                         
+│   │   ├─ public         Dossier publiquement accessible et ciblé par le disque "public"                                
+│   │   └─ testing        Fichiers audios de tests pour le développement                              
 │   ├─ clockwork                                        
-│   ├─ ...                                       
-│   └─ logs                                         
+│   ├─ ...                                        
+│   └─ logs               Emplacement de laravel.log                          
 ├─ tests                  Tests automatisés                      
 │   ├─ Feature            Tests fonctionnels                            
 │   ├─ Jetstream          Tests créés par Jetstream                              
