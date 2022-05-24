@@ -74,12 +74,17 @@ TODO: to check
     ```bash
     npm run watch
     ```
+    Le résultat de ce processus est le fichier `public/css/app.css` et `public/js/app.js`.
+1. Si vous n'aller pas travailler dessus mais que vous avez juste besoin de voir l'application, vous pouvez lancer cette autre commande qui fait le processus 1 seule fois.
+    ```bash
+    npm run dev
+    ```
 
-1. Et dans un autre terminal, vous pouver démarrer votre serveur:
+2. Et dans un autre terminal, vous pouver démarrer votre serveur:
     ```bash
     php artisan server
     ```
-2. Il ne reste plus qu'à ouvrir votre navigateur sur `localhost:8000` ou l'autre adresse affichée et vous devriez pouvoir vous connecter avec les identifiants suivants: `sam@example.com` - `password` ou vous créer un nouveau compte.
+3. Il ne reste plus qu'à ouvrir votre navigateur sur `localhost:8000` ou l'autre adresse affichée et vous devriez pouvoir vous connecter avec les identifiants suivants: `sam@example.com` - `password` ou vous créer un nouveau compte.
 
 ### Préparation et mise en production
 Une fois l'environnement et le projet mis en place (sans le remplissage des données de tests), il faut compiler et optimiser les fichiers JS et CSS pour la production (minification, purgation, ...) afin d'être d'avoir des fichiers légers.
