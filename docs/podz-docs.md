@@ -3,18 +3,19 @@
 <p style="text-align: center; border: none; font-size: 3rem;">Documentation de Podz</p>
 <p style="text-align: center; border: none; font-size: 2rem;">Application web de publication de podcasts</p>
 <div style="display:flex; padding: 50px 100px; justify-content: center; font-family: Fira Code;">
-<img src="logo.png" style="">
+<img src="logo.png" style="box-shadow: none">
 </div>
-<h2 style="text-align: center; font-size: 1.6rem;">Projet TPI - 2022</h2>
-<h2 style="text-align: center; font-size: 1.3rem;">Samuel Roland</h2>
+<h2 style="text-align: center; font-size: 1.8rem;">Projet TPI - 2022</h2>
+<h2 style="text-align: center; font-size: 1.5rem;">Samuel Roland</h2>
 
 </div>
 
 <div class="page"/> 
 
-## Analyse préliminaire
+<div class="toc">
 
 **Table des matières**
+## Analyse préliminaire
 - [Analyse préliminaire](#analyse-préliminaire)
   - [Introduction](#introduction)
   - [Objectifs](#objectifs)
@@ -27,7 +28,6 @@
     - [Maquettes](#maquettes)
     - [Choix de conception](#choix-de-conception)
   - [Stratégie de test](#stratégie-de-test)
-  - [Tests](#tests)
     - [Où sont écrits les tests ?](#où-sont-écrits-les-tests-)
     - [Couverture des tests](#couverture-des-tests)
     - [Résultats des tests](#résultats-des-tests)
@@ -50,6 +50,8 @@
   - [Journal de travail](#journal-de-travail)
   - [Manuel d'Installation](#manuel-dinstallation)
   - [Archives du projet](#archives-du-projet)
+
+</div>
 
 <div class="page"/><!-- saut de page -->
 
@@ -108,9 +110,12 @@ J'ai choisi la stack **TALL** (*TailwindCSS - AlpineJS - Livewire - Laravel*) po
 - **[AlpineJS](https://alpinejs.dev/)**: un petit framework Javascript relativement simple à apprendre, utilisée ici pour gérer certaines interactions que Livewire ne permet pas, ou qui ne concernent des états d'affichage (là où des requêtes sur le backend seraient inutile notamment). Les composants s'écrivent inline (sur les balises HTML directement). Très pratique pour afficher un dropdown, faire une barre de progression, ...
 - **[TailwindCSS](https://tailwindcss.com/)**: un framework CSS, semblable à Bootstrap mais centré autour des propriétés CSS (en ayant des classes utilitaires - "utility-first") au lieu de tourner autour de composants. C'est très puissant pour construire rapidement des interfaces, en écrivant quasiment jamais de CSS pur, et pour faire du responsive c'est très pratique parce qu'on peut préfixer toutes les classes par `md:` par ex. afin dire que la classe ne s'applique que sur les écrans medium et au dessus.
 
+<div class="together">
+
 #### Base de données: MCD
 ![MCD](MCD.png)
 En dehors des champs évidents, voici quelques aspects techniques qui demandent des explications.
+</div
 
 **Dans Episodes**:
 - Les combinaisons du Numéro et du podcast lié, ainsi que le titre et le podcast lié, sont uniques (exemple: on ne peut pas avoir 2 fois un épisode 4 du podcast "Summer stories", et on ne peut pas avoir 2 fois un épisode nommé "Summer 2020 review" du podcast "Summer stories").
@@ -121,12 +126,16 @@ En dehors des champs évidents, voici quelques aspects techniques qui demandent 
 **Dans Podcasts**:
 - La combinaison du titre et de l'auteur est unique. Exemple: Michelle ne peut pas publier 2 podcasts s'appelant "My story", par contre Michelle et Bob peuvent chacun publier 1 podcast nommé "My story".
 
+<div class="together">
+
 #### Base de données: MLD
 ![MLD](MLD.png)
 
 Certains champs sont créés par une migration générée par Jetstream, je n'en ai pas besoin mais je ne vais pas les retirer au risque de casser certaines parties existantes. Je n'ai pas créé ce MLD à la main mais je l'ai rétro-ingéniéré depuis la base de données, après avoir codé les migrations.
 todo: documenter spécificités.
 todo: tables et champs gérés par Laravel...
+</div>
+
 
 <!--
 Le concept complet avec toutes ses annexes :
@@ -137,6 +146,7 @@ Par exemple :
 •	Programmation: interfaces graphiques, maquettes, analyse fonctionnelle…
 •	…
 -->
+<div class="together">
 
 #### Maquettes
 Pour pouvoir utiliser les fonctionnalités requises, voici la liste complète des pages existantes et leur maquette.
@@ -149,37 +159,50 @@ Pour pouvoir utiliser les fonctionnalités requises, voici la liste complète de
 - Page Détails d'un podcast (auteur)
 - Page Création d'un podcast
 
+</div>
+
 **Page Connexion**  
 ![page](models/Connexion.png)
 
 **Page Inscription**  
 ![page](models/Inscription.png)
 
+<div class="together">
+
 **Page Liste des podcasts**  
 Cette page est visible publiquement et c'est la page par défaut de l'application, on y accède également via le bouton Podcasts en haut à gauche. On peut cliquer sur un podcast pour accéder à ses détails.
 ![page](models/Podcasts_page.png)
+</div>
+
+<div class="together">
 
 **Page Détails d'un podcast (visiteur)**  
 Les visiteurs ne voient que les épisodes qui sont visibles et qu'une partie de leurs informations. Ils ne voient que le numéro, le titre, la description, l'audio et le date (arrondie au jour).
 ![page](models/Page_d%C3%A9tails_podcast_visiteur.png)
+</div>
 
-<div class="page"/><!-- saut de page -->
+<div class="together">
 
 **Page Edition des détails d'un podcast (auteur)**  
 L'auteur d'un podcast peut gérer les détails de son podcast, autant le titre et la description que les détails et la liste des épisodes. Nous sommes le 09.05.2022 dans cette maquette, l'épisode 4 est caché et le 5 est planifié pour le 10.05.2022. Ici l'auteur crée un 5 ème épisode planifiée qui ne sera publié que le lendemain à 15h08. Il peut aussi éditer les anciens épisodes en cliquant sur l'icône de stylo, ce qui passe l'épisode en mode édition (et permet ainsi de modifier).
 ![page](models/Page_d%C3%A9tails_podcast_panneaux_%C3%A9dition.png)
 
-<div class="page"/><!-- saut de page -->
+</div>
+
+<div class="together">
 
 **Page Détails d'un podcast (auteur)**  
 L'auteur voit évidemment toutes les informations de ses podcasts contrairement au visiteur. (Pour les podcasts d'autres auteurs, il voit la vue visiteur). Nous sommes le 10.05.2022 dans cette maquette, l'épisode 4 est caché et le 5 est planifié pour le 10.05.2022. L'épisode 4 est caché parce que l'auteur a décidé après coup de le remettre en privé.
 ![page](models/Page_d%C3%A9tails_podcast_auteur.png)
 
-<div class="page"/><!-- saut de page -->
+</div>
+
+<div class="together">
 
 **Page Création d'un podcast**  
 Simple formulaire pour créer un nouveau podcast, avec affichage des erreurs en dessous des champs si jamais les valeurs rentrées sont invalides.
 ![page](models/Page_cr%C3%A9er_podcast.png)
+</div>
 
 #### Choix de conception
 <!-- question: check section ok -->
@@ -191,6 +214,7 @@ Simple formulaire pour créer un nouveau podcast, avec affichage des erreurs en 
 Pour qu'un épisode soit visible publiquement il faut que sa date de publication soit dans le passé et que son état Caché soit Faux.
 -->
 
+<div class="together">
 
 ### Stratégie de test
 
@@ -205,20 +229,20 @@ Décrire la stratégie globale de test:
 •	les testeurs extérieurs éventuels.
 -->
 
-
-### Tests
 Cette section concerne la manière dont est testé Podz durant le projet et à la fin. Samuel teste manuellement les fonctionnalités dans son navigateur (Firefox) et écrit aussi des tests automatisés avec PhpUnit (un framework PHP pour les tests). La plupart des fonctionnalités sont couvertes par ces tests automatisés et quand cela n'est pas le cas, Samuel regarde à la main si cela fonctionne.
 Les factories et le seeder écrits sont également très utile pour les tests. 
 
 La stratégie de développement est le BDD (Behavior Driven Development). Cela consiste à écrire des tests qui testent le comportement avant de coder, s'assurer que le test plante, puis développer jusqu'à que le test passe. Ensuite on peut refactoriser pour augmenter la qualité tout en s'assurant que cela fonctionne toujours grâce à nos tests.  
 Toute la suite de tests est lancée très fréquemment pour s'assurer qu'une nouvelle fonctionnalité n'a pas cassé une autre en chemin.
-
+</div>
 <!-- todo: check BDD meaning -->
 
 #### Où sont écrits les tests ?
 Tous les tests se trouve dans le dossier `tests` à la racine du repository. Le dossier `Feature` contient les tests fonctionnels, `Unit` les tests unitaires et `Jetstream` les tests créé par Jetstream (ces derniers ont été déplacé de `Feature` afin de ne pas les exécuter constamment).
 
 <!-- Check "test fonctionnel" -->
+
+<div class="together">
 
 #### Couverture des tests
 Comme les tests sont écrits et exécutés en PHP, les tests ne peuvent que tester le comportement backend. les interractions frontend ne peuvent pas être testées avec les outils actuels (il faudrait d'autres outils comme Laravel Dusk, Selenium, ...).
@@ -240,6 +264,8 @@ Voici la liste complète des tests, les noms devraient permettre d'avoir une id�
 **Tests\Feature\YYY**
 - podcasts page exists
 
+</div>
+
 #### Résultats des tests
 
 Cette capture montre le résultat des tests exécutés le YYY à YYY. Tous les tests passent.
@@ -257,6 +283,7 @@ Afin de ne pas impacter la base de données de développement, les tests sont la
 <env name="DB_DATABASE" value=":memory:"/>
 <env name="DB_CONNECTION" value="sqlite"/>
 ```
+<div class="together">
 
 #### Comment lancer les tests ?
 Il y a différentes manières de lancer les tests dans un terminal:
@@ -266,6 +293,7 @@ Il y a différentes manières de lancer les tests dans un terminal:
 Les tests en dehors du dossier `tests/Unit` et `tests/Feature` ne seront pas lancés. Pour lancer les tests de Jetstream si besoin, il faut lancer `php artisan test tests/Jetstream`.
 
 Vous pouvez passer des paramètres à `phpunit` (idem pour la commande `php artisan test`).
+</div>
 
 **Exemples**:
 - pour exécuter seulement 1 test:  
@@ -322,7 +350,7 @@ Les 2 valeurs dans la configuration de PHP (fichier `php.ini`) doivent être aug
 
 #### Composants réutilisables
 
-**Le composant Field**
+**Le composant Field**  
 Un composant blade permettant d'abstraire les éléments communs de tous les champs de formulaire, avec quelques réglages possibles. L'affichage du label, le design basique, l'affichage des erreurs de validations.
 
 Propriétés du composant
@@ -345,6 +373,7 @@ Exemple d'utilisation:
 [...]
 </form>
 ```
+<div class="together">
 
 Un autre exemple d'utilisation dans le cas d'un formulaire géré par Livewire:
 ```php
@@ -356,6 +385,8 @@ Un autre exemple d'utilisation dans le cas d'un formulaire géré par Livewire:
     <button wire:click.prevent="update" class="btn mt-1">Enregistrer</button>
 </div>
 ```
+</div>
+
 <div class="page"/><!-- saut de page -->
 
 ## Réalisation
@@ -380,8 +411,7 @@ podz                      Racine du repository
 │   ├─ Providers                                        
 │   └─ View               Les classes des vues, pour les composants Blade                          
 │       └─ Components                                         
-├─ bootstrap                                        
-│   └─ cache                                        
+├─ ...                                      
 ├─ config                 Les fichiers de configuration globaux                        
 ├─ database               Tout ce qui concerne la gestion de la base de données                          
 │   ├─ factories          Les factories pour créer des données fictives                              
@@ -416,8 +446,7 @@ podz                      Racine du repository
 │   │   ├─ public         Dossier publiquement accessible et pointe sur le disque "public"                                
 │   │   └─ testing        Fichiers audios de tests                                
 │   ├─ clockwork                                        
-│   ├─ framework                                                                           
-│   │   └─ ...                                        
+│   ├─ ...                                       
 │   └─ logs                                         
 ├─ tests                  Tests automatisés                      
 │   ├─ Feature            Tests fonctionnels                            
