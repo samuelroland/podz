@@ -33,7 +33,6 @@
     - [Résultats des tests](#résultats-des-tests)
     - [Prérequis pour lancer les tests](#prérequis-pour-lancer-les-tests)
     - [Comment lancer les tests ?](#comment-lancer-les-tests-)
-  - [Risques techniques](#risques-techniques)
   - [Planification](#planification)
   - [Dossier de conception](#dossier-de-conception)
     - [Upload d'un fichier audio d'épisode](#upload-dun-fichier-audio-dépisode)
@@ -101,6 +100,10 @@ Ces éléments peuvent être repris des spécifications de départ.
 ## Analyse / Conception
 ### Concept
 
+TODO ????
+
+L'application tourne en PHP sur un serveur Apache. Elle utilise une base de données MySQL pour stocker ses données.
+
 #### Technologies utilisées
 J'ai choisi la stack **TALL** (*TailwindCSS - AlpineJS - Livewire - Laravel*) pour ce projet, car je suis à l'aise avec ces 4 frameworks et parce qu'ils permettent d'être assez productif pour développer une application web.
 
@@ -109,6 +112,8 @@ J'ai choisi la stack **TALL** (*TailwindCSS - AlpineJS - Livewire - Laravel*) po
 - **[Livewire](https://laravel-livewire.com/)**: un framework pour Laravel permettant de faire des composants fullstack réactifs. L'idée est d'utiliser la puissance de Blade et du PHP pour avoir des parties réactives sur le frontend (normalement codé en Javascript) sans devoir coder des requêtes AJAX.
 - **[AlpineJS](https://alpinejs.dev/)**: un petit framework Javascript relativement simple à apprendre, utilisée ici pour gérer certaines interactions que Livewire ne permet pas, ou qui concernent des états d'affichage (là où des requêtes sur le backend seraient inutiles notamment). Les composants s'écrivent inline (sur les balises HTML directement). Très pratique pour afficher un dropdown, faire une barre de progression, ...
 - **[TailwindCSS](https://tailwindcss.com/)**: un framework CSS, concurrent de Bootstrap mais centré autour des propriétés CSS (en ayant des classes utilitaires - "utility-first") au lieu de tourner autour de composants. C'est très puissant pour construire rapidement des interfaces, en écrivant quasiment jamais de CSS pur et pour faire du responsive c'est très pratique parce qu'on peut préfixer toutes les classes par `md:` par ex. afin dire que la classe ne s'applique que sur les écrans medium et au dessus.
+
+- **[Jetstream](https://jetstream.laravel.com/2.x/introduction.html)**: Un starter Kit Laravel mettant en place les fonctionnalités d'authentification, tels que la connexion, la création de compte, la gestion du compte et beaucoup d'autres. L'option Livewire a été utilisée.
 
 #### Base de données: MCD
 ![MCD](MCD.png)
@@ -214,6 +219,10 @@ Sur la page Podcasts, il y a un résumé des descriptions des podcasts, qui se l
 Pour qu'un épisode soit visible publiquement il faut que sa date de publication soit dans le passé et que son état Caché soit Faux.
 -->
 
+**Traduction**  
+Pour que les messages d'erreurs soient en français. J'utilise le système d'internationalisation de Laravel et j'ai défini le français comme langue par défaut et l'anglais comme langue de repli ("fallback language") au cas où quelquechose n'aurait pas été traduit en français. J'ai dupliqué le fichier `lang/fr/validation.php` à partir `lang/en/validation.php` et j'ai traduit les erreurs que j'utilisais.
+
+
 <div class="together">
 
 ### Stratégie de test
@@ -318,13 +327,6 @@ Je recommande de configurer un raccourci dans votre IDE pour lancer les tests. J
 }
 ```
 
-### Risques techniques
-<!--
-
-•	risques techniques (complexité, manque de compétences, …).
-
-Décrire aussi quelles solutions ont été appliquées pour réduire les risques (priorités, formation, actions, …).
--->
 ### Planification
 <!--
 Révision de la planification initiale du projet :
@@ -336,6 +338,8 @@ Il s’agit en principe de la planification définitive du projet. Elle peut êt
 -->
 
 ### Dossier de conception
+
+
 <!--
 Fournir tous les document de conception:
 
