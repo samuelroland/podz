@@ -40,7 +40,7 @@
             <div class="mt-1 text-sm italic text-gray-700 overflow-hidden text-ellipsis">{{ $episode->description }}
             </div>
             <audio controls class="w-full my-2">
-                <source src="{{ $episode->path }}" />
+                <source src="{{ Storage::url($episode->path) }}" />
             </audio>
         </div>
 
