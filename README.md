@@ -76,7 +76,7 @@ Ces 2 paramètres dans la configuration de PHP (fichier `php.ini`) doivent être
     ```bash
     npm run watch
     ```
-    Le résultat de ce processus est le fichier `public/css/app.css` et `public/js/app.js`.
+    Le résultat de ce processus sont les fichiers `public/css/app.css` et `public/js/app.js`.
 1. Si vous n'aller pas travailler dessus mais que vous avez juste besoin de voir l'application, vous pouvez lancer cette autre commande qui fait le processus 1 seule fois.
     ```bash
     npm run dev
