@@ -11,10 +11,10 @@ See more on: https://alpinejs.dev/directives/cloak
     display: none !important;
 }
 
+/* Headings */
 h1 {
     @apply text-3xl
 }
-
 
 h2 {
     @apply text-2xl
@@ -28,9 +28,11 @@ h4 {
     @apply text-lg
 }
 
+/* Common */
 .text-info {
     @apply italic text-sm text-gray-700
 }
+
 .btn {
     @apply bg-green text-white px-2 py-1 rounded-sm
 }
