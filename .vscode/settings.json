@@ -7,5 +7,10 @@
     "markdown-pdf.convertOnSave": false,
     "markdown-pdf.type": [
         "pdf"
-    ]
+    ],
+    "markdown-pdf.margin.top": "1cm",
+    "markdown-pdf.margin.bottom": "1cm",
+    "markdown-pdf.margin.right": "0.5cm",
+    "markdown-pdf.margin.left": "0.5cm",
+    "markdown-pdf.highlightStyle": "github-gist.css",
 }
