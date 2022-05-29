@@ -506,14 +506,72 @@ Cette capture montre le résultat des tests exécutés le YYY à YYY. Tous les t
 <!-- todo: check selenium and testing tools -->
 Voici la liste complète des tests, les noms devraient permettre d'avoir une idée de ce qui est testé et quels cas sont couverts.
 
-•	les conditions exactes de chaque test
-•	les preuves de test (papier ou fichier)
-•	tests sans preuve: fournir au moins une description 
--->
+<!-- todo: update the list and names if changed in between! -->
+1. **Tests\Unit\EpisodeTest**
+    1. `path is well built`
+
+2. **Tests\Unit\PodcastTest**
+    1. `podcasts summary is correctly extracted`
+    2. `podcasts summary doesnt extract when description length is already good`
+    3. `get next number really gives next number`
+
+3. **Tests\Feature\EpisodeCreationTest**
+    1. `podcast details page uses episode creation component`
+    2. `podcast details page doesnt use episode creation if not author`
+    3. `episode creation works`
+    4. `data are correctly validated`
+    5. `audio file type is validated`
+    6. `default value of the episode are set`
+    7. `publishing fails silently if forbidden`
+    8. `publishing 2 episodes with same title in a podcast is not possible`
+
+4. **Tests\Feature\EpisodeDeletionTest**
+    1. `episode deletion works`
+    2. `episode deletion is only authorized to the author`
+
+5. **Tests\Feature\EpisodeUpdateTest**
+    1. `podcast details page uses episode update component`
+    2. `podcast details page doesnt use episode update if not author`
+    3. `episode update works`
+    4. `data are correctly validated`
+    5. `datetime value is set after mount`
+    6. `update fails silently if forbidden`
+    7. `updating title to another episode title in the same podcast fails`
+
+6. **Tests\Feature\PodcastCreationTest**
+    1. `create a podcast page exists`
+    2. `create a podcast page is guarded`
+    3. `store route is guarded`
+    4. `podcast creation works`
+    5. `podcast is not created on invalid request`
+    6. `new podcast button is present`
+    7. `new podcast button doesnt exist as visitor`
+
+7. **Tests\Feature\PodcastDetailsTest**
+    1. `podcasts details page exists`
+    2. `podcast info component is included in the page`
+    3. `all information are displayed for the author`
+    4. `a message is displayed when no episode is published`
+    5. `prefix text of future release date is displayed correctly for author`
+    6. `release date displays only date for the public`
+    7. `future episodes are not publicly visible`
+    8. `past hidden episodes are nt visible for the public`
+    9. `only required info are displayed publicly`
+
+8. **Tests\Feature\PodcastUpdateTest**
+    1. `podcast details page contains update component`
+    2. `podcast details page doesnt contain update component as visitor and as non author`
+    3. `details can be updated`
+    4. `details must be valid`
+
+9. **Tests\Feature\PodcastsTest**
+    1. `podcasts page exists`
+    2. `the page has title and description`
+    3. `all podcasts are displayed with their data`
 
 
 #### Couverture des tests
-Comme les tests sont écrits et exécutés en PHP, les tests ne peuvent que tester le comportement backend. Les interractions frontend ne peuvent pas être testées avec les outils actuels.
+Comme les tests sont écrits et exécutés en PHP, les tests ne peuvent que tester le comportement backend. Les interactions frontend ne peuvent pas être testées avec les outils actuels.
 
 Pour la plupart des fonctionnalités, j'ai suivi cette ordre pour décider des tests à écrire et de leur contenu:
 1. D'abord écrire un test pour vérifier que la page existe ou que le composant testé est bien chargé dans une des pages.
@@ -570,22 +628,75 @@ Développez en tous cas les points suivants:
 •	Suites possibles pour le projet (évolutions & améliorations)
 
  -->
-## Annexes
 
-### Résumé du rapport du TPI / version succincte de la documentation
-<!-- todo: sur une page dédiée -->
+### Objectifs atteints / non-atteints
+
+**Fonctionnalités détaillées selon le type d’utilisateur**
+
+| Objectif                                                                                      | Atteint ? |
+| --------------------------------------------------------------------------------------------- | --------- |
+| En tant que visiteur (personne non authentifiée) :                                            |           |
+| - Consultation de la liste des podcasts.                                                      | Oui       |
+| - Consultation du détail d’un podcast : épisodes                                              | Oui       |
+| - Ecoute d’un épisode d’un podcast.                                                           |           |
+| En tant qu’utilisateur authentifié, en plus des fonctionnalités accessibles à tout visiteur : |           |
+| - Création d’un nouveau podcast, édition d’un de ses podcasts existant.                       | Oui       |
+| Sur l’un de ses podcasts :                                                                    |           |
+| - Affichage de la liste des épisodes avec toutes les données liées.                           | Oui       |
+| - Ajout d’un nouvel épisode.                                                                  | Oui       |
+| - Edition d’un épisode.                                                                       | Oui       |
+| - Suppression d’un épisode.                                                                   | Oui       |
+
+ <!-- ![podz en images](imgs/) todo -->
+
+### Bilan personnel
+J'ai eu beaucoup de plaisir à développer Podz, surtout avec l'écriture des tests. Contrairement à mon Pré-TPI où je n'avais pas pu terminer le développement et la documentation, je suis content d'avoir réussi à finir toutes les fonctionnalités demandées de justesse et d'avoir pu faire correctement la documentation.
+Comme à mon Pré-TPI j'ai eu de la peine avec l'upload de fichiers, parce que je n'arrivais pas à écrire des tests correctement, je devais tester à la main et cela devenait vite chronophage. Grâce à l'aide M. Hurni mon chef de projet, j'ai pu changer de stratégie pour ces tests
+
+### Suites possibles au projet
+Pour la suite du projet.....
+<div class="page"/>
+
+## Annexes
+<!-- todo: document séparé ?? -->
+### Résumé du rapport du TPI
+**Situation de départ**  
+Le but du projet est de développer une application web avec Laravel de publication de podcasts. Pour les auteurs, il doit être possible de créer et modifier leurs podcasts, et créer, éditer et supprimer des épisodes dans leurs podcasts. Les épisodes doivent pouvoir être publié dans le futur et caché par l'auteur si besoin. Le projet est parti de rien (il ne s'appuie pas sur un autre projet). J'ai choisi d'appeler l'application Podz.  
+Les critères spécifiques demandaient de faire une modélisation des données pertinentes, de respecter les principes du modèle MVC, d'avoir une interface utilisateur propre et utilisable. Il était aussi demandé de suivre les normes d'écriture de code, d'utiliser un système de versionning en faisant des petits commits atomiques. Les épisodes devaient aussi être correctement écoutable dans les navigateurs.
+
+**Mise en oeuvre**  
+En plus de l'utilisation du framework Laravel, j'y ai ajouté Livewire, AlpineJS et TailwindCSS. Ces 4 frameworks que j'avais utilisé en stage et pour des projets personnels forment la stack TALL et sont régulièrement utilisé dans l'écosystème Laravel.  
+Pour ne pas avoir à développer la connexion et la création de compte, j'ai utilisé le starter kit Jetstream qui mettait déjà tout en place. J'ai fait mon MCD et MLD de ma base de données. J'ai réfléchi aux différentes pages nécessaires pour utiliser les fonctionnalités requises et j'ai fait des maquettes pour chacune des pages. La page de détails d'un podcast a en fait plusieurs vues, selon si l'on est visiteur ou auteur, et en tant qu'auteur on peut ouvrir ou fermer les formulaires pour modifier des épisodes ou les informations du podcast. Une fois cette analyse terminée, j'ai développé l'une après l'autre toutes les fonctionnalités demandées, tout en suivant ma planification. J'ai eu un peu d'avance au départ sur le premier sprint (j'ai avancé une tâche du sprint 2 au sprint 1) puis comme la création d'épisode avec l'upload de fichiers était plus complexe que je l'imaginais, j'ai eu un peu de retard sur mon planning, mais j'ai réussi à rattraper le retard à la fin et tout finir dans les temps.  
+La particularité de mon TPI par rapport à d'autres élèves est que j'ai écrit de nombreux tests automatisés pour m'assurer que la majeure partie du comportement de mon application était correct et restait fonctionnel tout le long du projet. PHPUnit était utiliser pour écrire ces tests, qui on pris un peu de temps à être écrit mais qui permettait d'accélerer la validation du fonctionnement, j'ai ainsi pu éviter beaucoup d'essais à la main puisque j'avais confiance sur le fait que mon backend fonctionne. Il restait bien sûr à s'assurer que tout fonctionnait comme prévu dans mon navigateur mais cela était plus rapide à déterminer.
+
+**Résultats**
+
+
+<div class="page"/>
+
 
 ### Sources – Bibliographie
 - Icônes: les icônes ont été copié-collées (en SVG) depuis [heroicons.com](https://heroicons.com/), elle sont publiées sous licence MIT.
 
 - [Liste des Types de médias, par l'IANA](https://www.iana.org/assignments/media-types/media-types.xhtml). Cette ressource m'a été utile pour trouver les types MIME des fichiers audios .ogg, .opus, .mp3 et .m4a.
+
+Pour résoudre mes différents problèmes j'ai utilisé StackOverflow et les documentations officielles des 4 frameworks que j'utilise:
+- **[Documentation de Laravel](https://laravel.com/docs)**
+- **[Documentation de Livewire](https://laravel-livewire.com/docs)**
+- **[Documentation de AlpineJS](https://alpinejs.dev/docs)**
+- **[Documentation de TailwindCSS](https://tailwindcss.com/docs)**
+
+J'ai aussi utilisé le site **[Mozilla Developer Network]**(https://developer.mozilla.org/fr/) comme référence pour le HTML et le CSS.
+
 <!--
 
 Liste des livres utilisés (Titre, auteur, date), des sites Internet (URL) consultés, des articles (Revue, date, titre, auteur)… Et de toutes les aides externes (noms)   
 -->
 ### Journal de travail
+Le journal est disponible en document séparé ou directement sur en Markdown [en Markdown](https://github.com/samuelroland/podz/blob/main/docs/podz-journal.md) ou [en PDF](https://github.com/samuelroland/podz/blob/main/docs/podz-journal.md)
 
 ### Manuel d'Installation
+todo
 
 ### Archives du projet 
 
