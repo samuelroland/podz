@@ -47,6 +47,7 @@
 - [Annexes](#annexes)
   - [Résumé du rapport du TPI](#résumé-du-rapport-du-tpi)
   - [Sources – Bibliographie](#sources--bibliographie)
+  - [Remerciements](#remerciements)
   - [Journal de travail](#journal-de-travail)
   - [Manuel d'Installation](#manuel-dinstallation)
   - [Archives du projet](#archives-du-projet)
@@ -131,6 +132,8 @@ J'ai choisi la stack **TALL** (*TailwindCSS - AlpineJS - Livewire - Laravel*) po
 
 - **[Jetstream](https://jetstream.laravel.com/2.x/introduction.html)**: Un starter Kit Laravel mettant en place les fonctionnalités d'authentification, tels que la connexion, la création de compte, la gestion du compte et beaucoup d'autres. L'option Livewire a été utilisée.
 
+<div class="page"/>
+
 #### Outils d'aide
 Pour m'aider dans mon développement, j'ai utilisé différent outils, ils ne sont pas indispensables mais peuvent être très utiles:
 - **[Clockwork](https://underground.works/clockwork/)**: paquet Composer et extension web pour debugger les performances, les requêtes SQL, voir le temps d'exécution, ... Le paquet Composer est déjà installé.
@@ -158,9 +161,12 @@ Pour m'aider dans mon développement, j'ai utilisé différent outils, ils ne so
 <div class="together">
 
 #### Base de données: MLD
+
 ![MLD](MLD.png)
 
-Ce MLD n'a pas été fait à la main mais a été rétro-ingéniéré depuis la base de données, après avoir codé les migrations. Certains champs sont créés par une migration générée par Jetstream, je n'en ai pas besoin mais je ne vais pas les retirer au risque de casser certaines parties existantes. Ce MLD omet volontairement les tables générées par Laravel et propres à chaque application Laravel (`sessions`, `migrations`, ...), une partie provient de migrations créées par Jetstream. Ne vous étonnez donc pas de trouver d'autres tables dans la base de données, car je ne les utilise pas directement. 
+</div>
+
+Ce MLD n'a pas été fait à la main mais a été rétro-ingéniéré depuis la base de données, après avoir codé les migrations. Certains champs sont créés par une migration générée par Jetstream, je n'en ai pas besoin mais je ne vais pas les retirer au risque de casser certaines parties existantes. Ce MLD omet volontairement les tables générées par Laravel et propres à chaque application Laravel (`sessions`, `migrations`, ...), une partie provient de migrations créées par Jetstream. Ne vous étonnez donc pas de trouver d'autres tables dans la base de données, je ne les utilise pas directement. 
 
 todo: documenter spécificités.
 Les champs `created_at` et `updated_at` sont gérés automatiquement par Laravel, je n'utilise que le `created_at` en lecture seulement.
@@ -177,13 +183,14 @@ Par exemple :
 <div class="together">
 
 #### Maquettes
-Pour pouvoir utiliser les fonctionnalités requises, voici la liste complète des pages existantes et leur maquette:
+Pour pouvoir utiliser les fonctionnalités requises, voici la liste complète des pages nécessaires et leur maquette:
 
 - Page Connexion
 - Page Inscription
 - Page Liste des podcasts
-- Page Détails d'un podcast (visiteur)
-- Page Détails et édition d'un podcast (auteur)
+- Page Page Détails d'un podcast
+  - Vue visiteur
+  - Vue Détails et édition pour auteur
 - Page Création d'un podcast
 
 </div>
@@ -199,6 +206,7 @@ Pour pouvoir utiliser les fonctionnalités requises, voici la liste complète de
 **Page Liste des podcasts**  
 Cette page est visible publiquement et c'est la page par défaut de l'application, on y accède également via le bouton Podcasts en haut à gauche. On peut cliquer sur un podcast pour accéder à ses détails.
 ![page](models/Podcasts_page.png)
+
 </div>
 
 <div class="together">
@@ -215,6 +223,10 @@ Les visiteurs ne voient que les épisodes qui sont visibles et qu'une partie de 
 **Vue Détails et édition pour auteur**  
 L'auteur voit toutes les informations de ses podcasts contrairement au visiteur. L'auteur a une vue visiteur sur les podcasts qui ne lui appartiennent pas. Nous sommes le 09.05.2022 dans cette maquette, l'épisode 4 est caché et le 5 est planifié pour le 10.05.2022 à 15:08. L'épisode 4 est caché parce que l'auteur a décidé après coup de le remettre en privé. Voici l'apparance de la page quand un auteur la charge.
 ![page](models/Page_d%C3%A9tails_podcast_auteur.png)
+</div>
+
+<div class="together">
+
 Quand l'auteur clique sur les icônes d'édition, des formulaires s'affichent pour les éléments sélectionnés afin de permettre l'édition ou la suppression. Ici l'auteur crée un 5 ème épisode planifiée qui ne sera publié que le lendemain à 15h08. On peut éditer plusieurs éléments à la fois, il n'y aura pas de conflit.
 ![page](models/Page_d%C3%A9tails_podcast_panneaux_%C3%A9dition.png)
 
@@ -252,12 +264,6 @@ Toute la suite de tests est lancée très fréquemment (plusieurs fois par jour)
 #### Où sont écrits les tests ?
 Tous les tests se trouve dans le dossier `tests` à la racine du repository. Le dossier `Feature` contient les tests fonctionnels, `Unit` les tests unitaires et `Jetstream` les tests créé par Jetstream (ces derniers ont été déplacé de `Feature` afin de ne pas les exécuter constamment).
 
-<!-- Check "test fonctionnel" -->
-
-<div class="together">
-
-</div>
-
 #### Prérequis pour lancer les tests
 Il est nécessaire d'avoir mis en place le projet et d'avoir l'extension PHP SQLite.
 
@@ -269,7 +275,6 @@ Afin de ne pas impacter la base de données de développement, les tests sont la
 <env name="DB_DATABASE" value=":memory:"/>
 <env name="DB_CONNECTION" value="sqlite"/>
 ```
-<div class="together">
 
 #### Comment lancer les tests ?
 Il y a différentes manières de lancer les tests dans un terminal dans le dossier du projet:
@@ -280,7 +285,6 @@ Il y a différentes manières de lancer les tests dans un terminal dans le dossi
 Les tests en dehors du dossier `tests/Unit` et `tests/Feature` ne seront pas lancés. Pour exécuter les tests de Jetstream si besoin, il faut lancer `php artisan test tests/Jetstream`.
 
 Vous pouvez passer des paramètres à `phpunit` (aussi possible pour la commande `php artisan test`).
-</div>
 
 **Exemples**:
 1. pour exécuter seulement 1 test nommé `podcasts_page_exists`:  
@@ -313,19 +317,20 @@ Il s’agit en principe de la planification définitive du projet. Elle peut êt
 
 ### Dossier de conception
 
-**Résumé des podcats**  
+**Résumé des podcasts**  
 Sur la page Podcasts, il y a un résumé des descriptions des podcasts, qui se limitent à 150 charactères (+3 petits points), puisque la description est trop longue pour être affichée entièrement et l'utilisation de `text-overflow: ellipsis` en CSS sur plusieurs lignes n'est pas très simple. Raccourcir en PHP était donc l'autre solution. Un attribute `summary` de la classe `Podcast` permet de récuperer facilement ce résumé. Si la description est plus courte que la limite, la description est utilisée.
 
 **Visibilité des épisodes**
-
-<!-- random note 
-
-Pour qu'un épisode soit visible publiquement il faut que sa date de publication soit dans le passé et que son état Caché soit Faux.
--->
+Pour qu'un épisode soit visible publiquement il faut que sa date de publication soit dans le passé et que son état Caché soit Faux. Si cette condition n'est pas vraie, l'épisode n'est visible que par l'auteur.
 
 **Traduction**  
-Pour que les messages d'erreurs soient en français. J'utilise le système d'internationalisation de Laravel et j'ai défini le français comme langue par défaut et l'anglais comme langue de repli ("fallback language") au cas où quelquechose n'aurait pas été traduit en français. J'ai dupliqué le fichier `lang/fr/validation.php` à partir `lang/en/validation.php` et j'ai traduit les erreurs que j'utilisais.
+Pour que les messages d'erreurs soient en français. J'utilise le système d'internationalisation de Laravel et j'ai défini le français comme langue par défaut et l'anglais comme langue de repli ("fallback language") au cas où quelquechose n'aurait pas été traduit en français. J'ai dupliqué le fichier `lang/fr/validation.php` à partir `lang/en/validation.php` et j'ai traduit les quelques messages d'erreurs que j'utilisais.
 
+**Routes**  
+J'ai suivi les conventions des noms et URLs des routes comme pour les controlleurs resources (je n'en ai pas utilisé dans ce projet).
+
+![laravel-doc-image](imgs/routes-convention.png)
+[*Tiré de la documentation de Laravel*](https://laravel.com/docs/9.x/controllers#actions-handled-by-resource-controller)
 
 <!--
 Fournir tous les document de conception:
@@ -351,17 +356,17 @@ Un composant Blade permettant d'abstraire les éléments communs à tous les cha
 Propriétés du composant
 | Nom           | Type   | Requis | Description                                                                                                           |
 | ------------- | ------ | ------ | --------------------------------------------------------------------------------------------------------------------- |
-| `name`        | String | X      | Le nom technique du champ, utilisé pour l'attribut `name` de l'input et par le `@error()` et par la fonction `old()`. |
-| `label`       | String |        | Nom du label au dessus du champ.                                                                                      |
-| `type`        | String |        | Type de l'`<input>`. Par défaut `text`. Si `textarea` est donné, une balise `<textarea>` est utilisée à la place.     |
-| `placeholder` | String |        | Un placeholder qui est ajouté directement sur le champ.                                                               |
-| `cssOnField`  | String |        | Des classes CSS qui sont ajoutées directement sur le champ.                                                           |
+| `name`        | String | Oui    | Le nom technique du champ, utilisé pour l'attribut `name` de l'input et par le `@error()` et par la fonction `old()`. |
+| `label`       | String | Non    | Nom du label au dessus du champ.                                                                                      |
+| `type`        | String | Non    | Type de l'`<input>`. Par défaut `text`. Si `textarea` est donné, une balise `<textarea>` est utilisée à la place.     |
+| `placeholder` | String | Non    | Un placeholder qui est ajouté directement sur le champ.                                                               |
+| `cssOnField`  | String | Non    | Des classes CSS qui sont ajoutées directement sur le champ.                                                           |
 
 Tous les autres attributs non reconnus sont transférés à la `div` racine du composant, ce qui permet d'ajouter du style ou d'autres attributs HTML. Tous les attributs commençant par `wire:model` sont ajoutés au champ pour permettre l'utilisation de ce composant avec Livewire.
 
 Exemple d'utilisation:
-```php
-<form action="{{ route('podcasts.index') }}" method="POST">
+```html
+<form action="{{ route('podcasts.store') }}" method="POST">
 <x-field label="Title" name="title"></x-field>
 <x-field label="Description" type="textarea" name="description"></x-field>
 <x-field label="Date de naissance" type="date" name="user.date"></x-field>
@@ -370,7 +375,7 @@ Exemple d'utilisation:
 ```
 
 Un autre exemple d'utilisation dans le cas d'un formulaire géré par Livewire:
-```php
+```html
 <div>
     <x-field 
         wire:keyup.enter="update" 
@@ -387,6 +392,7 @@ Un autre exemple d'utilisation dans le cas d'un formulaire géré par Livewire:
 </div>
 ```
 
+
 **Classes CSS et couleurs**  
 J'ai défini 3 nouvelles couleurs Tailwind, qu'on peut utiliser partout où les couleurs sont utiles avec TailwindCSS (`border-green`, `text-lightblue`, ...)
 ```javascript
@@ -398,7 +404,7 @@ colors: {
 }
 ```
 
-Il y a aussi certaines classes CSS qui peuvent être utilisées pour avoir un design commun à travers l'interface:
+Il y a aussi des classes CSS qui peuvent être utilisées pour avoir un design commun à travers l'interface:
 - `text-info`: pour les messages d'informations
 - `btn`: pour les boutons
 
@@ -411,79 +417,80 @@ Il y a aussi certaines classes CSS qui peuvent être utilisées pour avoir un de
 **Structure du repository**  
 Certains dossiers de Laravel moins pertinents ont été remplacés par des `...`. Seulement les dossiers et les fichiers à la racine sont affichés. Uniquement ceux que j'ai utilisé sont définis.
 
-```
-podz                      Racine du repository
-├─ app                                        
-│   ├─ Actions                                        
-│   │   ├─ Fortify                                        
-│   │   └─ Jetstream                                        
-│   ├─ Console                                        
-│   ├─ Exceptions                                         
-│   ├─ Http                                         
-│   │   ├─ Controllers    Les classes contrôleurs                                    
-│   │   ├─ Livewire                                         
-│   │   └─ Middleware                                         
-│   ├─ Models             Les classes modèles                            
-│   ├─ Providers                                        
-│   └─ View               Les classes des vues, pour les composants Blade                          
-│       └─ Components                                         
-├─ ...                                      
-├─ config                 Les fichiers de configuration globaux                        
-├─ database               Tout ce qui concerne la gestion de la base de données                          
-│   ├─ factories          Les factories pour créer des données fictives                              
-│   ├─ migrations         Les migrations pour définir la structure des tables
-│   └─ seeders            Les seeders pour remplir la base de données avec les factories
-├─ docs                   Dossier pour stocker les éléments de documentations (notamment MCD, MLD)
-│   ├─ imgs               Les images utilisées dans cette documentation
-│   ├─ models             Les exports des maquettes
-│   └─ sources            Les fichiers source binaires des maquettes, MCD et MLD
-├─ lang                   Les fichiers de langues                      
-│   ├─ en                 
-│   └─ fr                 Certaines traductions en français                         
-├─ public                 
-├─ resources              Toutes les ressources utiles à générer nos vues                          
-│   ├─ css                Style CSS global dans app.css                         
-│   ├─ js                 Javascript global dans app.js                        
-│   ├─ markdown           
-│   └─ views              
-│       ├─ api            
-│       ├─ auth           
-│       ├─ components     
-│       ├─ layouts        
-│       ├─ livewire       Les vues pour Livewire
-│       ├─ podcasts       Vues pour les podcasts 
-│       ├─ profile                               
-│       └─ vendor                                
-│           └─ jetstream  Les vues de Jetstream  
-│               └─ ...                                          
-├─ routes                 Configuration des routes dans web.php                        
-├─ storage                Espace de stockage dédié                        
-│   ├─ app                Dossier ciblé par le disque "local"                         
-│   │   ├─ public         Dossier publiquement accessible et ciblé par le disque "public"                                
-│   │   └─ testing        Fichiers audios de tests pour le développement                              
-│   ├─ clockwork                                        
-│   ├─ ...                                        
-│   └─ logs               Emplacement de laravel.log                          
-├─ tests                  Tests automatisés                      
-│   ├─ Feature            Tests fonctionnels                            
-│   ├─ Jetstream          Tests créés par Jetstream                              
-│   └─ Unit               Tests unitaires 
-│                        
-│   .editorconfig                                       
-│   .env.example          Fichier .env d'exemple                              
-│   .gitattributes                                        
-│   .gitignore                                        
-│   .styleci.yml                                        
-│   artisan                                       
-│   composer.json         Liste des paquets Composer requis                              
-│   composer.lock         Liste des paquets Composer installées et leur version
-│   package-lock.json     Liste des paquets NPM installées et leur version
-│   package.json          Liste des paquets NPM requis                              
-│   phpunit.xml           Fichier de configuration de PhpUnit                             
-│   README.md                                        
-│   tailwind.config.js    Configuration de Tailwind                                    
-│   webpack.mix.js        Configuration du build JS et CSS avec Webpack pour Mix
-```
+<pre class="text-sm">
+podz                      <span>Racine du repository</span>
+├─ app                    <span></span>
+│   ├─ Actions            <span></span>
+│   │   ├─ Fortify        <span></span>
+│   │   └─ Jetstream      <span></span>
+│   ├─ Console            <span></span>
+│   ├─ Exceptions         <span></span>
+│   ├─ Http               <span></span>
+│   │   ├─ Controllers    <span>Les classes contrôleurs</span>
+│   │   ├─ Livewire       <span></span>
+│   │   └─ Middleware     <span></span>
+│   ├─ Models             <span>Les classes modèles</span>
+│   ├─ Providers          <span></span>
+│   └─ View               <span>Les classes des vues, pour les composants Blade</span>
+│       └─ Components     <span></span>
+├─ ...                    <span></span>
+├─ config                 <span>Les fichiers de configuration globaux</span>
+├─ database               <span>Tout ce qui concerne la gestion de la base de données</span>
+│   ├─ factories          <span>Les factories pour créer des données fictives</span>
+│   ├─ migrations         <span>Les migrations pour définir la structure des tables</span>
+│   └─ seeders            <span>Les seeders pour remplir la base de données avec les factories</span>
+├─ docs                   <span>Dossier pour stocker les éléments de documentations (MCD, MLD)</span>
+│   ├─ imgs               <span>Les images utilisées dans cette documentation</span>
+│   ├─ models             <span>Les exports des maquettes</span>
+│   └─ sources            <span>Les fichiers source binaires des maquettes, MCD et MLD</span>
+├─ lang                   <span>Les fichiers de langues</span>
+│   ├─ en                 <span></span>
+│   └─ fr                 <span>Certaines traductions en français</span>
+├─ public                 <span></span>
+├─ resources              <span>Toutes les ressources utiles à générer nos vues</span>
+│   ├─ css                <span>Style CSS global écrit dans app.css</span>
+│   ├─ js                 <span>Javascript global écrit dans app.js</span>
+│   ├─ markdown           <span></span>
+│   └─ views              <span></span>
+│       ├─ api            <span></span>
+│       ├─ auth           <span></span>
+│       ├─ components     <span></span>
+│       ├─ layouts        <span>Contient le gabarit app.blade.php</span>
+│       ├─ livewire       <span>Les vues pour Livewire</span>
+│       ├─ podcasts       <span>Vues pour les podcasts</span>
+│       ├─ profile        <span></span>
+│       └─ vendor         <span></span>
+│           └─ jetstream  <span>Les vues de Jetstream </span>
+│               └─ ...    <span></span>
+├─ routes                 <span>Configuration des routes dans web.php</span>
+├─ storage                <span>Espace de stockage dédié</span>
+│   ├─ app                <span>Dossier ciblé par le disque "local"</span>
+│   │   ├─ public         <span>Dossier publiquement accessible et ciblé par le disque "public"</span>
+│   │   └─ testing        <span>Fichiers audios de tests pour le développement</span>
+│   ├─ clockwork          <span></span>
+│   ├─ ...                <span></span>
+│   └─ logs               <span>Emplacement de laravel.log</span>
+├─ tests                  <span>Tests automatisés</span>
+│   ├─ Feature            <span>Tests fonctionnels</span>
+│   ├─ Jetstream          <span>Tests créés par Jetstream</span>
+│   └─ Unit               <span>Tests unitaires</span>
+│                         <span></span>
+│   .editorconfig         <span></span>
+│   .env.example          <span>Fichier .env d'exemple</span>                    
+│   .gitattributes        <span></span>
+│   .gitignore            <span></span>
+│   .styleci.yml          <span></span>
+│   artisan               <span>Le CLI artisan</span>
+│   composer.json         <span>Liste des paquets Composer requis</span>
+│   composer.lock         <span>Liste des paquets Composer installées et leur version</span>
+│   package-lock.json     <span>Liste des paquets NPM installées et leur version</span>
+│   package.json          <span>Liste des paquets NPM requis</span>
+│   phpunit.xml           <span>Fichier de configuration de PhpUnit</span>
+│   README.md             <span></span>
+│   tailwind.config.js    <span>Configuration de Tailwind</span>
+│   webpack.mix.js        <span>Configuration du build JS et CSS avec Webpack pour Mix</span>
+</pre>
+
 <!--
 
 Décrire la réalisation "physique" de votre projet
@@ -507,15 +514,15 @@ Cette capture montre le résultat des tests exécutés le YYY à YYY. Tous les t
 Voici la liste complète des tests, les noms devraient permettre d'avoir une idée de ce qui est testé et quels cas sont couverts.
 
 <!-- todo: update the list and names if changed in between! -->
-1. **Tests\Unit\EpisodeTest**
+1. **`Tests\Unit\EpisodeTest`**
     1. `path is well built`
 
-2. **Tests\Unit\PodcastTest**
+2. **`Tests\Unit\PodcastTest`**
     1. `podcasts summary is correctly extracted`
     2. `podcasts summary doesnt extract when description length is already good`
     3. `get next number really gives next number`
 
-3. **Tests\Feature\EpisodeCreationTest**
+3. **`Tests\Feature\EpisodeCreationTest`**
     1. `podcast details page uses episode creation component`
     2. `podcast details page doesnt use episode creation if not author`
     3. `episode creation works`
@@ -525,11 +532,11 @@ Voici la liste complète des tests, les noms devraient permettre d'avoir une id�
     7. `publishing fails silently if forbidden`
     8. `publishing 2 episodes with same title in a podcast is not possible`
 
-4. **Tests\Feature\EpisodeDeletionTest**
+4. **`Tests\Feature\EpisodeDeletionTest`**
     1. `episode deletion works`
     2. `episode deletion is only authorized to the author`
 
-5. **Tests\Feature\EpisodeUpdateTest**
+5. **`Tests\Feature\EpisodeUpdateTest`**
     1. `podcast details page uses episode update component`
     2. `podcast details page doesnt use episode update if not author`
     3. `episode update works`
@@ -538,7 +545,7 @@ Voici la liste complète des tests, les noms devraient permettre d'avoir une id�
     6. `update fails silently if forbidden`
     7. `updating title to another episode title in the same podcast fails`
 
-6. **Tests\Feature\PodcastCreationTest**
+6. **`Tests\Feature\PodcastCreationTest`**
     1. `create a podcast page exists`
     2. `create a podcast page is guarded`
     3. `store route is guarded`
@@ -547,7 +554,7 @@ Voici la liste complète des tests, les noms devraient permettre d'avoir une id�
     6. `new podcast button is present`
     7. `new podcast button doesnt exist as visitor`
 
-7. **Tests\Feature\PodcastDetailsTest**
+7. **`Tests\Feature\PodcastDetailsTest`**
     1. `podcasts details page exists`
     2. `podcast info component is included in the page`
     3. `all information are displayed for the author`
@@ -558,13 +565,13 @@ Voici la liste complète des tests, les noms devraient permettre d'avoir une id�
     8. `past hidden episodes are nt visible for the public`
     9. `only required info are displayed publicly`
 
-8. **Tests\Feature\PodcastUpdateTest**
+8. **`Tests\Feature\PodcastUpdateTest`**
     1. `podcast details page contains update component`
     2. `podcast details page doesnt contain update component as visitor and as non author`
     3. `details can be updated`
     4. `details must be valid`
 
-9. **Tests\Feature\PodcastsTest**
+9. **`Tests\Feature\PodcastsTest`**
     1. `podcasts page exists`
     2. `the page has title and description`
     3. `all podcasts are displayed with their data`
@@ -631,27 +638,26 @@ Développez en tous cas les points suivants:
 
 ### Objectifs atteints / non-atteints
 
-**Fonctionnalités détaillées selon le type d’utilisateur**
-
+Tous les objectifs fixés au départ ont été atteints.
 | Objectif                                                                                      | Atteint ? |
 | --------------------------------------------------------------------------------------------- | --------- |
 | En tant que visiteur (personne non authentifiée) :                                            |           |
-| - Consultation de la liste des podcasts.                                                      | Oui       |
-| - Consultation du détail d’un podcast : épisodes                                              | Oui       |
-| - Ecoute d’un épisode d’un podcast.                                                           |           |
+| <li>Consultation de la liste des podcasts.</li>                                               | Oui       |
+| <li>Consultation du détail d’un podcast : épisodes  </li>                                     | Oui       |
+| <li>Ecoute d’un épisode d’un podcast.    </li>                                                | Oui       |
 | En tant qu’utilisateur authentifié, en plus des fonctionnalités accessibles à tout visiteur : |           |
-| - Création d’un nouveau podcast, édition d’un de ses podcasts existant.                       | Oui       |
-| Sur l’un de ses podcasts :                                                                    |           |
-| - Affichage de la liste des épisodes avec toutes les données liées.                           | Oui       |
-| - Ajout d’un nouvel épisode.                                                                  | Oui       |
-| - Edition d’un épisode.                                                                       | Oui       |
-| - Suppression d’un épisode.                                                                   | Oui       |
+| <li>Création d’un nouveau podcast, édition d’un de ses podcasts existant.    </li>            | Oui       |
+| Sur l’un de ses podcasts :                                            </li>                   |           |
+| <li>Affichage de la liste des épisodes avec toutes les données liées.  </li>                  | Oui       |
+| <li>Ajout d’un nouvel épisode.                                           </li>                | Oui       |
+| <li>Edition d’un épisode.                                          </li>                      | Oui       |
+| <li>Suppression d’un épisode.                                       </li>                     | Oui       |
 
  <!-- ![podz en images](imgs/) todo -->
 
 ### Bilan personnel
-J'ai eu beaucoup de plaisir à développer Podz, surtout avec l'écriture des tests. Contrairement à mon Pré-TPI où je n'avais pas pu terminer le développement et la documentation, je suis content d'avoir réussi à finir toutes les fonctionnalités demandées de justesse et d'avoir pu faire correctement la documentation.
-Comme à mon Pré-TPI j'ai eu de la peine avec l'upload de fichiers, parce que je n'arrivais pas à écrire des tests correctement, je devais tester à la main et cela devenait vite chronophage. Grâce à l'aide M. Hurni mon chef de projet, j'ai pu changer de stratégie pour ces tests
+J'ai eu beaucoup de plaisir à développer Podz, surtout avec l'écriture des tests. Contrairement à mon Pré-TPI où je n'avais pas pu terminer le développement et la documentation, je suis plutôt content d'avoir réussi à finir toutes les fonctionnalités demandées dans les temps et d'avoir pu faire correctement la documentation.  
+Comme durant mon Pré-TPI, j'ai eu de la peine avec l'upload de fichiers, parce que je n'arrivais pas à écrire des tests correctement, je devais tester à la main et cela devenait vite chronophage. Grâce à l'aide M. Hurni mon chef de projet, j'ai pu changer de stratégie pour ces tests
 
 ### Suites possibles au projet
 Pour la suite du projet.....
@@ -661,44 +667,51 @@ Pour la suite du projet.....
 <!-- todo: document séparé ?? -->
 ### Résumé du rapport du TPI
 **Situation de départ**  
-Le but du projet est de développer une application web avec Laravel de publication de podcasts. Pour les auteurs, il doit être possible de créer et modifier leurs podcasts, et créer, éditer et supprimer des épisodes dans leurs podcasts. Les épisodes doivent pouvoir être publié dans le futur et caché par l'auteur si besoin. Le projet est parti de rien (il ne s'appuie pas sur un autre projet). J'ai choisi d'appeler l'application Podz.  
-Les critères spécifiques demandaient de faire une modélisation des données pertinentes, de respecter les principes du modèle MVC, d'avoir une interface utilisateur propre et utilisable. Il était aussi demandé de suivre les normes d'écriture de code, d'utiliser un système de versionning en faisant des petits commits atomiques. Les épisodes devaient aussi être correctement écoutable dans les navigateurs.
+Le but du projet est de développer une application web avec Laravel de publication de podcasts. Pour les auteurs, il doit être possible de créer et modifier leurs podcasts, et créer, éditer et supprimer des épisodes dans leurs podcasts. Les épisodes doivent pouvoir être publiés dans le futur et caché par l'auteur si besoin. Le projet est parti de rien (il ne s'appuie pas sur un autre projet). J'ai choisi d'appeler l'application Podz.  
+Les critères spécifiques demandaient de faire une modélisation des données pertinentes, de respecter les principes du modèle MVC, d'avoir une interface utilisateur propre et utilisable. Il était aussi demandé de suivre les normes d'écriture de code, d'utiliser un système de versionning en faisant des petits commits atomiques et fréquents. Les épisodes devaient aussi être correctement écoutables dans les navigateurs.
 
 **Mise en oeuvre**  
 En plus de l'utilisation du framework Laravel, j'y ai ajouté Livewire, AlpineJS et TailwindCSS. Ces 4 frameworks que j'avais utilisé en stage et pour des projets personnels forment la stack TALL et sont régulièrement utilisé dans l'écosystème Laravel.  
 Pour ne pas avoir à développer la connexion et la création de compte, j'ai utilisé le starter kit Jetstream qui mettait déjà tout en place. J'ai fait mon MCD et MLD de ma base de données. J'ai réfléchi aux différentes pages nécessaires pour utiliser les fonctionnalités requises et j'ai fait des maquettes pour chacune des pages. La page de détails d'un podcast a en fait plusieurs vues, selon si l'on est visiteur ou auteur, et en tant qu'auteur on peut ouvrir ou fermer les formulaires pour modifier des épisodes ou les informations du podcast. Une fois cette analyse terminée, j'ai développé l'une après l'autre toutes les fonctionnalités demandées, tout en suivant ma planification. J'ai eu un peu d'avance au départ sur le premier sprint (j'ai avancé une tâche du sprint 2 au sprint 1) puis comme la création d'épisode avec l'upload de fichiers était plus complexe que je l'imaginais, j'ai eu un peu de retard sur mon planning, mais j'ai réussi à rattraper le retard à la fin et tout finir dans les temps.  
-La particularité de mon TPI par rapport à d'autres élèves est que j'ai écrit de nombreux tests automatisés pour m'assurer que la majeure partie du comportement de mon application était correct et restait fonctionnel tout le long du projet. PHPUnit était utiliser pour écrire ces tests, qui on pris un peu de temps à être écrit mais qui permettait d'accélerer la validation du fonctionnement, j'ai ainsi pu éviter beaucoup d'essais à la main puisque j'avais confiance sur le fait que mon backend fonctionne. Il restait bien sûr à s'assurer que tout fonctionnait comme prévu dans mon navigateur mais cela était plus rapide à déterminer.
+La particularité de mon TPI par rapport à d'autres élèves est que j'ai écrit de nombreux tests automatisés pour m'assurer que la majeure partie du comportement de mon application était correct et restait fonctionnel tout le long du projet. J'ai utilisé PHPUnit pour écrire ces tests. L'écriture a pris un peu de temps tout au long du projet, mais ils ont permis d'accélerer la validation du fonctionnement, j'ai ainsi pu éviter beaucoup d'essais à la main puisque j'avais confiance sur le fait que mon backend fonctionne. Il restait bien sûr à s'assurer que tout fonctionne comme prévu dans mon navigateur mais cela était plus rapide à déterminer.
 
-**Résultats**
-
+**Résultats**  
+Toutes les fonctionnalités demandées ont pu être implémentées et testées. La création d'un podcast se fait sur une page dédiée, tandis que l'édition d'un podcast, la création, modification et suppression d'épisodes se font toutes dans la même page Détails d'un podcast. Je n'ai pas eu de difficultés particulières à designer mon application, je n'ai donc pas eu besoin d'utiliser de template.
 
 <div class="page"/>
 
-
 ### Sources – Bibliographie
-- Icônes: les icônes ont été copié-collées (en SVG) depuis [heroicons.com](https://heroicons.com/), elle sont publiées sous licence MIT.
-
-- [Liste des Types de médias, par l'IANA](https://www.iana.org/assignments/media-types/media-types.xhtml). Cette ressource m'a été utile pour trouver les types MIME des fichiers audios .ogg, .opus, .mp3 et .m4a.
-
 Pour résoudre mes différents problèmes j'ai utilisé StackOverflow et les documentations officielles des 4 frameworks que j'utilise:
 - **[Documentation de Laravel](https://laravel.com/docs)**
 - **[Documentation de Livewire](https://laravel-livewire.com/docs)**
 - **[Documentation de AlpineJS](https://alpinejs.dev/docs)**
 - **[Documentation de TailwindCSS](https://tailwindcss.com/docs)**
 
-J'ai aussi utilisé le site **[Mozilla Developer Network]**(https://developer.mozilla.org/fr/) comme référence pour le HTML et le CSS.
+J'ai aussi utilisé le site [**Mozilla Developer Network**](https://developer.mozilla.org/fr/) comme référence pour le HTML et le CSS.
+
+- **Icônes**: les icônes ont été copié-collées (en SVG) depuis [heroicons.com](https://heroicons.com/), elle sont publiées sous licence MIT.
+
+- [Liste des Types de médias, par l'IANA](https://www.iana.org/assignments/media-types/media-types.xhtml). Cette ressource m'a été utile pour trouver les types MIME des fichiers audios .ogg, .opus, et .mp3 pour la validation lors de la création d'épisode.
+
+### Remerciements
+J'aimerai remercier M. Hurni pour les retours et les conseils techniques qu'il m'a apporté au Pré-TPI et au TPI qui m'ont permis de progresser avec Laravel en général et l'écriture de tests. J'espère avoir pu utiliser au mieux ces feedbacks et continuer de m'améliorer continuellement sur Laravel et les autres frameworks à l'avenir, pour produire du code de qualité et maîtriser de plus en plus ces technologies.
+
+Je remercie aussi Gatien Jayme pour sa relecture de ma documentation.
 
 <!--
 
 Liste des livres utilisés (Titre, auteur, date), des sites Internet (URL) consultés, des articles (Revue, date, titre, auteur)… Et de toutes les aides externes (noms)   
 -->
 ### Journal de travail
-Le journal est disponible en document séparé ou directement sur en Markdown [en Markdown](https://github.com/samuelroland/podz/blob/main/docs/podz-journal.md) ou [en PDF](https://github.com/samuelroland/podz/blob/main/docs/podz-journal.md)
+Le journal est disponible en document séparé ou directement sur Github [en Markdown](https://github.com/samuelroland/podz/blob/main/docs/podz-journal.md) ou [en PDF](https://github.com/samuelroland/podz/blob/main/docs/podz-journal.md).
 
 ### Manuel d'Installation
-todo
+Toutes les informations nécessaires à l'installation du projet se trouve dans le [README](https://github.com/samuelroland/podz/blob/main/README.md).
 
 ### Archives du projet 
+- podz-code-samuel-roland.zip
+
+<!-- todo -->
 
 <!-- 
 Media, … dans une fourre en plastique 
