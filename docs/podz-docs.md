@@ -15,36 +15,37 @@
 <div class="toc">
 
 **Table des matières**
-## Analyse préliminaire
 - [Analyse préliminaire](#analyse-préliminaire)
   - [Introduction](#introduction)
+  - [Glossaire](#glossaire)
   - [Objectifs](#objectifs)
   - [Planification initiale](#planification-initiale)
 - [Analyse / Conception](#analyse--conception)
   - [Concept](#concept)
     - [Technologies utilisées](#technologies-utilisées)
+    - [Outils d'aide](#outils-daide)
     - [Base de données: MCD](#base-de-données-mcd)
     - [Base de données: MLD](#base-de-données-mld)
     - [Maquettes](#maquettes)
-    - [Choix de conception](#choix-de-conception)
   - [Stratégie de test](#stratégie-de-test)
     - [Où sont écrits les tests ?](#où-sont-écrits-les-tests-)
-    - [Couverture des tests](#couverture-des-tests)
-    - [Résultats des tests](#résultats-des-tests)
     - [Prérequis pour lancer les tests](#prérequis-pour-lancer-les-tests)
     - [Comment lancer les tests ?](#comment-lancer-les-tests-)
   - [Planification](#planification)
   - [Dossier de conception](#dossier-de-conception)
-    - [Upload d'un fichier audio d'épisode](#upload-dun-fichier-audio-dépisode)
-    - [Composants réutilisables](#composants-réutilisables)
+    - [Upload d'un fichier audio pour la création d'un épisode](#upload-dun-fichier-audio-pour-la-création-dun-épisode)
+    - [Eléments réutilisables](#eléments-réutilisables)
 - [Réalisation](#réalisation)
   - [Dossier de réalisation](#dossier-de-réalisation)
-  - [Description des tests effectués](#description-des-tests-effectués)
-  - [Erreurs restantes](#erreurs-restantes)
+  - [Résultats des tests effectués](#résultats-des-tests-effectués)
+    - [Couverture des tests](#couverture-des-tests)
   - [Liste des documents fournis](#liste-des-documents-fournis)
 - [Conclusions](#conclusions)
+  - [Objectifs atteints / non-atteints](#objectifs-atteints--non-atteints)
+  - [Bilan personnel](#bilan-personnel)
+  - [Suites possibles au projet](#suites-possibles-au-projet)
 - [Annexes](#annexes)
-  - [Résumé du rapport du TPI / version succincte de la documentation](#résumé-du-rapport-du-tpi--version-succincte-de-la-documentation)
+  - [Résumé du rapport du TPI](#résumé-du-rapport-du-tpi)
   - [Sources – Bibliographie](#sources--bibliographie)
   - [Journal de travail](#journal-de-travail)
   - [Manuel d'Installation](#manuel-dinstallation)
@@ -54,9 +55,23 @@
 
 <div class="page"/><!-- saut de page -->
 
+## Analyse préliminaire
 ### Introduction
 
-Podz est une application web de publication de podcasts, pour le projet de TPI de Samuel Roland. Les auteurs de podcasts peuvent créer des podcasts, publier des épisodes, planifier la publication d'épisodes dans le futur et cacher des épisodes. L'application est basée sous Laravel 9 et part de zéro.
+Podz est une application web de publication de podcasts, pour le projet de TPI de Samuel Roland. Les auteurs peuvent créer des podcasts, publier des épisodes, planifier la publication d'épisodes dans le futur et les cacher. L'application est basée sous Laravel 9 et ne part pas d'un projet existant. <!-- pas "part de zéro" -->
+
+### Glossaire
+
+- BDD Behavior Driven Development
+- CSS: Cascading Style Sheets
+- HTML: Hypertext Markup Language
+- IDE: Integrated Development Environment
+- MCD: Modèle Conceptuel de Données
+- MLD: Modèle Logique de Données
+- MVC: Modèle Vue Contrôleur
+- PHP: PHP Hypertext Preprocessor
+- POO: Programmation orientée objet
+- TALL: TailwindCSS - AlpineJS - Livewire - Laravel : stack de 4 frameworks web
 
 ### Objectifs
 
@@ -81,6 +96,8 @@ Ces fonctionnalités sont implémentées par Jetstream, je n'ai donc pas eu beso
     - Ajout d’un nouvel épisode.
     - Edition d’un épisode.
     - Suppression d’un épisode.
+
+todo: ajouter critères spécifiques
 <!-- 
 
 Ce chapitre énumère les objectifs du projet. L'atteinte ou non de ceux-ci devra pouvoir être contrôlée à la fin du projet. Les objectifs pourront éventuellement être revus après l'analyse. 
@@ -99,33 +116,43 @@ Ces éléments peuvent être repris des spécifications de départ.
 ## Analyse / Conception
 ### Concept
 
-TODO ????
+TODO ???? retirer =
 
 L'application tourne en PHP sur un serveur Apache. Elle utilise une base de données MySQL pour stocker ses données.
 
 #### Technologies utilisées
-J'ai choisi la stack **TALL** (*TailwindCSS - AlpineJS - Livewire - Laravel*) pour ce projet, car je suis à l'aise avec ces 4 frameworks et parce qu'ils permettent d'être assez productif pour développer une application web.
+J'ai choisi la stack **TALL** (*TailwindCSS - AlpineJS - Livewire - Laravel*) pour ce projet, car je suis à l'aise avec ces 4 frameworks et parce qu'ils permettent d'être productif pour développer une application web.
 
 **Petits aperçus de ces frameworks**
-- **[Laravel](https://laravel.com/)**: un framework PHP basé sur le modèle MVC et en POO. Laravel donne accès à beaucoup de classes et fonctions très pratiques, d'avoir une structure imposée, d'avoir des solutions toutes faites pour beaucoup de problèmes récurrents (traductions, authentification, gestion des dates et énormément d'autres). Tout ceci simplifie énormément le développement d'applications web en PHP une fois qu'on ait à l'aise avec les bases.
+- **[Laravel](https://laravel.com/)**: un framework PHP basé sur le modèle MVC et en POO. Laravel donne accès à beaucoup de classes et fonctions très pratiques, d'avoir une structure imposée, d'avoir des solutions simples aux récurrents (traductions, authentification, gestion des dates, ...). Tout ceci simplifie beaucoup le développement d'applications web en PHP une fois qu'on ait à l'aise avec les bases.
 - **[Livewire](https://laravel-livewire.com/)**: un framework pour Laravel permettant de faire des composants fullstack réactifs. L'idée est d'utiliser la puissance de Blade et du PHP pour avoir des parties réactives sur le frontend (normalement codé en Javascript) sans devoir coder des requêtes AJAX.
-- **[AlpineJS](https://alpinejs.dev/)**: un petit framework Javascript relativement simple à apprendre, utilisée ici pour gérer certaines interactions que Livewire ne permet pas, ou qui concernent des états d'affichage (là où des requêtes sur le backend seraient inutiles notamment). Les composants s'écrivent inline (sur les balises HTML directement). Très pratique pour afficher un dropdown, faire une barre de progression, ...
+- **[AlpineJS](https://alpinejs.dev/)**: un petit framework Javascript relativement simple à apprendre, utilisée ici pour gérer certaines interactions que Livewire ne permet pas, ou qui concernent des états d'affichage (là où des requêtes sur le backend seraient inutiles). Les composants s'écrivent inline (sur les balises HTML directement). Très pratique pour afficher un dropdown, faire une barre de progression, ...
 - **[TailwindCSS](https://tailwindcss.com/)**: un framework CSS, concurrent de Bootstrap mais centré autour des propriétés CSS (en ayant des classes utilitaires - "utility-first") au lieu de tourner autour de composants. C'est très puissant pour construire rapidement des interfaces, en écrivant quasiment jamais de CSS pur et pour faire du responsive c'est très pratique parce qu'on peut préfixer toutes les classes par `md:` par ex. afin dire que la classe ne s'applique que sur les écrans medium et au dessus.
 
 - **[Jetstream](https://jetstream.laravel.com/2.x/introduction.html)**: Un starter Kit Laravel mettant en place les fonctionnalités d'authentification, tels que la connexion, la création de compte, la gestion du compte et beaucoup d'autres. L'option Livewire a été utilisée.
 
+#### Outils d'aide
+Pour m'aider dans mon développement, j'ai utilisé différent outils, ils ne sont pas indispensables mais peuvent être très utiles:
+- **[Clockwork](https://underground.works/clockwork/)**: paquet Composer et extension web pour debugger les performances, les requêtes SQL, voir le temps d'exécution, ... Le paquet Composer est déjà installé.
+![clockwork](imgs/clockwork.png)
+- **[Laravel Valet](https://laravel.com/docs/9.x/valet)**: fait tourner des serveurs web avec Nginx les rendant accessibles via des domaines en .test. Ce qui me permet de faire tourner mon serveur sous `podz.test` sans avoir besoin de me soucier de démarrer et d'arrêter ce serveur ni de gérer plusieurs ports quand plusieurs serveurs sont allumés. Fonctionne pour MacOS, mais des forks pour [Windows](https://github.com/cretueusebiu/valet-windows) et [Linux](https://cpriego.github.io/valet-linux/) existent également. Attention à bien suivre la procédure d'installation pour ne pas être coupé d'internet à cause du DNS local mal configuré.
+![valet](imgs/valet.png)
+
+</div>
+
+<div class="page"/>
+
 #### Base de données: MCD
 ![MCD](MCD.png)
-En dehors des champs évidents, voici quelques aspects techniques qui demandent des explications.
-</div
+</div>
 
-**Dans Episodes**:
+**Spécificités dans Episodes**:
 - Les combinaisons du Numéro et du podcast lié, ainsi que le titre et le podcast lié, sont uniques (exemple: on ne peut pas avoir 2 fois un épisode 4 du podcast "Summer stories", et on ne peut pas avoir 2 fois un épisode nommé "Summer 2020 review" du podcast "Summer stories").
 - La date de création est définie par la date de création de l'épisode sur la plateforme (avec l'upload du fichier), peu importe ses autres informations (la publication ou l'état caché n'a pas d'influence sur cette date). Cette date ne change jamais et est affichée qu'à l'auteur.
 - La date de publication peut être dans le passé ou mais aussi dans le futur. Si elle est dans le futur, l'épisode n'est pas encore publié (jusqu'à la date définie). Ceci permet de programmer dans le futur une publication.
 - Le champ Caché est par défaut à Faux et n'a pas d'effet dans ce cas. S'il est Vrai, l'épisode ne sera pas visible dans les détails du podcast.
 
-**Dans Podcasts**:
+**Spécificités dans Podcasts**:
 - La combinaison du titre et de l'auteur est unique. Exemple: Michelle ne peut pas publier 2 podcasts s'appelant "My story", par contre Michelle et Bob peuvent chacun publier 1 podcast nommé "My story".
 
 <div class="together">
@@ -150,14 +177,13 @@ Par exemple :
 <div class="together">
 
 #### Maquettes
-Pour pouvoir utiliser les fonctionnalités requises, voici la liste complète des pages existantes et leur maquette.
+Pour pouvoir utiliser les fonctionnalités requises, voici la liste complète des pages existantes et leur maquette:
 
 - Page Connexion
 - Page Inscription
 - Page Liste des podcasts
 - Page Détails d'un podcast (visiteur)
-- Page Edition des détails d'un podcast (auteur)
-- Page Détails d'un podcast (auteur)
+- Page Détails et édition d'un podcast (auteur)
 - Page Création d'un podcast
 
 </div>
@@ -177,24 +203,20 @@ Cette page est visible publiquement et c'est la page par défaut de l'applicatio
 
 <div class="together">
 
-**Page Détails d'un podcast (visiteur)**  
-Les visiteurs ne voient que les épisodes qui sont visibles et qu'une partie de leurs informations. Ils ne voient que le numéro, le titre, la description, l'audio et le date (arrondie au jour).
+**Page Détails d'un podcast**
+
+**Vue visiteur**  
+Les visiteurs ne voient que les épisodes qui sont visibles et qu'une partie de leurs informations. Ils ne voient que le numéro, le titre, la description, l'audio et la date (mais sans l'heure et la minute de publication).
 ![page](models/Page_d%C3%A9tails_podcast_visiteur.png)
 </div>
 
 <div class="together">
 
-**Page Edition des détails d'un podcast (auteur)**  
-L'auteur d'un podcast peut gérer les détails de son podcast, autant le titre et la description que les détails et la liste des épisodes. Nous sommes le 09.05.2022 dans cette maquette, l'épisode 4 est caché et le 5 est planifié pour le 10.05.2022. Ici l'auteur crée un 5 ème épisode planifiée qui ne sera publié que le lendemain à 15h08. Il peut aussi éditer les anciens épisodes en cliquant sur l'icône de stylo, ce qui passe l'épisode en mode édition (et permet ainsi de modifier).
-![page](models/Page_d%C3%A9tails_podcast_panneaux_%C3%A9dition.png)
-
-</div>
-
-<div class="together">
-
-**Page Détails d'un podcast (auteur)**  
-L'auteur voit évidemment toutes les informations de ses podcasts contrairement au visiteur. (Pour les podcasts d'autres auteurs, il voit la vue visiteur). Nous sommes le 10.05.2022 dans cette maquette, l'épisode 4 est caché et le 5 est planifié pour le 10.05.2022. L'épisode 4 est caché parce que l'auteur a décidé après coup de le remettre en privé.
+**Vue Détails et édition pour auteur**  
+L'auteur voit toutes les informations de ses podcasts contrairement au visiteur. L'auteur a une vue visiteur sur les podcasts qui ne lui appartiennent pas. Nous sommes le 09.05.2022 dans cette maquette, l'épisode 4 est caché et le 5 est planifié pour le 10.05.2022 à 15:08. L'épisode 4 est caché parce que l'auteur a décidé après coup de le remettre en privé. Voici l'apparance de la page quand un auteur la charge.
 ![page](models/Page_d%C3%A9tails_podcast_auteur.png)
+Quand l'auteur clique sur les icônes d'édition, des formulaires s'affichent pour les éléments sélectionnés afin de permettre l'édition ou la suppression. Ici l'auteur crée un 5 ème épisode planifiée qui ne sera publié que le lendemain à 15h08. On peut éditer plusieurs éléments à la fois, il n'y aura pas de conflit.
+![page](models/Page_d%C3%A9tails_podcast_panneaux_%C3%A9dition.png)
 
 </div>
 
@@ -204,23 +226,6 @@ L'auteur voit évidemment toutes les informations de ses podcasts contrairement 
 Simple formulaire pour créer un nouveau podcast, avec affichage des erreurs en dessous des champs si jamais les valeurs rentrées sont invalides.
 ![page](models/Page_cr%C3%A9er_podcast.png)
 </div>
-
-#### Choix de conception
-<!-- question: check section ok -->
-
-**Résumé des podcats**  
-Sur la page Podcasts, il y a un résumé des descriptions des podcasts, qui se limitent à 150 charactères (+3 petits points), puisque la description est trop longue pour être affichée entièrement et l'utilisation de `text-overflow: ellipsis` en CSS sur plusieurs lignes n'est pas très simple. Raccourcir en PHP était donc l'autre solution. Un attribute `summary` de la classe `Podcast` permet de récuperer facilement ce résumé. Si la description est plus courte que la limite, la description est utilisée.
-
-**Visibilité des épisodes**
-
-<!-- random note 
-
-Pour qu'un épisode soit visible publiquement il faut que sa date de publication soit dans le passé et que son état Caché soit Faux.
--->
-
-**Traduction**  
-Pour que les messages d'erreurs soient en français. J'utilise le système d'internationalisation de Laravel et j'ai défini le français comme langue par défaut et l'anglais comme langue de repli ("fallback language") au cas où quelquechose n'aurait pas été traduit en français. J'ai dupliqué le fichier `lang/fr/validation.php` à partir `lang/en/validation.php` et j'ai traduit les erreurs que j'utilisais.
-
 
 <div class="together">
 
@@ -237,11 +242,10 @@ Décrire la stratégie globale de test:
 •	les testeurs extérieurs éventuels.
 -->
 
-Cette section concerne la manière dont est testé Podz durant le projet et à la fin. Samuel teste manuellement les fonctionnalités dans son navigateur (Firefox) et écrit aussi des tests automatisés avec PhpUnit (un framework PHP pour les tests). La plupart des fonctionnalités sont couvertes par ces tests automatisés et quand cela n'est pas le cas, Samuel regarde à la main si cela fonctionne.
-Les factories et le seeder écrits sont également très utile pour les tests. 
+Cette section concerne la manière dont est testé Podz durant le projet et à la fin. Je teste manuellement les fonctionnalités dans son navigateur (Firefox) et écrit aussi des tests automatisés avec PHPUnit (un framework PHP de tests). La plupart des fonctionnalités sont couvertes par ces tests automatisés et quand cela n'est pas le cas, je regarde à la main si cela fonctionne. Les factories et le seeder écrits sont également très utile pour les tests. 
 
-La stratégie de développement est le BDD (Behavior Driven Development). Cela consiste à écrire des tests qui testent le comportement avant de coder, s'assurer que le test plante, puis développer jusqu'à que le test passe. Ensuite on peut refactoriser pour augmenter la qualité tout en s'assurant que cela fonctionne toujours grâce à nos tests.  
-Toute la suite de tests est lancée très fréquemment pour s'assurer qu'une nouvelle fonctionnalité n'a pas cassé une autre en chemin.
+La stratégie de développement est le BDD (Behavior Driven Development). Cela consiste à écrire des tests qui testent le comportement avant de coder, s'assurer que le test plante, puis développer jusqu'à que le test passe. Ensuite on peut refactoriser pour augmenter la qualité tout en s'assurant que cela fonctionne.  
+Toute la suite de tests est lancée très fréquemment (plusieurs fois par jour) pour s'assurer qu'une nouvelle fonctionnalité n'a pas cassé une autre en chemin.
 </div>
 <!-- todo: check BDD meaning -->
 
@@ -252,45 +256,15 @@ Tous les tests se trouve dans le dossier `tests` à la racine du repository. Le 
 
 <div class="together">
 
-#### Couverture des tests
-Comme les tests sont écrits et exécutés en PHP, les tests ne peuvent que tester le comportement backend. les interractions frontend ne peuvent pas être testées avec les outils actuels (il faudrait d'autres outils comme Laravel Dusk, Selenium, ...).
-
-Pour la plupart des fonctionnalités, j'ai suivi cette ordre pour décider des tests à écrire et de leur contenu:
-1. D'abord écrire un test pour vérifier que la page existe ou que le composant testé est bien chargé dans une des pages.
-2. Ensuite tester le comportement idéal (toutes les données valides) pour s'assurer que les données gérées ont bien été modifiées.
-3. Ensuite tester les validations des données.
-4. Et finalement valider les permissions de visibilité ou d'accès (ex: être sûr qu'un visiteur ne peut pas modifier un épisode).
-
-<!-- check order and reorder if needed -->
-
-todo
-
-**Ce que les tests ne couvrent pas**:
-- Validation de la taille maximale d'upload d'un fichier
-- 
-
-<!-- todo: check selenium and testing tools -->
-Voici la liste complète des tests, les noms devraient permettre d'avoir une idée de ce qui est testé et quels cas sont couverts.
-
-<!-- todo: update the list and names -->
-**Tests\Feature\YYY**
-- podcasts page exists
-
 </div>
-
-#### Résultats des tests
-
-Cette capture montre le résultat des tests exécutés le YYY à YYY. Tous les tests passent.
-![img](imgs/running-tests.png)
-
-todos
 
 #### Prérequis pour lancer les tests
 Il est nécessaire d'avoir mis en place le projet et d'avoir l'extension PHP SQLite.
 
-Avant l'exécution de chaque test, on retourne à l'état d'avant l'exécution du test (grâce au trait `RefreshDatabase`) et le seeder `DatabaseSeeder` s'exécute (`$seed` défini à `true`). Ces 2 configurations sont faites dans `tests/TestCase.php`, ce qui permet au final que tous les tests sont lancées sur une base de données propre et remplie.
+<!-- todo: à corriger -->
+Avant chaque test, on retourne à l'état initiale grâce au trait `RefreshDatabase`. Puis le seeder `DatabaseSeeder` s'exécute graĉe au `$seed` défini à `true`. Ces 2 configurations sont faites dans `tests/TestCase.php`, ce qui permet au final que tous les tests sont lancées sur une base de données propre et remplie.
 
-Afin de ne pas impacter la base de données de développement, les tests sont lancés sur une base de données SQLite en mémoire. Voici les lignes en bas du fichier de configuration de PhpUnit `phpunit.xml`, qui redéfinit 2 variables d'environnement permettant d'avoir une base de données en RAM.
+Afin de ne pas impacter la base de données de développement, les tests sont lancés sur une base de données SQLite en mémoire. Voici les lignes en bas du fichier de configuration de PHPUnit `phpunit.xml`, qui redéfinit 2 variables d'environnement permettant d'avoir une base de données en RAM.
 ```xml
 <env name="DB_DATABASE" value=":memory:"/>
 <env name="DB_CONNECTION" value="sqlite"/>
@@ -298,30 +272,31 @@ Afin de ne pas impacter la base de données de développement, les tests sont la
 <div class="together">
 
 #### Comment lancer les tests ?
-Il y a différentes manières de lancer les tests dans un terminal:
+Il y a différentes manières de lancer les tests dans un terminal dans le dossier du projet:
 - `./vendor/bin/phpunit`
 - `php artisan test`
+- `phpunit` (si phpunit a été installé séparement)
 
-Les tests en dehors du dossier `tests/Unit` et `tests/Feature` ne seront pas lancés. Pour lancer les tests de Jetstream si besoin, il faut lancer `php artisan test tests/Jetstream`.
+Les tests en dehors du dossier `tests/Unit` et `tests/Feature` ne seront pas lancés. Pour exécuter les tests de Jetstream si besoin, il faut lancer `php artisan test tests/Jetstream`.
 
-Vous pouvez passer des paramètres à `phpunit` (idem pour la commande `php artisan test`).
+Vous pouvez passer des paramètres à `phpunit` (aussi possible pour la commande `php artisan test`).
 </div>
 
 **Exemples**:
-- pour exécuter seulement 1 test:  
+1. pour exécuter seulement 1 test nommé `podcasts_page_exists`:  
 `php artisan test --filter podcasts_page_exists`
-- pour exécuter une classe de tests donnée:  
+1. pour exécuter une classe de tests donnée:  
 `php artisan test tests/Feature/PodcastsTest.php`
-- pour exécuter les tests d'un dossier:  
+1. pour exécuter les tests d'un dossier:  
 `php artisan test tests/Unit`
 
-Je recommande de configurer un raccourci dans votre IDE pour lancer les tests. J'ai utilisé ce réglage de raccourci dans VSCode pour lancer `php artisan test tests/Feature` lors d'un `ctrl+t ctrl+t`
+Je recommande de configurer un raccourci dans votre IDE pour lancer les tests. J'ai utilisé ce réglage de raccourci dans VSCode pour lancer tous les tests lors d'un `ctrl+t ctrl+t`
 ```json
 {
     "key": "ctrl+t ctrl+t",
     "command": "workbench.action.terminal.sendSequence",
     "args": {
-        "text": "php artisan test tests/Feature\u000D"
+        "text": "php artisan test\u000D"
     }
 }
 ```
@@ -338,6 +313,19 @@ Il s’agit en principe de la planification définitive du projet. Elle peut êt
 
 ### Dossier de conception
 
+**Résumé des podcats**  
+Sur la page Podcasts, il y a un résumé des descriptions des podcasts, qui se limitent à 150 charactères (+3 petits points), puisque la description est trop longue pour être affichée entièrement et l'utilisation de `text-overflow: ellipsis` en CSS sur plusieurs lignes n'est pas très simple. Raccourcir en PHP était donc l'autre solution. Un attribute `summary` de la classe `Podcast` permet de récuperer facilement ce résumé. Si la description est plus courte que la limite, la description est utilisée.
+
+**Visibilité des épisodes**
+
+<!-- random note 
+
+Pour qu'un épisode soit visible publiquement il faut que sa date de publication soit dans le passé et que son état Caché soit Faux.
+-->
+
+**Traduction**  
+Pour que les messages d'erreurs soient en français. J'utilise le système d'internationalisation de Laravel et j'ai défini le français comme langue par défaut et l'anglais comme langue de repli ("fallback language") au cas où quelquechose n'aurait pas été traduit en français. J'ai dupliqué le fichier `lang/fr/validation.php` à partir `lang/en/validation.php` et j'ai traduit les erreurs que j'utilisais.
+
 
 <!--
 Fournir tous les document de conception:
@@ -351,23 +339,23 @@ Fournir tous les document de conception:
 
 Le dossier de conception devrait permettre de sous-traiter la réalisation du projet !
 -->
-#### Upload d'un fichier audio d'épisode
+#### Upload d'un fichier audio pour la création d'un épisode
 J'ai décidé de fixer la taille maximum d'upload de fichiers à 150MB. Cette limite est fixée dans l'application, au niveau de la validation à la création d'un épisode.
-Les 2 valeurs dans la configuration de PHP (fichier `php.ini`) doivent être augmentées au dessus de 150MB: `upload_max_filesize` et `post_max_size`.
+Ces 2 paramètres dans la configuration de PHP (fichier `php.ini`) doivent être augmentées au dessus de 150MB: `upload_max_filesize` et `post_max_size`.
 
-#### Composants réutilisables
+#### Eléments réutilisables
 
 **Le composant Field**  
-Un composant blade permettant d'abstraire les éléments communs de tous les champs de formulaire, avec quelques réglages possibles. L'affichage du label, le design basique, l'affichage des erreurs de validations.
+Un composant Blade permettant d'abstraire les éléments communs à tous les champs de formulaire: l'affichage du label, le design basique, l'affichage des erreurs de validations.
 
 Propriétés du composant
-| Nom           | Type   | Requis | Description                                                                                                          |
-| ------------- | ------ | ------ | -------------------------------------------------------------------------------------------------------------------- |
-| `name`        | String | X      | Le nom technique du champ, utilisé pour l'attribut `name` de l'input et par le `@error()` et par la fonction `old()` |
-| `label`       | String |        | Nom du label au dessus du champ                                                                                      |
-| `type`        | String |        | Type de l'`<input>`. Par défaut `text`. Si `textarea` est donné, une balise `<textarea>` est utilisée à la place.    |
-| `placeholder` | String |        | Un placeholder qui est ajouté directement sur le champ                                                               |
-| `cssOnField`  | String |        | Des classes CSS qui sont ajoutées directement sur le champ                                                           |
+| Nom           | Type   | Requis | Description                                                                                                           |
+| ------------- | ------ | ------ | --------------------------------------------------------------------------------------------------------------------- |
+| `name`        | String | X      | Le nom technique du champ, utilisé pour l'attribut `name` de l'input et par le `@error()` et par la fonction `old()`. |
+| `label`       | String |        | Nom du label au dessus du champ.                                                                                      |
+| `type`        | String |        | Type de l'`<input>`. Par défaut `text`. Si `textarea` est donné, une balise `<textarea>` est utilisée à la place.     |
+| `placeholder` | String |        | Un placeholder qui est ajouté directement sur le champ.                                                               |
+| `cssOnField`  | String |        | Des classes CSS qui sont ajoutées directement sur le champ.                                                           |
 
 Tous les autres attributs non reconnus sont transférés à la `div` racine du composant, ce qui permet d'ajouter du style ou d'autres attributs HTML. Tous les attributs commençant par `wire:model` sont ajoutés au champ pour permettre l'utilisation de ce composant avec Livewire.
 
@@ -380,27 +368,48 @@ Exemple d'utilisation:
 [...]
 </form>
 ```
-<div class="together">
 
 Un autre exemple d'utilisation dans le cas d'un formulaire géré par Livewire:
 ```php
 <div>
-    <x-field wire:keyup.enter="update" placeholder="Rentrez un titre court et marquant." label="Title" name="podcast.title" wire:model.lazy="podcast.title"></x-field>
-    <x-field label="Description" type="textarea" name="podcast.description" wire:model.lazy="podcast.description">
+    <x-field 
+        wire:keyup.enter="update" 
+        placeholder="Rentrez un titre court et marquant." 
+        label="Title" name="podcast.title" 
+        wire:model.lazy="podcast.title">
+    </x-field>
+    <x-field 
+        label="Description" type="textarea" 
+        name="podcast.description" wire:model.lazy="podcast.description">
     </x-field>
     @csrf
     <button wire:click.prevent="update" class="btn mt-1">Enregistrer</button>
 </div>
 ```
-</div>
+
+**Classes CSS et couleurs**  
+J'ai défini 3 nouvelles couleurs Tailwind, qu'on peut utiliser partout où les couleurs sont utiles avec TailwindCSS (`border-green`, `text-lightblue`, ...)
+```javascript
+//Extrait de tailwind.config.js
+colors: {
+    'green': '#0d9488',
+    'blue': '#0d1594',
+    'lightblue': '#0d159414',
+}
+```
+
+Il y a aussi certaines classes CSS qui peuvent être utilisées pour avoir un design commun à travers l'interface:
+- `text-info`: pour les messages d'informations
+- `btn`: pour les boutons
 
 <div class="page"/>
 
 ## Réalisation
 ### Dossier de réalisation
 
-**Structure du repository**:
-Certains dossiers de Laravel moins pertinents ont été remplacés par des `...`. Seulement les dossiers sont affichés et seulement que j'ai utilisé (travaillé dedans) sont définis.
+<!-- réduire taille du texte pour éviter les overflow-->
+**Structure du repository**  
+Certains dossiers de Laravel moins pertinents ont été remplacés par des `...`. Seulement les dossiers et les fichiers à la racine sont affichés. Uniquement ceux que j'ai utilisé sont définis.
 
 ```
 podz                      Racine du repository
@@ -425,7 +434,7 @@ podz                      Racine du repository
 │   ├─ migrations         Les migrations pour définir la structure des tables
 │   └─ seeders            Les seeders pour remplir la base de données avec les factories
 ├─ docs                   Dossier pour stocker les éléments de documentations (notamment MCD, MLD)
-│   ├─ imgs               Les images utilisant dans cette documentation
+│   ├─ imgs               Les images utilisées dans cette documentation
 │   ├─ models             Les exports des maquettes
 │   └─ sources            Les fichiers source binaires des maquettes, MCD et MLD
 ├─ lang                   Les fichiers de langues                      
@@ -441,7 +450,7 @@ podz                      Racine du repository
 │       ├─ auth           
 │       ├─ components     
 │       ├─ layouts        
-│       ├─ livewire       Les vues pour Livewire.
+│       ├─ livewire       Les vues pour Livewire
 │       ├─ podcasts       Vues pour les podcasts 
 │       ├─ profile                               
 │       └─ vendor                                
@@ -488,30 +497,57 @@ Décrire la réalisation "physique" de votre projet
 
 NOTE : Evitez d’inclure les listings des sources, à moins que vous ne désiriez en expliquer une partie vous paraissant importante. Dans ce cas n’incluez que cette partie…
 -->
-### Description des tests effectués
-<!--
 
-Pour chaque partie testée de votre projet, il faut décrire:
+### Résultats des tests effectués
+<!-- Compléter temps !! -->
+Cette capture montre le résultat des tests exécutés le YYY à YYY. Tous les tests passent.
+![img](imgs/tests-results.png)
+
+<!-- todo: check selenium and testing tools -->
+Voici la liste complète des tests, les noms devraient permettre d'avoir une idée de ce qui est testé et quels cas sont couverts.
 
 •	les conditions exactes de chaque test
 •	les preuves de test (papier ou fichier)
 •	tests sans preuve: fournir au moins une description 
 -->
 
-<!-- todo: tests don't cover maximum of file upload -->
 
-### Erreurs restantes  
+#### Couverture des tests
+Comme les tests sont écrits et exécutés en PHP, les tests ne peuvent que tester le comportement backend. Les interractions frontend ne peuvent pas être testées avec les outils actuels.
+
+Pour la plupart des fonctionnalités, j'ai suivi cette ordre pour décider des tests à écrire et de leur contenu:
+1. D'abord écrire un test pour vérifier que la page existe ou que le composant testé est bien chargé dans une des pages.
+2. Ensuite tester le comportement idéal (toutes les données valides) pour s'assurer que les données gérées ont bien été modifiées.
+3. Puis tester les validations des données.
+4. Et finalement valider les permissions de visibilité ou d'accès (ex: être sûr qu'un visiteur ne peut pas modifier un épisode ou ne peut pas voir d'épisode s'il est invisible).
+
+<!-- check order and reorder if needed -->
+
+**Ce que les tests ne couvrent pas**:
+- Validation de la taille maximale d'upload d'un fichier pour la création d'épisode
+
+Les tests manuels ont permis de vérifier que cela fonctionnait. Un test manuel avec un fichier mp3 de 170Mo a été fait plusieurs fois afin de vérifier la limite de 150Mo. En voici la démonstration:
+
+![file-upload-error](imgs/file-upload-error.png)
+
 <!--
+### Erreurs restantes  
 
 S'il reste encore des erreurs: 
 
 •	Description détaillée
 •	Conséquences sur l'utilisation du produit
 •	Actions envisagées ou possibles
+TODO: a retirer au dernier moment.
 -->
 
 ### Liste des documents fournis
+- Ce rapport de projet nommé "Documentation de Podz" <!-- nom du fichier -->
+- Journal de travail
+- README: contient la documentation d'installation du projet
+
 <!--
+todo: utile ?
 
 Lister les documents fournis au client avec votre produit, en indiquant les numéros de versions 
 
