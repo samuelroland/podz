@@ -53,7 +53,7 @@
   - [Difficultés particulières](#difficultés-particulières)
   - [Points positifs / négatifs](#points-positifs--négatifs)
   - [Bilan du projet](#bilan-du-projet)
-  - [Suites possibles au projet](#suites-possibles-au-projet)
+  - [Suites possibles pour le projet](#suites-possibles-pour-le-projet)
 - [Annexes](#annexes)
   - [Résumé du rapport du TPI](#résumé-du-rapport-du-tpi)
   - [Sources – Bibliographie](#sources--bibliographie)
@@ -203,6 +203,10 @@ Par exemple :
 <div class="together">
 
 #### Maquettes
+Le gabarit est déjà designé par Jetstream. La vue en tant que visiteur (donc déconnecté):
+![page](models/Gabarit-visitor.png)
+La vue en tant qu'auteur, donc connecté.
+![page](models/Gabarit-author.png)
 Pour pouvoir utiliser les fonctionnalités requises, voici la liste complète des pages nécessaires et leur maquette:
 
 - Page Connexion
@@ -242,13 +246,13 @@ Les visiteurs ne voient que les épisodes qui sont visibles et qu'une partie de 
 
 **Vue Détails et édition pour auteur**  
 L'auteur voit toutes les informations de ses podcasts contrairement au visiteur. L'auteur a une vue visiteur sur les podcasts qui ne lui appartiennent pas. Nous sommes le 09.05.2022 dans cette maquette, l'épisode 4 est caché et le 5 est planifié pour le 10.05.2022 à 15:08. L'épisode 4 est caché parce que l'auteur a décidé après coup de le remettre en privé. Voici l'apparance de la page quand un auteur la charge.
-![page](models/Page_d%C3%A9tails_podcast_auteur.png)
+![page](models/Vue-auteur-podcast-details.png)
 </div>
 
 <div class="together">
 
 Quand l'auteur clique sur les icônes d'édition, des formulaires s'affichent pour les éléments sélectionnés afin de permettre l'édition ou la suppression. Ici l'auteur crée un 5 ème épisode planifiée qui ne sera publié que le lendemain à 15h08. On peut éditer plusieurs éléments à la fois, il n'y aura pas de conflit.
-![page](models/Page_d%C3%A9tails_podcast_panneaux_%C3%A9dition.png)
+![page](models/Vue-auteur-podcast-details-edition.png)
 
 </div>
 
@@ -307,8 +311,8 @@ Les tests en dehors du dossier `tests/Unit` et `tests/Feature` ne seront pas lan
 Vous pouvez passer des paramètres à `phpunit` (aussi possible pour la commande `php artisan test`).
 
 **Exemples**:
-1. pour exécuter seulement 1 test nommé `podcasts_page_exists`:  
-`php artisan test --filter podcasts_page_exists`
+1. pour exécuter seulement 1 test nommé `test_podcasts_page_exists` on peut filtrer:  
+`php artisan test --filter test_podcasts_page_exists`
 1. pour exécuter une classe de tests donnée:  
 `php artisan test tests/Feature/PodcastsTest.php`
 1. pour exécuter les tests d'un dossier:  
@@ -326,9 +330,11 @@ Je recommande de configurer un raccourci dans votre IDE pour lancer les tests. J
 ```
 
 ### Planification
-La liste des tâches est la même qu'au départ, les estimations n'ont pas été modifiées, l'ordre est le même qu'il y avait dans les colonnes Todo sur GitHub au début du projet. Afin de comparer ce qui avait été prévu et ce qui s'est réellement passé finalement, j'ai rajouté quelques colonnes. Tout le tableau est ordré par la date d'achèvement des tâches, ce qui explique que ce n'est pas exactement le même ordre que la planification initiale. 
+La liste des tâches est la même qu'au départ, les estimations n'ont pas été modifiées, l'ordre est le même qu'il y avait dans les colonnes Todo sur GitHub au début du projet. Afin de comparer ce qui avait été prévu et ce qui s'est réellement passé finalement, j'ai rajouté quelques colonnes. Tout le tableau est ordré par la date d'achèvement des tâches, ce qui explique que ce n'est pas exactement le même ordre que la planification initiale.
 :[fragment](markdown-build/planification-finale.md)
 
+<!-- ajouter heures diverses non classifiées -->
+<!-- commentaire avance et retard, et rattrapage et total, et heures diverse significations.-->
 <!--
 Révision de la planification initiale du projet :
 
@@ -348,6 +354,9 @@ Pour qu'un épisode soit visible publiquement il faut que sa date de publication
 
 **Traduction**  
 Pour que les messages d'erreurs soient en français. J'utilise le système d'internationalisation de Laravel et j'ai défini le français comme langue par défaut et l'anglais comme langue de repli ("fallback language") au cas où quelquechose n'aurait pas été traduit en français. J'ai dupliqué le fichier `lang/fr/validation.php` à partir `lang/en/validation.php` et j'ai traduit les quelques messages d'erreurs que j'utilisais.
+
+**Vues de Jetstream**  
+Le `navigation-menu.blade.php` a été modifié afin d'avoir les bons boutons. Le logo de Jetstream était modifiable dans 3-4 fichiers différents, j'ai préféré regrouper le tout dans `logo.blade.php` afin de centraliser. Le logo utilise la couleur `green` définie dans `tailwind.config.js`.
 
 **Routes**  
 J'ai suivi les conventions des noms et URLs des routes comme pour les controlleurs resources (je n'en ai pas utilisé dans ce projet).
@@ -690,9 +699,10 @@ Tous les objectifs fixés au départ ont été atteints.
 J'ai eu beaucoup de plaisir à développer Podz, surtout avec l'écriture des tests. Contrairement à mon Pré-TPI où je n'avais pas pu terminer le développement et la documentation, je suis plutôt content d'avoir réussi à finir toutes les fonctionnalités demandées dans les temps et d'avoir pu faire correctement la documentation. Je me sens encore plus à l'aise qu'avant pour écrire des tests, même pour des cas plus complexe pour gérer des fichiers et des erreurs. J'ai compris les stratégies de base pour savoir ce qu'on peut tester ou pas, quand je dois en écrire un nouveau je sais donc rapidement quels sont les éléments à inclure. Au passage, j'ai appris que tous les navigateurs ne supportent pas tous les fichiers audio (surtout s'ils sont propriétaires), Firefox par ex. a quelques difficultés avec les fichiers `.m4a`.
 Comme durant mon Pré-TPI, j'ai eu de la peine avec l'upload de fichiers parce que je n'arrivais pas à écrire des tests corrects. Donc j'ai beaucoup testé à la main et cela devenait vite chronophage. Grâce à l'aide M. Hurni mon chef de projet, j'ai pu changer de stratégie pour ces tests.
 
-### Suites possibles au projet
+### Suites possibles pour le projet
 De nombreuses fonctionnalités pourraient implémentés si le projet est réutilisé par quelqu'un d'autre. Voici une petite liste d'idées:
-1. Ajouter un flux RSS des podcasts
+1. Ajouter un flux RSS pour écouter le podcast depuis un lecteur de podcasts (comme Apple Podcasts par exemple)
+2. 
 
 <div class="page"/>
 
