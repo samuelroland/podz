@@ -6,7 +6,7 @@ body {
 h2 {
     font-size: 33px;
     margin-top: 25px;
-    padding-bottom: 10px;
+    padding-bottom: 15px;
     border-bottom: 1px solid #0d1594;
 }
 
@@ -98,11 +98,13 @@ pre code {
 
 td, th {
     border: 1px gray solid;
+    padding: 5px !important;
 }
 
 th {
     white-space: nowrap;
     background-color: #0d16943d !important;
+    text-align: center !important;
 }
 
 td li {
