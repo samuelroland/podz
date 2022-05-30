@@ -1,20 +1,26 @@
-
-<div style="text-align: center; padding: 150px 0px;">
-<p style="text-align: center; border: none; font-size: 3rem;">Documentation de Podz</p>
+<div style="text-align: center; padding-top: 150px;">
+<p style="text-align: center; border: none; font-size: 50px; font-weight: 500;">Documentation de Podz</p>
 <p style="text-align: center; border: none; font-size: 2rem;">Application web de publication de podcasts</p>
 <div style="display:flex; padding: 50px 100px; justify-content: center; font-family: Fira Code;">
 <img src="logo.png" style="box-shadow: none">
 </div>
-<h2 style="text-align: center; font-size: 1.8rem;">Projet TPI - 2022</h2>
-<h2 style="text-align: center; font-size: 1.5rem;">Samuel Roland</h2>
+<div style="display: flex; justify-content: center; margin-bottom: 50px;">
+<img style="box-shadow: none; height: 100px; margin: 0px 10px;" src="imgs/tailwind.png" />
+<img style="box-shadow: none; height: 100px; margin: 0px 10px;" src="imgs/alpine.png" />
+<img style="box-shadow: none; height: 100px; margin: 0px 10px;" src="imgs/livewire.png" />
+<img style="box-shadow: none; height: 100px; margin: 0px 10px;" src="imgs/laravel.png" />
+</div>
 
+<h2 style="text-align: center; border: none; font-size: 35px;">Projet TPI - 2022</h2>
+<h2 style="text-align: center; border: none; font-size: 1.5rem;">Samuel Roland, SI-MI4A</h2>
 </div>
 
 <div class="page"/> 
 
 <div class="toc">
 
-**Table des matières**
+<div style="font-size: 28px; margin-top: 20px;">Table des matières</div>
+
 - [Analyse préliminaire](#analyse-préliminaire)
   - [Introduction](#introduction)
   - [Glossaire](#glossaire)
@@ -59,7 +65,7 @@
 ## Analyse préliminaire
 ### Introduction
 
-Podz est une application web de publication de podcasts, pour le projet de TPI de Samuel Roland. Les auteurs peuvent créer des podcasts, publier des épisodes, planifier la publication d'épisodes dans le futur et les cacher. L'application est basée sous Laravel 9 et ne part pas d'un projet existant. <!-- pas "part de zéro" -->
+Podz est une application web de publication de podcasts, pour le projet de TPI de Samuel Roland en SI-MI4A. Les auteurs peuvent créer des podcasts, publier des épisodes, planifier la publication d'épisodes dans le futur et les cacher. L'application est basée sous Laravel 9 et ne part pas d'un projet existant. <!-- pas "part de zéro" -->
 
 ### Glossaire
 
@@ -98,13 +104,14 @@ Ces fonctionnalités sont implémentées par Jetstream, je n'ai donc pas eu beso
     - Edition d’un épisode.
     - Suppression d’un épisode.
 
-todo: ajouter critères spécifiques
-<!-- 
-
-Ce chapitre énumère les objectifs du projet. L'atteinte ou non de ceux-ci devra pouvoir être contrôlée à la fin du projet. Les objectifs pourront éventuellement être revus après l'analyse. 
-
-Ces éléments peuvent être repris des spécifications de départ.
--->
+**En plus de cela, le travail sera évalué sur les 7 points spécifiques suivants:**
+1. Modélisation des données pertinentes (types, tailles, associations).
+1. Respect du modèle MVC.
+1. Ergonomie de l’interface utilisateur.
+1. Gestion des erreurs de saisie des utilisateurs.
+1. Respect des normes d’écriture de code.
+1. Utilisation d’un SCM type git avec commits atomiques, petits et fréquents.
+1. Lecture audio du podcast bien réalisée.
 
 ### Planification initiale
 <!--
@@ -306,6 +313,9 @@ Je recommande de configurer un raccourci dans votre IDE pour lancer les tests. J
 ```
 
 ### Planification
+
+todo
+
 <!--
 Révision de la planification initiale du projet :
 
