@@ -60,6 +60,7 @@ class EpisodeUpdate extends Component
     {
         if ($this->episode->podcast->isAuthor()) {
             $this->episode->delete();
+            $this->emit('episodesListUpdate');
         }
     }
 }
