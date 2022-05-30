@@ -19,7 +19,7 @@
 
     @if($mode == 'update')
     <audio controls class="w-full my-2">
-        <source src="{{ $episode->path }}" />
+        <source src="{{ Storage::url($episode->path) }}" />
     </audio>
 
     @endif
