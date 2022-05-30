@@ -65,7 +65,7 @@ file_put_contents('planification-initiale.md', $content);
 //Step 3: generate final planning
 ob_start();
 
-echo "| ID | Sprint  | Terminé dans | Titre      | Estimé | Passé | Delta | Achèvement | \n";
+echo "| ID | S-d | S-f | Titre      | Estimé | Passé | Delta | Fin | \n";
 echo "| ------ | --- | --- | ------ | ------ | ----- | ----- | --- | \n";
 
 foreach ($issues as $issue) {
