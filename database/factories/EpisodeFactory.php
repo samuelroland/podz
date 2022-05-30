@@ -39,7 +39,6 @@ class EpisodeFactory extends Factory
     public function configure()
     {
         return $this->afterCreating(function (Episode $episode) {
-            Storage::disk('public')->delete("episodes/" . $episode->path);  //delete just in case it already exists
 
             //Names of formats and testing files
             $sampleFiles = [
