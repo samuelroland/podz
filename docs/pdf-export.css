@@ -42,6 +42,10 @@ img {
     box-shadow: 1px 2px 10px 2px rgba(87, 87, 87, 0.2);
 }
 
+table {
+    margin: 10px 0px;
+}
+
 p code, table code, div code, li code {
     color: #0d1594 !important;
     padding: 2px 3px; 
@@ -82,6 +86,10 @@ pre code {
     margin-top: 10px;
 }
 
+.toc li {
+    margin-left: 0px;
+}
+
 td, th {
     border: 1px gray solid;
 }
@@ -113,4 +121,8 @@ pre.text-sm span {
 
 a {
     font-weight: 500;
+}
+
+body .journal {
+    font-size: 13px !important;
 }

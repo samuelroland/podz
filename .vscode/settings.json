@@ -1,6 +1,6 @@
 {
-    "markdown-pdf.headerTemplate": "<div style=\"font-size: 9px; margin-left: 1cm;\"> <span class=''></span></div> <div style=\"font-size: 9px; margin-left: auto; margin-right: 1cm; \"> <span class=''>Samuel Roland</span></div>",
-    "markdown-pdf.footerTemplate": "<div style=\"font-size: 9px; margin-left: 1cm;\"> <span class=''></span></div> <div style=\"font-size: 9px; margin-left: auto; margin-right: 1cm; \"> <span class=''><span class='pageNumber'></span> / <span class='totalPages'>",
+    "markdown-pdf.headerTemplate": "<div style=\"font-size: 10px; margin-top: 3px; margin-left: 0.7cm;\">TPI - Podz</div> <div style=\"font-size: 10px; margin-top: 3px; margin-left: auto; margin-right: 0.7cm; \"> <span class=''>Samuel Roland</span></div>",
+    "markdown-pdf.footerTemplate": "<div style=\"font-size: 10px; margin-bottom: 3px; margin-left: 0.7cm;\"> <span class=''></span></div> <div style=\"font-size: 10px; margin-bottom: 3px; margin-left: auto; margin-right: 0.7cm; \"> <span class=''><span class='pageNumber'></span> / <span class='totalPages'>",
     "markdown-pdf.styles": [
         "docs/pdf-export.css",
     ],
@@ -8,8 +8,8 @@
     "markdown-pdf.type": [
         "pdf"
     ],
-    "markdown-pdf.margin.top": "1cm",
-    "markdown-pdf.margin.bottom": "1cm",
+    "markdown-pdf.margin.top": "1.3cm",
+    "markdown-pdf.margin.bottom": "1.2cm",
     "markdown-pdf.margin.right": "0.5cm",
     "markdown-pdf.margin.left": "0.5cm",
     "markdown-pdf.highlightStyle": "github-gist.css",
