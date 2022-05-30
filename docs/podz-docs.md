@@ -23,10 +23,10 @@
 <!-- toc start -->
 <div class="toc">
 
-- [Analyse préliminaire](#analyse-préliminaire)<strong class="atright">5</strong>
-  - [Introduction](#introduction)<strong class="atright">5</strong>
-  - [Glossaire](#glossaire)<strong class="atright">5</strong>
-  - [Objectifs](#objectifs)<strong class="atright">5</strong>
+- [Analyse préliminaire](#analyse-préliminaire)
+  - [Introduction](#introduction)
+  - [Glossaire](#glossaire)
+  - [Objectifs](#objectifs)
   - [Planification initiale](#planification-initiale)
 - [Analyse / Conception](#analyse--conception)
   - [Concept](#concept)
@@ -50,7 +50,9 @@
   - [Liste des documents fournis](#liste-des-documents-fournis)
 - [Conclusions](#conclusions)
   - [Objectifs atteints / non-atteints](#objectifs-atteints--non-atteints)
-  - [Bilan personnel](#bilan-personnel)
+  - [Difficultés particulières](#difficultés-particulières)
+  - [Points positifs / négatifs](#points-positifs--négatifs)
+  - [Bilan du projet](#bilan-du-projet)
   - [Suites possibles au projet](#suites-possibles-au-projet)
 - [Annexes](#annexes)
   - [Résumé du rapport du TPI](#résumé-du-rapport-du-tpi)
@@ -73,7 +75,7 @@ Podz est une application web de publication de podcasts, pour le projet de TPI d
 
 ### Glossaire
 
-- **BDD**: Behavior Driven Development
+- **BDD**: Behaviour Driven Development
 - **CSS**: Cascading Style Sheets
 - **HTML**: Hypertext Markup Language
 - **IDE**: Integrated Development Environment
@@ -83,6 +85,9 @@ Podz est une application web de publication de podcasts, pour le projet de TPI d
 - **PHP**: PHP Hypertext Preprocessor
 - **POO**: Programmation orientée objet
 - **TALL**: TailwindCSS - AlpineJS - Livewire - Laravel : stack de 4 frameworks web
+- **Framework**: ensemble de librairires et de conventions qui donnent un cadre pour développer une application
+- **stack**: ensemble cohérent de technologies pour un but donné
+- **RSS**: RDF Site Summary ou Really Simple Syndication: système de flux web
 
 ### Objectifs
 
@@ -336,7 +341,7 @@ Il s’agit en principe de la planification définitive du projet. Elle peut êt
 ### Dossier de conception
 
 **Résumé des podcasts**  
-Sur la page Podcasts, il y a un résumé des descriptions des podcasts, qui se limitent à 150 charactères (+3 petits points), puisque la description est trop longue pour être affichée entièrement et l'utilisation de `text-overflow: ellipsis` en CSS sur plusieurs lignes n'est pas très simple. Raccourcir en PHP était donc l'autre solution. Un attribute `summary` de la classe `Podcast` permet de récuperer facilement ce résumé. Si la description est plus courte que la limite, la description est utilisée.
+Sur la page Podcasts, il y a un résumé des descriptions des podcasts, qui se limitent à 150 caractères (+3 petits points), puisque la description est trop longue pour être affichée entièrement et l'utilisation de `text-overflow: ellipsis` en CSS sur plusieurs lignes n'est pas très simple. Raccourcir en PHP était donc l'autre solution. Un attribute `summary` de la classe `Podcast` permet de récuperer facilement ce résumé. Si la description est plus courte que la limite, la description est utilisée.
 
 **Visibilité des épisodes**
 Pour qu'un épisode soit visible publiquement il faut que sa date de publication soit dans le passé et que son état Caché soit Faux. Si cette condition n'est pas vraie, l'épisode n'est visible que par l'auteur.
@@ -365,6 +370,8 @@ Le dossier de conception devrait permettre de sous-traiter la réalisation du pr
 #### Upload d'un fichier audio pour la création d'un épisode
 J'ai décidé de fixer la taille maximum d'upload de fichiers à 150MB. Cette limite est fixée dans l'application, au niveau de la validation à la création d'un épisode.
 Ces 2 paramètres dans la configuration de PHP (fichier `php.ini`) doivent être augmentées au dessus de 150MB: `upload_max_filesize` et `post_max_size`.
+
+Les fichiers audios sont stockés dans `storage/app/public/episodes` c'est à dire dans le dossier `episodes` du dossier `public`.
 
 #### Eléments réutilisables
 
@@ -673,12 +680,20 @@ Tous les objectifs fixés au départ ont été atteints.
 
  <!-- ![podz en images](imgs/) todo -->
 
-### Bilan personnel
-J'ai eu beaucoup de plaisir à développer Podz, surtout avec l'écriture des tests. Contrairement à mon Pré-TPI où je n'avais pas pu terminer le développement et la documentation, je suis plutôt content d'avoir réussi à finir toutes les fonctionnalités demandées dans les temps et d'avoir pu faire correctement la documentation.  
-Comme durant mon Pré-TPI, j'ai eu de la peine avec l'upload de fichiers, parce que je n'arrivais pas à écrire des tests correctement, je devais tester à la main et cela devenait vite chronophage. Grâce à l'aide M. Hurni mon chef de projet, j'ai pu changer de stratégie pour ces tests
+### Difficultés particulières
+
+### Points positifs / négatifs
+
+
+### Bilan du projet
+
+J'ai eu beaucoup de plaisir à développer Podz, surtout avec l'écriture des tests. Contrairement à mon Pré-TPI où je n'avais pas pu terminer le développement et la documentation, je suis plutôt content d'avoir réussi à finir toutes les fonctionnalités demandées dans les temps et d'avoir pu faire correctement la documentation. Je me sens encore plus à l'aise qu'avant pour écrire des tests, même pour des cas plus complexe pour gérer des fichiers et des erreurs. J'ai compris les stratégies de base pour savoir ce qu'on peut tester ou pas, quand je dois en écrire un nouveau je sais donc rapidement quels sont les éléments à inclure. Au passage, j'ai appris que tous les navigateurs ne supportent pas tous les fichiers audio (surtout s'ils sont propriétaires), Firefox par ex. a quelques difficultés avec les fichiers `.m4a`.
+Comme durant mon Pré-TPI, j'ai eu de la peine avec l'upload de fichiers parce que je n'arrivais pas à écrire des tests corrects. Donc j'ai beaucoup testé à la main et cela devenait vite chronophage. Grâce à l'aide M. Hurni mon chef de projet, j'ai pu changer de stratégie pour ces tests.
 
 ### Suites possibles au projet
-Pour la suite du projet.....
+De nombreuses fonctionnalités pourraient implémentés si le projet est réutilisé par quelqu'un d'autre. Voici une petite liste d'idées:
+1. Ajouter un flux RSS des podcasts
+
 <div class="page"/>
 
 ## Annexes
@@ -694,12 +709,12 @@ Pour ne pas avoir à développer la connexion et la création de compte, j'ai ut
 La particularité de mon TPI par rapport à d'autres élèves est que j'ai écrit de nombreux tests automatisés pour m'assurer que la majeure partie du comportement de mon application était correct et restait fonctionnel tout le long du projet. J'ai utilisé PHPUnit pour écrire ces tests. L'écriture a pris un peu de temps tout au long du projet, mais ils ont permis d'accélerer la validation du fonctionnement, j'ai ainsi pu éviter beaucoup d'essais à la main puisque j'avais confiance sur le fait que mon backend fonctionne. Il restait bien sûr à s'assurer que tout fonctionne comme prévu dans mon navigateur mais cela était plus rapide à déterminer.
 
 **Résultats**  
-Toutes les fonctionnalités demandées ont pu être implémentées et testées. La création d'un podcast se fait sur une page dédiée, tandis que l'édition d'un podcast, la création, modification et suppression d'épisodes se font toutes dans la même page Détails d'un podcast. Je n'ai pas eu de difficultés particulières à designer mon application, je n'ai donc pas eu besoin d'utiliser de template.
+Toutes les fonctionnalités demandées ont pu être implémentées et testées. La création d'un podcast se fait sur une page dédiée, tandis que l'édition d'un podcast, la création, modification et suppression d'épisodes se font toutes dans la même page Détails d'un podcast. Je n'ai pas eu de difficultés particulières à designer mon application, je n'ai donc pas eu besoin d'utiliser de template. Les points spécifiques ont été respectés.
 
 <div class="page"/>
 
 ### Sources – Bibliographie
-Pour résoudre mes différents problèmes j'ai utilisé StackOverflow et les documentations officielles des 4 frameworks que j'utilise:
+Pour résoudre mes différents problèmes j'ai surtout utilisé StackOverflow et les documentations officielles des 4 frameworks que j'utilise:
 - **[Documentation de Laravel](https://laravel.com/docs)**
 - **[Documentation de Livewire](https://laravel-livewire.com/docs)**
 - **[Documentation de AlpineJS](https://alpinejs.dev/docs)**
@@ -711,6 +726,10 @@ J'ai aussi utilisé le site [**Mozilla Developer Network**](https://developer.mo
 
 - [Liste des Types de médias, par l'IANA](https://www.iana.org/assignments/media-types/media-types.xhtml). Cette ressource m'a été utile pour trouver les types MIME des fichiers audios .ogg, .opus, et .mp3 pour la validation lors de la création d'épisode.
 
+**Aides humaines**
+- **M. Hurni**: conseils et retours réguliers, réponses à mes questions.
+- **Gatien Jayme**: aide relecture des documents
+
 ### Remerciements
 J'aimerai remercier M. Hurni pour les retours et les conseils techniques qu'il m'a apporté au Pré-TPI et au TPI qui m'ont permis de progresser avec Laravel en général et l'écriture de tests. J'espère avoir pu utiliser au mieux ces feedbacks et continuer de m'améliorer continuellement sur Laravel et les autres frameworks à l'avenir, pour produire du code de qualité et maîtriser de plus en plus ces technologies.
 
@@ -721,16 +740,15 @@ Je remercie aussi Gatien Jayme pour sa relecture de ma documentation.
 Liste des livres utilisés (Titre, auteur, date), des sites Internet (URL) consultés, des articles (Revue, date, titre, auteur)… Et de toutes les aides externes (noms)   
 -->
 ### Journal de travail
-Le journal est disponible en document séparé ou directement sur Github [en Markdown](https://github.com/samuelroland/podz/blob/main/docs/podz-journal.md) ou [en PDF](https://github.com/samuelroland/podz/blob/main/docs/podz-journal.md).
+Le journal est disponible en document séparé (voir archives) ou directement sur Github [en Markdown](https://github.com/samuelroland/podz/blob/main/docs/podz-journal.md) ou [en PDF](https://github.com/samuelroland/podz/blob/main/docs/podz-journal.md).
 
 ### Manuel d'Installation
-Toutes les informations nécessaires à l'installation du projet se trouve dans le [README](https://github.com/samuelroland/podz/blob/main/README.md).
+Toutes les informations nécessaires à l'installation du projet se trouve dans le README disponible en document séparé (voir archives) ou sur GitHub [en Markdown](https://github.com/samuelroland/podz/blob/main/README.md).
 
-### Archives du projet 
-- podz-code-samuel-roland.zip
+### Archives du projet
+- `podz-code-samuel-roland.zip`
+- `podz-documentation-samuel-roland.pdf`
+- `podz-journal-de-travail-samuel-roland.pdf`
+- `podz-résumé-tpi-samuel-roland.pdf`
+- `podz-readme-samuel-roland.pdf`
 
-<!-- todo -->
-
-<!-- 
-Media, … dans une fourre en plastique 
--->
