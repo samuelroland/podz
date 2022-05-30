@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Facade;
 
 return [
@@ -29,6 +30,10 @@ return [
     */
 
     'env' => env('APP_ENV', 'production'),
+
+    //Application version and version date
+    'version' => 'v1',
+    'version_date' => Carbon::parse('2022-05-31'),
 
     /*
     |--------------------------------------------------------------------------
