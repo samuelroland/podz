@@ -29,22 +29,27 @@
   - [Objectifs](#objectifs)
   - [Planification initiale](#planification-initiale)
 - [Analyse / Conception](#analyse--conception)
-  - [Concept](#concept)
     - [Technologies utilisées](#technologies-utilisées)
     - [Outils d'aide](#outils-daide)
-    - [Base de données: MCD](#base-de-données-mcd)
-    - [Base de données: MLD](#base-de-données-mld)
+    - [Modèle Conceptuel de Données](#modèle-conceptuel-de-données)
+    - [Modèle Logique de Données](#modèle-logique-de-données)
     - [Maquettes](#maquettes)
   - [Stratégie de test](#stratégie-de-test)
     - [Où sont écrits les tests ?](#où-sont-écrits-les-tests-)
-    - [Prérequis pour lancer les tests](#prérequis-pour-lancer-les-tests)
+    - [Les données de tests](#les-données-de-tests)
     - [Comment lancer les tests ?](#comment-lancer-les-tests-)
   - [Planification](#planification)
   - [Dossier de conception](#dossier-de-conception)
+    - [Résumé des podcasts](#résumé-des-podcasts)
+    - [Visibilité des épisodes](#visibilité-des-épisodes)
+    - [Traduction](#traduction)
+    - [Vues de Jetstream](#vues-de-jetstream)
+    - [Routes](#routes)
     - [Upload d'un fichier audio pour la création d'un épisode](#upload-dun-fichier-audio-pour-la-création-dun-épisode)
-    - [Eléments réutilisables](#eléments-réutilisables)
+    - [Éléments réutilisables](#éléments-réutilisables)
 - [Réalisation](#réalisation)
   - [Dossier de réalisation](#dossier-de-réalisation)
+  - [Construction de la documentation](#construction-de-la-documentation)
   - [Résultats des tests effectués](#résultats-des-tests-effectués)
     - [Couverture des tests](#couverture-des-tests)
   - [Liste des documents fournis](#liste-des-documents-fournis)
@@ -52,14 +57,14 @@
   - [Objectifs atteints / non-atteints](#objectifs-atteints--non-atteints)
   - [Difficultés particulières](#difficultés-particulières)
   - [Points positifs / négatifs](#points-positifs--négatifs)
-  - [Bilan du projet](#bilan-du-projet)
+  - [Bilan personnel](#bilan-personnel)
   - [Suites possibles pour le projet](#suites-possibles-pour-le-projet)
+  - [Remerciements](#remerciements)
 - [Annexes](#annexes)
   - [Résumé du rapport du TPI](#résumé-du-rapport-du-tpi)
   - [Sources – Bibliographie](#sources--bibliographie)
-  - [Remerciements](#remerciements)
   - [Journal de travail](#journal-de-travail)
-  - [Manuel d'Installation](#manuel-dinstallation)
+  - [Manuel d'installation](#manuel-dinstallation)
   - [Archives du projet](#archives-du-projet)
 
 <!-- toc end -->
@@ -71,23 +76,29 @@
 ## Analyse préliminaire
 ### Introduction
 
-Podz est une application web de publication de podcasts, pour le projet de TPI de Samuel Roland en SI-MI4A. Les auteurs peuvent créer des podcasts, publier des épisodes, planifier la publication d'épisodes dans le futur et les cacher. L'application est basée sous Laravel 9 et ne part pas d'un projet existant. <!-- pas "part de zéro" -->
+Podz est une application web de publication de podcasts, développée pour le TPI de Samuel Roland en SI-MI4A. Les auteurs peuvent créer des podcasts, publier et gérer des épisodes, planifier la publication d'épisodes dans le futur et les cacher. L'application est basée sous Laravel 9 et ne part pas d'un projet existant.
 
 ### Glossaire
 
+- **AJAX**: Asynchronous JavaScript and XML: méthode pour faire des requêtes HTTP en arrière-plan dans un navigateur afin d'éviter un rechargement complet de la page 
 - **BDD**: Behaviour Driven Development
+- **Blade**: moteur de vue de Laravel
 - **CSS**: Cascading Style Sheets
+- **Framework**: ensemble de librairies et de conventions qui donnent un cadre pour développer une application
 - **HTML**: Hypertext Markup Language
 - **IDE**: Integrated Development Environment
+- **JS**: JavaScript
 - **MCD**: Modèle Conceptuel de Données
 - **MLD**: Modèle Logique de Données
 - **MVC**: Modèle Vue Contrôleur
 - **PHP**: PHP Hypertext Preprocessor
 - **POO**: Programmation orientée objet
+- **RSS**: RDF Site Summary ou Really Simple Syndication: système de flux web pour diffuser du contenu (articles, podcasts, ...)
+- **Stack**: ensemble cohérent de technologies pour un but donné
+- **Starter kit**: kit de démarrage permettant de sauter les premières étapes
 - **TALL**: TailwindCSS - AlpineJS - Livewire - Laravel : stack de 4 frameworks web
-- **Framework**: ensemble de librairires et de conventions qui donnent un cadre pour développer une application
-- **stack**: ensemble cohérent de technologies pour un but donné
-- **RSS**: RDF Site Summary ou Really Simple Syndication: système de flux web
+
+<div class="together">
 
 ### Objectifs
 
@@ -98,7 +109,7 @@ Voici la liste des objectifs à atteindre, tirée du cahier des charges:
 - Authentification des utilisateurs.
 - Il n’y aura pas de partie back-office ni de rôle administrateur.
 
-Ces fonctionnalités sont implémentées par Jetstream, je n'ai donc pas eu besoin de m'en occuper.
+Ces fonctionnalités sont implémentées par Jetstream, je n'ai donc pas besoin de les implémenter.
 
 **Fonctionnalités détaillées selon le type d’utilisateur**
 - En tant que visiteur (personne non authentifiée) :
@@ -112,6 +123,7 @@ Ces fonctionnalités sont implémentées par Jetstream, je n'ai donc pas eu beso
     - Ajout d’un nouvel épisode.
     - Edition d’un épisode.
     - Suppression d’un épisode.
+</div>
 
 **En plus de cela, le travail sera évalué sur les 7 points spécifiques suivants:**
 1. Modélisation des données pertinentes (types, tailles, associations).
@@ -123,31 +135,33 @@ Ces fonctionnalités sont implémentées par Jetstream, je n'ai donc pas eu beso
 1. Lecture audio du podcast bien réalisée.
 
 ### Planification initiale
-<!--
-Ce chapitre montre la planification du projet. Celui-ci peut être découpé en tâches qui seront planifiées. Il s'agit de la première planification du projet, celle-ci devra être revue après l'analyse. Cette planification sera présentée sous la forme d'un diagramme.
+Le projet n'a pas de méthode de gestion de projet formel, mais plutôt une adaptation de la méthode Scrum (je travaille en Sprint et mon chef de projet vient de faire des retours 1 fois par cycle). Je ne voulais pas partir avec des gros outils comme IceScrum, j'ai préféré partir sur GitHub Projects et gérer des Issues dans des Kanbans. Les étiquettes des Issues indiquent le temps estimé (ex : `t-3` = temps estimé de 3h). Le projet se découpe en 5 sprints, la majorité durent 1 semaine, entre le 02.05.2022 et le 31.05.2022. Comme demandé par l’expert 1, une tâche de documentation quotidienne (avec 4 cases à cocher pour les 4 jours de travail) existe pour chaque sprint (ce qui donne 1h par jour).
 
-Ces éléments peuvent être repris des spécifications de départ.
--->
-La planification rendue le premier jour était faite sur un document séparé et avec une mise en page peu pratique, j'ai donc repris les données et j'ai changé l'affichage pour plus de lisibilité.
+**Dates des sprints**:
+- **Sprint 1**: du 02.05.2022 au 06.05.2022
+- **Sprint 2**: du 09.05.2022 au 13.05.2022
+- **Sprint 3**: du 16.05.2022 au 20.05.2022
+- **Sprint 4**: du 23.05.2022 au 27.05.2022
+- **Sprint 5**: du 30.05.2022 au 31.05.2022
+
+Voici à quoi ressemble mes kanbans pour chaque Sprint:
+![kanban](imgs/kanban-example.png)
+
+La planification initiale rendue le premier jour dans un document séparé avait une mise en page peu pratique, j'ai donc repris les données et j'ai changé l'affichage pour plus de lisibilité. L'ordre des tâches est le même qu'il y avait dans les colonnes Todo sur GitHub au début du projet.  
 :[fragment](markdown-build/planification-initiale.md)
 
 <div class="page"/>
 
 ## Analyse / Conception
-### Concept
-
-TODO ???? retirer ?
-
-L'application tourne en PHP sur un serveur Apache. Elle utilise une base de données MySQL pour stocker ses données.
 
 #### Technologies utilisées
 J'ai choisi la stack **TALL** (*TailwindCSS - AlpineJS - Livewire - Laravel*) pour ce projet, car je suis à l'aise avec ces 4 frameworks et parce qu'ils permettent d'être productif pour développer une application web.
 
 **Petits aperçus de ces frameworks**
-- **[Laravel](https://laravel.com/)**: un framework PHP basé sur le modèle MVC et en POO. Laravel donne accès à beaucoup de classes et fonctions très pratiques, d'avoir une structure imposée, d'avoir des solutions simples aux récurrents (traductions, authentification, gestion des dates, ...). Tout ceci simplifie beaucoup le développement d'applications web en PHP une fois qu'on ait à l'aise avec les bases.
-- **[Livewire](https://laravel-livewire.com/)**: un framework pour Laravel permettant de faire des composants fullstack réactifs. L'idée est d'utiliser la puissance de Blade et du PHP pour avoir des parties réactives sur le frontend (normalement codé en Javascript) sans devoir coder des requêtes AJAX.
+- **[Laravel](https://laravel.com/)**: un framework PHP basé sur le modèle MVC et en POO. Laravel donne accès à beaucoup de classes et fonctions très pratiques, d'avoir une structure imposée, d'avoir des solutions simples aux problèmes récurrents (traductions, authentification, gestion des dates, ...). Tout ceci simplifie beaucoup le développement d'applications web en PHP une fois qu'on est à l'aise avec les bases.
+- **[Livewire](https://laravel-livewire.com/)**: un framework pour Laravel permettant de faire des composants fullstack réactifs. L'idée est d'utiliser la puissance de Blade et PHP pour avoir des parties réactives sur le frontend (normalement codées en Javascript) sans devoir coder des requêtes AJAX.
 - **[AlpineJS](https://alpinejs.dev/)**: un petit framework Javascript relativement simple à apprendre, utilisée ici pour gérer certaines interactions que Livewire ne permet pas, ou qui concernent des états d'affichage (là où des requêtes sur le backend seraient inutiles). Les composants s'écrivent inline (sur les balises HTML directement). Très pratique pour afficher un dropdown, faire une barre de progression, ...
-- **[TailwindCSS](https://tailwindcss.com/)**: un framework CSS, concurrent de Bootstrap mais centré autour des propriétés CSS (en ayant des classes utilitaires - "utility-first") au lieu de tourner autour de composants. C'est très puissant pour construire rapidement des interfaces, en écrivant quasiment jamais de CSS pur et pour faire du responsive c'est très pratique parce qu'on peut préfixer toutes les classes par `md:` par ex. afin dire que la classe ne s'applique que sur les écrans medium et au dessus.
+- **[TailwindCSS](https://tailwindcss.com/)**: un framework CSS, concurrent de Bootstrap mais centré autour des propriétés CSS (en ayant des classes utilitaires - "utility-first") au lieu de fournir des classes "composants". C'est très puissant pour construire rapidement des interfaces, en écrivant quasiment jamais de CSS pur. Pour faire du responsive c'est très pratique parce qu'il suffit d'utiliser un préfixe d'écran devant n'importe quelle classe pour utiliser des media queries. Par exemple, on peut utiliser `md:text-white` pour dire que le texte est blanc sur les écrans medium et au dessus.
 
 Divers:
 - **[Jetstream](https://jetstream.laravel.com/2.x/introduction.html)**: Un starter Kit Laravel mettant en place les fonctionnalités d'authentification, tels que la connexion, la création de compte, la gestion du compte et beaucoup d'autres. L'option Livewire a été utilisée.
@@ -155,23 +169,23 @@ Divers:
 <div class="page"/>
 
 #### Outils d'aide
-Pour m'aider dans mon développement, j'ai utilisé différent outils, ils ne sont pas indispensables mais peuvent être très utiles:
+Pour m'aider dans mon développement, j'ai utilisé différent outils, ils ne sont pas requis pour travailler sur Podz, mais peuvent être très utiles:
 - **[Clockwork](https://underground.works/clockwork/)**: paquet Composer et extension web pour debugger les performances, les requêtes SQL, voir le temps d'exécution, ... Le paquet Composer est déjà installé.
 ![clockwork](imgs/clockwork.png)
-- **[Laravel Valet](https://laravel.com/docs/9.x/valet)**: fait tourner des serveurs web avec Nginx les rendant accessibles via des domaines en .test. Ce qui me permet de faire tourner mon serveur sous `podz.test` sans avoir besoin de me soucier de démarrer et d'arrêter ce serveur ni de gérer plusieurs ports quand plusieurs serveurs sont allumés. Fonctionne pour MacOS, mais des forks pour [Windows](https://github.com/cretueusebiu/valet-windows) et [Linux](https://cpriego.github.io/valet-linux/) existent également. Attention à bien suivre la procédure d'installation pour ne pas être coupé d'internet à cause du DNS local mal configuré.
+- **[Laravel Valet](https://laravel.com/docs/9.x/valet)**: fait tourner des serveurs web avec Nginx les rendant accessibles via des domaines en `.test`. Ce qui me permet de faire tourner mon serveur sous `podz.test` en HTTPS sans avoir besoin de me soucier de démarrer et d'arrêter ce serveur ni de gérer plusieurs ports quand plusieurs serveurs sont allumés. L'outil fonctionne pour MacOS, mais des forks pour [Windows](https://github.com/cretueusebiu/valet-windows) et [Linux](https://cpriego.github.io/valet-linux/) existent également. Attention à bien suivre la procédure d'installation pour ne pas être coupé d'internet à cause du DNS local mal configuré.
 ![valet](imgs/valet.png)
 
 </div>
 
 <div class="page"/>
 
-#### Base de données: MCD
+#### Modèle Conceptuel de Données
 ![MCD](MCD.png)
 </div>
 
 **Spécificités dans Episodes**:
-- Les combinaisons du Numéro et du podcast lié, ainsi que le titre et le podcast lié, sont uniques (exemple: on ne peut pas avoir 2 fois un épisode 4 du podcast "Summer stories", et on ne peut pas avoir 2 fois un épisode nommé "Summer 2020 review" du podcast "Summer stories").
-- La date de création est définie par la date de création de l'épisode sur la plateforme (avec l'upload du fichier), peu importe ses autres informations (la publication ou l'état caché n'a pas d'influence sur cette date). Cette date ne change jamais et est affichée qu'à l'auteur.
+- Les combinaisons du numéro et du podcast lié, ainsi que le titre et le podcast lié, sont uniques (exemple: on ne peut pas avoir 2 fois un épisode 4 du podcast "Summer stories", et on ne peut pas avoir 2 fois un épisode nommé "Summer 2020 review" du podcast "Summer stories").
+- La date de création est définie par la date de création de l'épisode sur la plateforme, peu importe ses autres informations (la publication ou l'état caché n'a pas d'influence sur cette date). Cette date ne change jamais et n'est affichée qu'à l'auteur.
 - La date de publication peut être dans le passé ou mais aussi dans le futur. Si elle est dans le futur, l'épisode n'est pas encore publié (jusqu'à la date définie). Ceci permet de programmer dans le futur une publication.
 - Le champ Caché est par défaut à Faux et n'a pas d'effet dans ce cas. S'il est Vrai, l'épisode ne sera pas visible dans les détails du podcast.
 
@@ -180,16 +194,15 @@ Pour m'aider dans mon développement, j'ai utilisé différent outils, ils ne so
 
 <div class="together">
 
-#### Base de données: MLD
+#### Modèle Logique de Données
 
 ![MLD](MLD.png)
 
 </div>
 
-Ce MLD n'a pas été fait à la main mais a été rétro-ingéniéré depuis la base de données, après avoir codé les migrations. Certains champs sont créés par une migration générée par Jetstream, je n'en ai pas besoin mais je ne vais pas les retirer au risque de casser certaines parties existantes. Ce MLD omet volontairement les tables générées par Laravel et propres à chaque application Laravel (`sessions`, `migrations`, ...), une partie provient de migrations créées par Jetstream. Ne vous étonnez donc pas de trouver d'autres tables dans la base de données, je ne les utilise pas directement. 
+Ce MLD n'a pas été fait à la main mais a été rétro-ingéniéré depuis la base de données, après avoir codé les migrations. Certains champs (`two_factor_*`) sont créés par une migration générée par Jetstream, je n'en ai pas besoin mais je ne vais pas les retirer pour ne pas risquer de casser certaines vues existantes. Ce MLD omet volontairement les tables générées par Laravel et propres à chaque application Laravel (`sessions`, `migrations`, ...), une partie provient de migrations créées par Jetstream. Ne vous étonnez donc pas de trouver d'autres tables dans la base de données, je ne les utilise pas directement. 
 
-todo: documenter spécificités.
-Les champs `created_at` et `updated_at` sont gérés automatiquement par Laravel, je n'utilise que le `created_at` en lecture seulement.
+Les champs `created_at` et `updated_at` sont gérés automatiquement par Laravel (grâce au timestamps activés dans la migration), je n'utilise que le `created_at` en lecture seulement.
 
 <!--
 Le concept complet avec toutes ses annexes :
@@ -203,9 +216,9 @@ Par exemple :
 <div class="together">
 
 #### Maquettes
-Le gabarit est déjà designé par Jetstream. La vue en tant que visiteur (donc déconnecté):
+Le gabarit est déjà designé par Jetstream. Voici ce que voit un visiteur (déconnecté):
 ![page](models/Gabarit-visitor.png)
-La vue en tant qu'auteur, donc connecté.
+Et maintenant ce que voit un auteur (connecté):
 ![page](models/Gabarit-author.png)
 Pour pouvoir utiliser les fonctionnalités requises, voici la liste complète des pages nécessaires et leur maquette:
 
@@ -238,7 +251,7 @@ Cette page est visible publiquement et c'est la page par défaut de l'applicatio
 **Page Détails d'un podcast**
 
 **Vue visiteur**  
-Les visiteurs ne voient que les épisodes qui sont visibles et qu'une partie de leurs informations. Ils ne voient que le numéro, le titre, la description, l'audio et la date (mais sans l'heure et la minute de publication).
+Les visiteurs ne voient que les épisodes qui sont visibles et ils ne voient que le numéro, le titre, la description, l'audio et la date (mais sans l'heure et la minute de publication).
 ![page](models/Page_d%C3%A9tails_podcast_visiteur.png)
 </div>
 
@@ -251,7 +264,7 @@ L'auteur voit toutes les informations de ses podcasts contrairement au visiteur.
 
 <div class="together">
 
-Quand l'auteur clique sur les icônes d'édition, des formulaires s'affichent pour les éléments sélectionnés afin de permettre l'édition ou la suppression. Ici l'auteur crée un 5 ème épisode planifiée qui ne sera publié que le lendemain à 15h08. On peut éditer plusieurs éléments à la fois, il n'y aura pas de conflit.
+Quand l'auteur clique sur les icônes d'édition, des formulaires s'affichent pour les éléments sélectionnés afin de permettre l'édition ou la suppression. Quand on clique sur `Nouvel épisode...`, le formulaire de création apparaît juste en dessous. On peut éditer plusieurs éléments à la fois, il n'y aura pas de problèmes puisque la page ne se rafraîchit pas mais est découpée en plusieurs composants Livewire.
 ![page](models/Vue-auteur-podcast-details-edition.png)
 
 </div>
@@ -267,32 +280,26 @@ Simple formulaire pour créer un nouveau podcast, avec affichage des erreurs en 
 
 ### Stratégie de test
 
-<!--
+Cette section concerne la manière dont est testé Podz durant le projet. Je teste manuellement les fonctionnalités dans mon navigateur (Firefox) et j'écris aussi des tests automatisés avec PHPUnit (un framework PHP de tests). La plupart des fonctionnalités sont couvertes par ces tests automatisés et quand cela n'est pas le cas, je regarde à la main si cela fonctionne. 
 
-Décrire la stratégie globale de test: 
-
-•	types de des tests et ordre dans lequel ils seront effectués.
-•	les moyens à mettre en œuvre.
-•	couverture des tests (tests exhaustifs ou non, si non, pourquoi ?).
-•	données de test à prévoir (données réelles ?).
-•	les testeurs extérieurs éventuels.
--->
-
-Cette section concerne la manière dont est testé Podz durant le projet et à la fin. Je teste manuellement les fonctionnalités dans son navigateur (Firefox) et écrit aussi des tests automatisés avec PHPUnit (un framework PHP de tests). La plupart des fonctionnalités sont couvertes par ces tests automatisés et quand cela n'est pas le cas, je regarde à la main si cela fonctionne. Les factories et le seeder écrits sont également très utile pour les tests. 
-
-La stratégie de développement est le BDD (Behavior Driven Development). Cela consiste à écrire des tests qui testent le comportement avant de coder, s'assurer que le test plante, puis développer jusqu'à que le test passe. Ensuite on peut refactoriser pour augmenter la qualité tout en s'assurant que cela fonctionne.  
-Toute la suite de tests est lancée très fréquemment (plusieurs fois par jour) pour s'assurer qu'une nouvelle fonctionnalité n'a pas cassé une autre en chemin.
+La stratégie de développement est le BDD (Behaviour Driven Development). Cela consiste à écrire des tests qui testent le comportement avant de coder, s'assurer que le test plante, puis développer jusqu'à que le test passe. Ensuite on peut refactoriser pour augmenter la qualité tout en s'assurant que cela fonctionne. J'ai fait quelques tests unitaires mais la majorité sont des tests fonctionnels. Toute la suite de tests est lancée très fréquemment (plusieurs fois par jour) pour s'assurer qu'une nouvelle fonctionnalité n'a pas cassé une autre en chemin.
 </div>
 <!-- todo: check BDD meaning -->
 
 #### Où sont écrits les tests ?
-Tous les tests se trouve dans le dossier `tests` à la racine du repository. Le dossier `Feature` contient les tests fonctionnels, `Unit` les tests unitaires et `Jetstream` les tests créé par Jetstream (ces derniers ont été déplacé de `Feature` afin de ne pas les exécuter constamment).
+Tous les tests se trouvent dans le dossier `tests` à la racine du repository. Le dossier `Feature` contient les tests fonctionnels, `Unit` les tests unitaires et `Jetstream` les tests créé par Jetstream (ces derniers ont été retiré de `Feature` afin de ne pas les exécuter constamment).
 
-#### Prérequis pour lancer les tests
-Il est nécessaire d'avoir mis en place le projet et d'avoir l'extension PHP SQLite.
+#### Les données de tests
 
 <!-- todo: à corriger -->
-Avant chaque test, on retourne à l'état initiale grâce au trait `RefreshDatabase`. Puis le seeder `DatabaseSeeder` s'exécute graĉe au `$seed` défini à `true`. Ces 2 configurations sont faites dans `tests/TestCase.php`, ce qui permet au final que tous les tests sont lancées sur une base de données propre et remplie.
+Des factories et le seeder ont été codés pour ne pas devoir rentrer des valeurs à la main. Dans mon seeder `DatabaseSeeder` je génére peu d'éléments (minimum de 2) pour les tests automatisés, afin d'accélérer l'exécution. Je génère plus d'éléments pour l'application locale afin d'avoir une situation plus réaliste dans le navigateur. Dans `EpisodeFactory`, j'ai fait en sorte que les épisodes soient toujours visibles et publiés dans le passé (afin d'éviter des tests qui plantent à cause de cette partie aléatoire non supportée). Quand les tests doivent avoir des épisodes cachés (pour tester les cas de visibilité), ils en créent eux-mêmes quelques-uns avant.
+
+Etant le choix par défaut dans Laravel, j'ai utilisé le paquet Faker dans mes factories pour générer différents types de données. Le texte généré est en Lorem Ipsum. Ce qui est pratique comparé à l'écriture de données manuelles, c'est qu'on peut avoir des textes très longs permettant de valider dans nos interfaces que les valeurs extrèmes sont correctement affichées.
+
+**Exemple de données fictives générées par Faker**:
+![faker](imgs/faker-example.png)
+
+Avant chaque test, on retourne à l'état initiale grâce au trait `RefreshDatabase`. Puis le seeder `DatabaseSeeder` s'exécute grâce au `$seed` défini à `true`. Ces 2 configurations sont faites dans `tests/TestCase.php`, ce qui permet au final que tous les tests sont lancées sur une base de données propre et remplie.
 
 Afin de ne pas impacter la base de données de développement, les tests sont lancés sur une base de données SQLite en mémoire. Voici les lignes en bas du fichier de configuration de PHPUnit `phpunit.xml`, qui redéfinit 2 variables d'environnement permettant d'avoir une base de données en RAM.
 ```xml
@@ -301,14 +308,14 @@ Afin de ne pas impacter la base de données de développement, les tests sont la
 ```
 
 #### Comment lancer les tests ?
-Il y a différentes manières de lancer les tests dans un terminal dans le dossier du projet:
-- `./vendor/bin/phpunit`
+Il est nécessaire d'avoir mis en place le projet et d'avoir l'extension PHP SQLite tout d'arbod. Ensuite, il y a différentes manières de lancer les tests dans un terminal dans le dossier du projet:
 - `php artisan test`
-- `phpunit` (si phpunit a été installé séparement)
+- `./vendor/bin/phpunit`
+- `phpunit` (seulement si phpunit a été installé séparement/globalement)
 
-Les tests en dehors du dossier `tests/Unit` et `tests/Feature` ne seront pas lancés. Pour exécuter les tests de Jetstream si besoin, il faut lancer `php artisan test tests/Jetstream`.
+Les tests en dehors du dossier `tests/Unit` et `tests/Feature` ne sont pas lancés. Pour exécuter les tests de Jetstream si besoin, il faut lancer `php artisan test tests/Jetstream` ou pour tout inclure `php artisan test tests`.
 
-Vous pouvez passer des paramètres à `phpunit` (aussi possible pour la commande `php artisan test`).
+Vous pouvez passer des paramètres à `phpunit` (fonctionne aussi avec la commande `php artisan test`).
 
 **Exemples**:
 1. pour exécuter seulement 1 test nommé `test_podcasts_page_exists` on peut filtrer:  
@@ -318,7 +325,7 @@ Vous pouvez passer des paramètres à `phpunit` (aussi possible pour la commande
 1. pour exécuter les tests d'un dossier:  
 `php artisan test tests/Unit`
 
-Je recommande de configurer un raccourci dans votre IDE pour lancer les tests. J'ai utilisé ce réglage de raccourci dans VSCode pour lancer tous les tests lors d'un `ctrl+t ctrl+t`
+Je recommande de configurer un raccourci clavier dans votre IDE pour lancer les tests. J'ai utilisé ce réglage de raccourci dans VSCode pour lancer tous les tests lors d'un `ctrl+t ctrl+t`
 ```json
 {
     "key": "ctrl+t ctrl+t",
@@ -328,10 +335,14 @@ Je recommande de configurer un raccourci dans votre IDE pour lancer les tests. J
     }
 }
 ```
+<div class="page"/>
 
 ### Planification
-La liste des tâches est la même qu'au départ, les estimations n'ont pas été modifiées, l'ordre est le même qu'il y avait dans les colonnes Todo sur GitHub au début du projet. Afin de comparer ce qui avait été prévu et ce qui s'est réellement passé finalement, j'ai rajouté quelques colonnes. Tout le tableau est ordré par la date d'achèvement des tâches, ce qui explique que ce n'est pas exactement le même ordre que la planification initiale.
+La liste des tâches est la même qu'au départ, les estimations n'ont pas été modifiées. Afin de comparer ce qui avait été prévu et ce qui s'est réellement passé finalement, j'ai rajouté quelques colonnes. Tout le tableau est ordré par la date d'achèvement des tâches, ce qui explique que ce n'est pas exactement le même ordre que la planification initiale. `S-d` signifie `Sprint de départ` et `S-f` signifie `Sprint final` (est différent pour les tâches achevée en retard ou en avance). Le Delta est la résultat de Temps estimé - Temps passé.
 :[fragment](markdown-build/planification-finale.md)
+
+**Comparaison**  
+En fait mon sprint 4 est trop long puisque le jeudi et vendredi étaient fériés. TODO.
 
 <!-- ajouter heures diverses non classifiées -->
 <!-- commentaire avance et retard, et rattrapage et total, et heures diverse significations.-->
@@ -346,19 +357,19 @@ Il s’agit en principe de la planification définitive du projet. Elle peut êt
 
 ### Dossier de conception
 
-**Résumé des podcasts**  
+#### Résumé des podcasts  
 Sur la page Podcasts, il y a un résumé des descriptions des podcasts, qui se limitent à 150 caractères (+3 petits points), puisque la description est trop longue pour être affichée entièrement et l'utilisation de `text-overflow: ellipsis` en CSS sur plusieurs lignes n'est pas très simple. Raccourcir en PHP était donc l'autre solution. Un attribute `summary` de la classe `Podcast` permet de récuperer facilement ce résumé. Si la description est plus courte que la limite, la description est utilisée.
 
-**Visibilité des épisodes**
-Pour qu'un épisode soit visible publiquement il faut que sa date de publication soit dans le passé et que son état Caché soit Faux. Si cette condition n'est pas vraie, l'épisode n'est visible que par l'auteur.
+#### Visibilité des épisodes
+Pour qu'un épisode soit visible publiquement il faut que sa date de publication soit dans le passé et que son état Caché soit Faux. Si cette condition n'est pas vraie, l'épisode n'est visible que par l'auteur. Si on regarde en détail le code et les routes, on s'aperçoit que les fichiers étant sur le disque public, il n'y a pas d'autorisations appliquée au chargement des fichiers audios. Ainsi si on mémorise le nom du fichier audio, et que l'épisode devient ensuite invisible, on pourra toujours accéder publiquement 
 
-**Traduction**  
+#### Traduction  
 Pour que les messages d'erreurs soient en français. J'utilise le système d'internationalisation de Laravel et j'ai défini le français comme langue par défaut et l'anglais comme langue de repli ("fallback language") au cas où quelquechose n'aurait pas été traduit en français. J'ai dupliqué le fichier `lang/fr/validation.php` à partir `lang/en/validation.php` et j'ai traduit les quelques messages d'erreurs que j'utilisais.
 
-**Vues de Jetstream**  
+#### Vues de Jetstream  
 Le `navigation-menu.blade.php` a été modifié afin d'avoir les bons boutons. Le logo de Jetstream était modifiable dans 3-4 fichiers différents, j'ai préféré regrouper le tout dans `logo.blade.php` afin de centraliser. Le logo utilise la couleur `green` définie dans `tailwind.config.js`.
 
-**Routes**  
+#### Routes
 J'ai suivi les conventions des noms et URLs des routes comme pour les controlleurs resources (je n'en ai pas utilisé dans ce projet).
 
 ![laravel-doc-image](imgs/routes-convention.png)
@@ -382,7 +393,7 @@ Ces 2 paramètres dans la configuration de PHP (fichier `php.ini`) doivent être
 
 Les fichiers audios sont stockés dans `storage/app/public/episodes` c'est à dire dans le dossier `episodes` du dossier `public`.
 
-#### Eléments réutilisables
+#### Éléments réutilisables
 
 **Le composant Field**  
 Un composant Blade permettant d'abstraire les éléments communs à tous les champs de formulaire: l'affichage du label, le design basique, l'affichage des erreurs de validations.
@@ -445,6 +456,9 @@ Il y a aussi des classes CSS qui peuvent être utilisées pour avoir un design c
 <div class="page"/>
 
 ## Réalisation
+
+Podz est maintenant en version 1 (v1), cette version est affichée à droite du logo. Il n'y a pas d'autres numéros avant.
+
 ### Dossier de réalisation
 
 <!-- réduire taille du texte pour éviter les overflow-->
@@ -538,6 +552,11 @@ Décrire la réalisation "physique" de votre projet
 
 NOTE : Evitez d’inclure les listings des sources, à moins que vous ne désiriez en expliquer une partie vous paraissant importante. Dans ce cas n’incluez que cette partie…
 -->
+
+### Construction de la documentation
+La documentation étant écrite en Markdown, j'ai du régler plusieurs problèmes pour avoir le même résultat visuel que si j'avais travaillé dans Word.
+
+Pour l'exporter en PDF et avoir cette apparance, j'ai utilisé VSCode et une extension nommée `Markdown PDF` (id: `yzane.markdown-pdf`), de lancer la palette de commandes (Ctrl + Maj + P), puis de choisir l'action `Markdown PDF: Export (pdf)`. Le résultat sera le fichier `podz-docs.pdf` à côté de ce fichier. Même fonctionnement pour le journal de travail et le README s'il y a besoin de les exporter. J'ai du écrire du CSS `docs/markdown-build/pdf-export.css` pour améliorer le design de l'export qui n'était pas très joli. Toutes les configurations pour l'extension sont faites dans le fichier `.vscode/settings.json` (en-tête et pied de page, choix du thème du surlignage avec HighlightJS, taille des marges et feuilles de styles).
 
 ### Résultats des tests effectués
 <!-- Compléter temps !! -->
@@ -694,7 +713,7 @@ Tous les objectifs fixés au départ ont été atteints.
 ### Points positifs / négatifs
 
 
-### Bilan du projet
+### Bilan personnel
 
 J'ai eu beaucoup de plaisir à développer Podz, surtout avec l'écriture des tests. Contrairement à mon Pré-TPI où je n'avais pas pu terminer le développement et la documentation, je suis plutôt content d'avoir réussi à finir toutes les fonctionnalités demandées dans les temps et d'avoir pu faire correctement la documentation. Je me sens encore plus à l'aise qu'avant pour écrire des tests, même pour des cas plus complexe pour gérer des fichiers et des erreurs. J'ai compris les stratégies de base pour savoir ce qu'on peut tester ou pas, quand je dois en écrire un nouveau je sais donc rapidement quels sont les éléments à inclure. Au passage, j'ai appris que tous les navigateurs ne supportent pas tous les fichiers audio (surtout s'ils sont propriétaires), Firefox par ex. a quelques difficultés avec les fichiers `.m4a`.
 Comme durant mon Pré-TPI, j'ai eu de la peine avec l'upload de fichiers parce que je n'arrivais pas à écrire des tests corrects. Donc j'ai beaucoup testé à la main et cela devenait vite chronophage. Grâce à l'aide M. Hurni mon chef de projet, j'ai pu changer de stratégie pour ces tests.
@@ -704,22 +723,17 @@ De nombreuses fonctionnalités pourraient implémentés si le projet est réutil
 1. Ajouter un flux RSS pour écouter le podcast depuis un lecteur de podcasts (comme Apple Podcasts par exemple)
 2. 
 
+### Remerciements
+J'aimerai remercier M. Hurni pour les retours et les conseils techniques qu'il m'a apporté au Pré-TPI et au TPI qui m'ont permis de progresser avec Laravel en général et l'écriture de tests. J'espère avoir pu utiliser au mieux ces feedbacks et continuer de m'améliorer continuellement sur Laravel et les autres frameworks à l'avenir, pour produire du code de qualité et maîtriser de plus en plus ces technologies.
+
+Je remercie aussi Gatien Jayme pour sa relecture de ma documentation.
+
 <div class="page"/>
 
 ## Annexes
 <!-- todo: document séparé ?? -->
 ### Résumé du rapport du TPI
-**Situation de départ**  
-Le but du projet est de développer une application web avec Laravel de publication de podcasts. Pour les auteurs, il doit être possible de créer et modifier leurs podcasts, et créer, éditer et supprimer des épisodes dans leurs podcasts. Les épisodes doivent pouvoir être publiés dans le futur et caché par l'auteur si besoin. Le projet est parti de rien (il ne s'appuie pas sur un autre projet). J'ai choisi d'appeler l'application Podz.  
-Les critères spécifiques demandaient de faire une modélisation des données pertinentes, de respecter les principes du modèle MVC, d'avoir une interface utilisateur propre et utilisable. Il était aussi demandé de suivre les normes d'écriture de code, d'utiliser un système de versionning en faisant des petits commits atomiques et fréquents. Les épisodes devaient aussi être correctement écoutables dans les navigateurs.
-
-**Mise en oeuvre**  
-En plus de l'utilisation du framework Laravel, j'y ai ajouté Livewire, AlpineJS et TailwindCSS. Ces 4 frameworks que j'avais utilisé en stage et pour des projets personnels forment la stack TALL et sont régulièrement utilisé dans l'écosystème Laravel.  
-Pour ne pas avoir à développer la connexion et la création de compte, j'ai utilisé le starter kit Jetstream qui mettait déjà tout en place. J'ai fait mon MCD et MLD de ma base de données. J'ai réfléchi aux différentes pages nécessaires pour utiliser les fonctionnalités requises et j'ai fait des maquettes pour chacune des pages. La page de détails d'un podcast a en fait plusieurs vues, selon si l'on est visiteur ou auteur, et en tant qu'auteur on peut ouvrir ou fermer les formulaires pour modifier des épisodes ou les informations du podcast. Une fois cette analyse terminée, j'ai développé l'une après l'autre toutes les fonctionnalités demandées, tout en suivant ma planification. J'ai eu un peu d'avance au départ sur le premier sprint (j'ai avancé une tâche du sprint 2 au sprint 1) puis comme la création d'épisode avec l'upload de fichiers était plus complexe que je l'imaginais, j'ai eu un peu de retard sur mon planning, mais j'ai réussi à rattraper le retard à la fin et tout finir dans les temps.  
-La particularité de mon TPI par rapport à d'autres élèves est que j'ai écrit de nombreux tests automatisés pour m'assurer que la majeure partie du comportement de mon application était correct et restait fonctionnel tout le long du projet. J'ai utilisé PHPUnit pour écrire ces tests. L'écriture a pris un peu de temps tout au long du projet, mais ils ont permis d'accélerer la validation du fonctionnement, j'ai ainsi pu éviter beaucoup d'essais à la main puisque j'avais confiance sur le fait que mon backend fonctionne. Il restait bien sûr à s'assurer que tout fonctionne comme prévu dans mon navigateur mais cela était plus rapide à déterminer.
-
-**Résultats**  
-Toutes les fonctionnalités demandées ont pu être implémentées et testées. La création d'un podcast se fait sur une page dédiée, tandis que l'édition d'un podcast, la création, modification et suppression d'épisodes se font toutes dans la même page Détails d'un podcast. Je n'ai pas eu de difficultés particulières à designer mon application, je n'ai donc pas eu besoin d'utiliser de template. Les points spécifiques ont été respectés.
+Le résumé est disponible en document séparé (voir archives) ou directement sur Github [en Markdown](https://github.com/samuelroland/podz/blob/main/docs/podz-résumé-tpi.md).
 
 <div class="page"/>
 
@@ -739,12 +753,6 @@ J'ai aussi utilisé le site [**Mozilla Developer Network**](https://developer.mo
 **Aides humaines**
 - **M. Hurni**: conseils et retours réguliers, réponses à mes questions.
 - **Gatien Jayme**: aide relecture des documents
-
-### Remerciements
-J'aimerai remercier M. Hurni pour les retours et les conseils techniques qu'il m'a apporté au Pré-TPI et au TPI qui m'ont permis de progresser avec Laravel en général et l'écriture de tests. J'espère avoir pu utiliser au mieux ces feedbacks et continuer de m'améliorer continuellement sur Laravel et les autres frameworks à l'avenir, pour produire du code de qualité et maîtriser de plus en plus ces technologies.
-
-Je remercie aussi Gatien Jayme pour sa relecture de ma documentation.
-
 <!--
 
 Liste des livres utilisés (Titre, auteur, date), des sites Internet (URL) consultés, des articles (Revue, date, titre, auteur)… Et de toutes les aides externes (noms)   
@@ -752,13 +760,13 @@ Liste des livres utilisés (Titre, auteur, date), des sites Internet (URL) consu
 ### Journal de travail
 Le journal est disponible en document séparé (voir archives) ou directement sur Github [en Markdown](https://github.com/samuelroland/podz/blob/main/docs/podz-journal.md) ou [en PDF](https://github.com/samuelroland/podz/blob/main/docs/podz-journal.md).
 
-### Manuel d'Installation
+### Manuel d'installation
 Toutes les informations nécessaires à l'installation du projet se trouve dans le README disponible en document séparé (voir archives) ou sur GitHub [en Markdown](https://github.com/samuelroland/podz/blob/main/README.md).
 
 ### Archives du projet
-- `podz-code-samuel-roland.zip`
-- `podz-documentation-samuel-roland.pdf`
-- `podz-journal-de-travail-samuel-roland.pdf`
-- `podz-résumé-tpi-samuel-roland.pdf`
-- `podz-readme-samuel-roland.pdf`
+- `podz-code.zip`
+- `podz-documentation.pdf`
+- `podz-journal-de-travail.pdf`
+- `podz-résumé-tpi.pdf`
+- `podz-readme.pdf`
 
