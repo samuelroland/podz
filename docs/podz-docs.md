@@ -17,14 +17,16 @@
 
 <div class="page"/> 
 
-<div class="toc">
 
 <div style="font-size: 28px; margin-top: 20px;">Table des matières</div>
 
-- [Analyse préliminaire](#analyse-préliminaire)
-  - [Introduction](#introduction)
-  - [Glossaire](#glossaire)
-  - [Objectifs](#objectifs)
+<!-- toc start -->
+<div class="toc">
+
+- [Analyse préliminaire](#analyse-préliminaire)<strong class="atright">5</strong>
+  - [Introduction](#introduction)<strong class="atright">5</strong>
+  - [Glossaire](#glossaire)<strong class="atright">5</strong>
+  - [Objectifs](#objectifs)<strong class="atright">5</strong>
   - [Planification initiale](#planification-initiale)
 - [Analyse / Conception](#analyse--conception)
   - [Concept](#concept)
@@ -58,6 +60,8 @@
   - [Manuel d'Installation](#manuel-dinstallation)
   - [Archives du projet](#archives-du-projet)
 
+<!-- toc end -->
+
 </div>
 
 <div class="page"/><!-- saut de page -->
@@ -69,16 +73,16 @@ Podz est une application web de publication de podcasts, pour le projet de TPI d
 
 ### Glossaire
 
-- BDD Behavior Driven Development
-- CSS: Cascading Style Sheets
-- HTML: Hypertext Markup Language
-- IDE: Integrated Development Environment
-- MCD: Modèle Conceptuel de Données
-- MLD: Modèle Logique de Données
-- MVC: Modèle Vue Contrôleur
-- PHP: PHP Hypertext Preprocessor
-- POO: Programmation orientée objet
-- TALL: TailwindCSS - AlpineJS - Livewire - Laravel : stack de 4 frameworks web
+- **BDD**: Behavior Driven Development
+- **CSS**: Cascading Style Sheets
+- **HTML**: Hypertext Markup Language
+- **IDE**: Integrated Development Environment
+- **MCD**: Modèle Conceptuel de Données
+- **MLD**: Modèle Logique de Données
+- **MVC**: Modèle Vue Contrôleur
+- **PHP**: PHP Hypertext Preprocessor
+- **POO**: Programmation orientée objet
+- **TALL**: TailwindCSS - AlpineJS - Livewire - Laravel : stack de 4 frameworks web
 
 ### Objectifs
 
@@ -119,12 +123,15 @@ Ce chapitre montre la planification du projet. Celui-ci peut être découpé en 
 
 Ces éléments peuvent être repris des spécifications de départ.
 -->
+La planification rendue le premier jour était faite sur un document séparé et avec une mise en page peu pratique, j'ai donc repris les données et j'ai changé l'affichage pour plus de lisibilité.
+:[fragment](markdown-build/planification-initiale.md)
+
 <div class="page"/>
 
 ## Analyse / Conception
 ### Concept
 
-TODO ???? retirer =
+TODO ???? retirer ?
 
 L'application tourne en PHP sur un serveur Apache. Elle utilise une base de données MySQL pour stocker ses données.
 
@@ -137,6 +144,7 @@ J'ai choisi la stack **TALL** (*TailwindCSS - AlpineJS - Livewire - Laravel*) po
 - **[AlpineJS](https://alpinejs.dev/)**: un petit framework Javascript relativement simple à apprendre, utilisée ici pour gérer certaines interactions que Livewire ne permet pas, ou qui concernent des états d'affichage (là où des requêtes sur le backend seraient inutiles). Les composants s'écrivent inline (sur les balises HTML directement). Très pratique pour afficher un dropdown, faire une barre de progression, ...
 - **[TailwindCSS](https://tailwindcss.com/)**: un framework CSS, concurrent de Bootstrap mais centré autour des propriétés CSS (en ayant des classes utilitaires - "utility-first") au lieu de tourner autour de composants. C'est très puissant pour construire rapidement des interfaces, en écrivant quasiment jamais de CSS pur et pour faire du responsive c'est très pratique parce qu'on peut préfixer toutes les classes par `md:` par ex. afin dire que la classe ne s'applique que sur les écrans medium et au dessus.
 
+Divers:
 - **[Jetstream](https://jetstream.laravel.com/2.x/introduction.html)**: Un starter Kit Laravel mettant en place les fonctionnalités d'authentification, tels que la connexion, la création de compte, la gestion du compte et beaucoup d'autres. L'option Livewire a été utilisée.
 
 <div class="page"/>
@@ -313,8 +321,8 @@ Je recommande de configurer un raccourci dans votre IDE pour lancer les tests. J
 ```
 
 ### Planification
-
-todo
+La liste des tâches est la même qu'au départ, les estimations n'ont pas été modifiées, l'ordre est le même qu'il y avait dans les colonnes Todo sur GitHub au début du projet. Afin de comparer ce qui avait été prévu et ce qui s'est réellement passé finalement, j'ai rajouté quelques colonnes. Tout le tableau est ordré par la date d'achèvement des tâches, ce qui explique que ce n'est pas exactement le même ordre que la planification initiale. 
+:[fragment](markdown-build/planification-finale.md)
 
 <!--
 Révision de la planification initiale du projet :
