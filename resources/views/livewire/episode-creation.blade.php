@@ -1,6 +1,6 @@
-<div x-data="{newEpisodeOpen: true}" class="my-2">
+<div x-data="{newEpisodeOpen: false}" class="my-2">
     <h2 :class="{'cursor-pointer hover:underline': !newEpisodeOpen}" @click="newEpisodeOpen = true">Nouvel épisode <span x-show="!newEpisodeOpen">...</span></h2>
-    <div x-show="newEpisodeOpen" class="border-l border-blue px-2 pl-3 my-5 w-full ">
+    <div x-show="newEpisodeOpen" class="border-l border-blue px-2 pl-3 my-5 w-full " x-cloak>
 
         <x-episode-form :episode="$episode" mode="create"></x-episode-form>
 
