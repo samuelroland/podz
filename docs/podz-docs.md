@@ -52,7 +52,6 @@
   - [Construction de la documentation](#construction-de-la-documentation)
   - [Résultats des tests effectués](#résultats-des-tests-effectués)
     - [Couverture des tests](#couverture-des-tests)
-  - [Liste des documents fournis](#liste-des-documents-fournis)
 - [Conclusions](#conclusions)
   - [Objectifs atteints / non-atteints](#objectifs-atteints--non-atteints)
   - [Difficultés particulières](#difficultés-particulières)
@@ -361,19 +360,22 @@ Il s’agit en principe de la planification définitive du projet. Elle peut êt
 Sur la page Podcasts, il y a un résumé des descriptions des podcasts, qui se limitent à 150 caractères (+3 petits points), puisque la description est trop longue pour être affichée entièrement et l'utilisation de `text-overflow: ellipsis` en CSS sur plusieurs lignes n'est pas très simple. Raccourcir en PHP était donc l'autre solution. Un attribute `summary` de la classe `Podcast` permet de récuperer facilement ce résumé. Si la description est plus courte que la limite, la description est utilisée.
 
 #### Visibilité des épisodes
-Pour qu'un épisode soit visible publiquement il faut que sa date de publication soit dans le passé et que son état Caché soit Faux. Si cette condition n'est pas vraie, l'épisode n'est visible que par l'auteur. Si on regarde en détail le code et les routes, on s'aperçoit que les fichiers étant sur le disque public, il n'y a pas d'autorisations appliquée au chargement des fichiers audios. Ainsi si on mémorise le nom du fichier audio, et que l'épisode devient ensuite invisible, on pourra toujours accéder publiquement 
+Pour qu'un épisode soit visible publiquement il faut que sa date de publication soit dans le passé et que son état Caché soit Faux. Si cette condition n'est pas vraie, l'épisode n'est visible que par l'auteur. Si on regarde en détail le code et les routes, on s'aperçoit que les fichiers étant sur le disque public, il n'y a pas d'autorisations appliquée au chargement des fichiers audios. Ainsi si on mémorise le nom du fichier audio, et que l'épisode devient ensuite invisible, on pourra toujours accéder publiquement via le lien d'accès direct (ex: `https://podz.test/storage/episodes/UyJ7nE5TewwbnjXRAhrmWX6Ht45.ogg`). Cette sécurité n'était pas demandée donc je ne l'ai pas implémentée mais cela pourrait être une idée d'amélioration. Pour corriger ceci, il faudrait bouger les épisodes dans le disque `app` qui n'est pas publiquement accessibles, et "streamer" les fichiers audio via une route dédiée de notre application, de sorte à pouvoir appliquer un contrôle des droits d'accès et bloquer l'accès du fichier audio sur un épisode caché si ce n'est pas l'auteur.
 
 #### Traduction  
 Pour que les messages d'erreurs soient en français. J'utilise le système d'internationalisation de Laravel et j'ai défini le français comme langue par défaut et l'anglais comme langue de repli ("fallback language") au cas où quelquechose n'aurait pas été traduit en français. J'ai dupliqué le fichier `lang/fr/validation.php` à partir `lang/en/validation.php` et j'ai traduit les quelques messages d'erreurs que j'utilisais.
 
 #### Vues de Jetstream  
-Le `navigation-menu.blade.php` a été modifié afin d'avoir les bons boutons. Le logo de Jetstream était modifiable dans 3-4 fichiers différents, j'ai préféré regrouper le tout dans `logo.blade.php` afin de centraliser. Le logo utilise la couleur `green` définie dans `tailwind.config.js`.
+Le `navigation-menu.blade.php` a été modifié afin d'avoir les bons boutons. Le logo de Jetstream était modifiable dans 3-4 fichiers différents, j'ai préféré regrouper le tout dans `logo.blade.php` afin de centraliser. Le logo utilise la couleur `green` définie dans `tailwind.config.js`. Le gabarit `layouts.guest` a été supprimé au profit d'un seul gabarit `layouts.app`, le menu de navigation s'adapte pour si on est connecté ou non.
+
+<div class="togheter">
 
 #### Routes
 J'ai suivi les conventions des noms et URLs des routes comme pour les controlleurs resources (je n'en ai pas utilisé dans ce projet).
 
 ![laravel-doc-image](imgs/routes-convention.png)
-[*Tiré de la documentation de Laravel*](https://laravel.com/docs/9.x/controllers#actions-handled-by-resource-controller)
+*Tiré de la [documentation de Laravel](https://laravel.com/docs/9.x/controllers#actions-handled-by-resource-controller)*
+</div>
 
 <!--
 Fournir tous les document de conception:
@@ -388,17 +390,16 @@ Fournir tous les document de conception:
 Le dossier de conception devrait permettre de sous-traiter la réalisation du projet !
 -->
 #### Upload d'un fichier audio pour la création d'un épisode
-J'ai décidé de fixer la taille maximum d'upload de fichiers à 150MB. Cette limite est fixée dans l'application, au niveau de la validation à la création d'un épisode.
-Ces 2 paramètres dans la configuration de PHP (fichier `php.ini`) doivent être augmentées au dessus de 150MB: `upload_max_filesize` et `post_max_size`.
+J'ai décidé de fixer la taille maximum d'upload de fichiers à 150MB. Cette limite est fixée dans l'application, au niveau de la validation à la création d'un épisode et dans la taille maximum pour l'upload de fichiers temporaires de Livewire. Ces 2 paramètres dans la configuration de PHP (fichier `php.ini`) doivent être augmentées au dessus de 150MB: `upload_max_filesize` et `post_max_size`.
 
-Les fichiers audios sont stockés dans `storage/app/public/episodes` c'est à dire dans le dossier `episodes` du dossier `public`.
+Les fichiers audios sont stockés dans `storage/app/public/episodes` c'est à dire dans le dossier `episodes` du dossier `public` avec un nom aléatoire unique.
 
 #### Éléments réutilisables
 
 **Le composant Field**  
-Un composant Blade permettant d'abstraire les éléments communs à tous les champs de formulaire: l'affichage du label, le design basique, l'affichage des erreurs de validations.
+Un composant Blade permettant d'abstraire les éléments communs à tous les champs de formulaire: l'affichage du label, le design basique et l'affichage des erreurs de validations.
 
-Propriétés du composant
+*Propriétés du composant*
 | Nom           | Type   | Requis | Description                                                                                                           |
 | ------------- | ------ | ------ | --------------------------------------------------------------------------------------------------------------------- |
 | `name`        | String | Oui    | Le nom technique du champ, utilisé pour l'attribut `name` de l'input et par le `@error()` et par la fonction `old()`. |
@@ -407,7 +408,7 @@ Propriétés du composant
 | `placeholder` | String | Non    | Un placeholder qui est ajouté directement sur le champ.                                                               |
 | `cssOnField`  | String | Non    | Des classes CSS qui sont ajoutées directement sur le champ.                                                           |
 
-Tous les autres attributs non reconnus sont transférés à la `div` racine du composant, ce qui permet d'ajouter du style ou d'autres attributs HTML. Tous les attributs commençant par `wire:model` sont ajoutés au champ pour permettre l'utilisation de ce composant avec Livewire.
+Tous les autres attributs non reconnus sont transférés à la `div` racine du composant, ce qui permet d'ajouter du style ou d'autres attributs HTML pour tout le composant. Tous les attributs commençant par `wire:model` sont ajoutés au champ pour permettre l'utilisation de ce composant avec Livewire.
 
 Exemple d'utilisation:
 ```html
@@ -437,9 +438,8 @@ Un autre exemple d'utilisation dans le cas d'un formulaire géré par Livewire:
 </div>
 ```
 
-
 **Classes CSS et couleurs**  
-J'ai défini 3 nouvelles couleurs Tailwind, qu'on peut utiliser partout où les couleurs sont utiles avec TailwindCSS (`border-green`, `text-lightblue`, ...)
+J'ai défini 3 nouvelles couleurs Tailwind, qu'on peut utiliser partout où les couleurs fonctionnent avec TailwindCSS (`border-green`, `text-lightblue`, `bg-blue`, ...)
 ```javascript
 //Extrait de tailwind.config.js
 colors: {
@@ -475,7 +475,7 @@ podz                      <span>Racine du repository</span>
 │   ├─ Exceptions         <span></span>
 │   ├─ Http               <span></span>
 │   │   ├─ Controllers    <span>Les classes contrôleurs</span>
-│   │   ├─ Livewire       <span></span>
+│   │   ├─ Livewire       <span>Les classes des composants Livewire</span>
 │   │   └─ Middleware     <span></span>
 │   ├─ Models             <span>Les classes modèles</span>
 │   ├─ Providers          <span></span>
@@ -505,7 +505,7 @@ podz                      <span>Racine du repository</span>
 │       ├─ components     <span></span>
 │       ├─ layouts        <span>Contient le gabarit app.blade.php</span>
 │       ├─ livewire       <span>Les vues pour Livewire</span>
-│       ├─ podcasts       <span>Vues pour les podcasts</span>
+│       ├─ podcasts       <span>Les vues pour les podcasts</span>
 │       ├─ profile        <span></span>
 │       └─ vendor         <span></span>
 │           └─ jetstream  <span>Les vues de Jetstream </span>
@@ -560,7 +560,7 @@ Pour l'exporter en PDF et avoir cette apparance, j'ai utilisé VSCode et une ext
 
 ### Résultats des tests effectués
 <!-- Compléter temps !! -->
-Cette capture montre le résultat des tests exécutés le YYY à YYY. Tous les tests passent.
+Cette capture montre le résultat des tests exécutés le 30.05.2022. Tous les tests passent.
 ![img](imgs/tests-results.png)
 
 <!-- todo: check selenium and testing tools -->
@@ -634,46 +634,19 @@ Voici la liste complète des tests, les noms devraient permettre d'avoir une id�
 Comme les tests sont écrits et exécutés en PHP, les tests ne peuvent que tester le comportement backend. Les interactions frontend ne peuvent pas être testées avec les outils actuels.
 
 Pour la plupart des fonctionnalités, j'ai suivi cette ordre pour décider des tests à écrire et de leur contenu:
-1. D'abord écrire un test pour vérifier que la page existe ou que le composant testé est bien chargé dans une des pages.
-2. Ensuite tester le comportement idéal (toutes les données valides) pour s'assurer que les données gérées ont bien été modifiées.
+1. D'abord écrire un test pour vérifier que la page existe ou que le composant Livewire testé est bien chargé dans une des pages.
+2. Ensuite tester le comportement idéal (avec toutes les données valides).
 3. Puis tester les validations des données.
 4. Et finalement valider les permissions de visibilité ou d'accès (ex: être sûr qu'un visiteur ne peut pas modifier un épisode ou ne peut pas voir d'épisode s'il est invisible).
 
 <!-- check order and reorder if needed -->
 
 **Ce que les tests ne couvrent pas**:
-- Validation de la taille maximale d'upload d'un fichier pour la création d'épisode
+- La validation de la taille maximale d'upload d'un fichier pour la création d'épisode
 
-Les tests manuels ont permis de vérifier que cela fonctionnait. Un test manuel avec un fichier mp3 de 170Mo a été fait plusieurs fois afin de vérifier la limite de 150Mo. En voici la démonstration:
+    Les tests manuels ont permis de vérifier que cela fonctionnait. Un test manuel avec un fichier mp3 de 170Mo a été fait plusieurs fois afin de vérifier la limite de 150Mo. En voici la démonstration:
 
-![file-upload-error](imgs/file-upload-error.png)
-
-<!--
-### Erreurs restantes  
-
-S'il reste encore des erreurs: 
-
-•	Description détaillée
-•	Conséquences sur l'utilisation du produit
-•	Actions envisagées ou possibles
-TODO: a retirer au dernier moment.
--->
-
-### Liste des documents fournis
-- Ce rapport de projet nommé "Documentation de Podz" <!-- nom du fichier -->
-- Journal de travail
-- README: contient la documentation d'installation du projet
-
-<!--
-todo: utile ?
-
-Lister les documents fournis au client avec votre produit, en indiquant les numéros de versions 
-
-•	le rapport de projet
-•	le manuel d'Installation (en annexe)
-•	le manuel d'Utilisation avec des exemples graphiques (en annexe)
-•	autres…
--->
+    ![file-upload-error](imgs/file-upload-error.png)
 
 <div class="page"/>
 
@@ -709,6 +682,7 @@ Tous les objectifs fixés au départ ont été atteints.
  <!-- ![podz en images](imgs/) todo -->
 
 ### Difficultés particulières
+
 
 ### Points positifs / négatifs
 
