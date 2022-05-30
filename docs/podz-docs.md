@@ -46,6 +46,7 @@
     - [Vues de Jetstream](#vues-de-jetstream)
     - [Routes](#routes)
     - [Upload d'un fichier audio pour la création d'un épisode](#upload-dun-fichier-audio-pour-la-création-dun-épisode)
+    - [Suppression d'un épisode](#suppression-dun-épisode)
     - [Éléments réutilisables](#éléments-réutilisables)
 - [Réalisation](#réalisation)
   - [Dossier de réalisation](#dossier-de-réalisation)
@@ -93,6 +94,7 @@ Podz est une application web de publication de podcasts, développée pour le TP
 - **PHP**: PHP Hypertext Preprocessor
 - **POO**: Programmation orientée objet
 - **RSS**: RDF Site Summary ou Really Simple Syndication: système de flux web pour diffuser du contenu (articles, podcasts, ...)
+- **SQL**: Structured Query Language
 - **Stack**: ensemble cohérent de technologies pour un but donné
 - **Starter kit**: kit de démarrage permettant de sauter les premières étapes
 - **TALL**: TailwindCSS - AlpineJS - Livewire - Laravel : stack de 4 frameworks web
@@ -394,6 +396,22 @@ J'ai décidé de fixer la taille maximum d'upload de fichiers à 150MB. Cette li
 
 Les fichiers audios sont stockés dans `storage/app/public/episodes` c'est à dire dans le dossier `episodes` du dossier `public` avec un nom aléatoire unique.
 
+#### Suppression d'un épisode
+J'ai surchargé la méthode `delete` dans `Episode.php` afin d'ajouter la suppression du fichier en même temps que la suppression de l'enregistrement. J'ai mis le tout dans une transaction pour éviter d'avoir l'incohérence du fichier qui existe sur le disque mais il n'y a plus d'épisode lié dans la base de donnée. Cette transaction n'empêche pas d'avoir l'incohérence inverse, puisque la suppression sur le disque n'est pas une requête SQL (et ne peut pas être rollback).
+
+```php
+public function delete()
+{
+    DB::transaction(function () {
+        //Delete file on disk first
+        Storage::disk('public')->delete($this->path);
+
+        //Then delete the record in db
+        parent::delete();
+    });
+}
+```
+
 #### Éléments réutilisables
 
 **Le composant Field**  
@@ -694,8 +712,12 @@ Comme durant mon Pré-TPI, j'ai eu de la peine avec l'upload de fichiers parce q
 
 ### Suites possibles pour le projet
 De nombreuses fonctionnalités pourraient implémentés si le projet est réutilisé par quelqu'un d'autre. Voici une petite liste d'idées:
-1. Ajouter un flux RSS pour écouter le podcast depuis un lecteur de podcasts (comme Apple Podcasts par exemple)
-2. 
+1. Ajouter un flux RSS ce qui permet d'écouter le podcast depuis un lecteur de podcasts (comme Apple Podcasts par exemple). Ce flux pourrait être utilisé pour republier le contenu sur d'autres plateformes (Spotify, Apple Podcasts, Soundcloud, ...).
+2. Comme expliqué pour l'upload de fichiers, les fichiers audio pourraient être sécurisé derrière une route Laravel et non un accès direct, en passant par le disque `local`.
+3. L'ajout d'images comme pochette de podcasts
+4. Ajout de commentaires pour chaque épisode
+
+Et beaucoup d'autres possibilités encore...
 
 ### Remerciements
 J'aimerai remercier M. Hurni pour les retours et les conseils techniques qu'il m'a apporté au Pré-TPI et au TPI qui m'ont permis de progresser avec Laravel en général et l'écriture de tests. J'espère avoir pu utiliser au mieux ces feedbacks et continuer de m'améliorer continuellement sur Laravel et les autres frameworks à l'avenir, pour produire du code de qualité et maîtriser de plus en plus ces technologies.
