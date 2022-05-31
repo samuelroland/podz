@@ -42,6 +42,8 @@ foreach ($issues as $issue) {
 $localIssues = json_decode(file_get_contents('planifdata.json'));
 ob_start();
 
+unset($localIssues->divers);
+
 echo "| ID | Sprint  | Titre      | Estimé  | \n";
 echo "| ------ | --- | -----------| ---------- | \n";
 
@@ -63,6 +65,7 @@ file_put_contents('planification-initiale.md', $content);
 
 
 //Step 3: generate final planning
+$localIssues = json_decode(file_get_contents('planifdata.json'));
 ob_start();
 $totalEstimated = 0;
 $totalSpent = 0;
@@ -84,12 +87,11 @@ foreach ($issues as $issue) {
     $totalEstimated += (float)substr($issue->labels[0]->name, 2);
     $totalSpent += (float)$localIssues->{$issue->number}->spent;
 }
-echo "| | |  | *Tâches diverses* | " . $localIssues->divers->estimated . " | " . $localIssues->divers->spent . " |  | | \n";
+echo "| | |  | *Tâches diverses* | | " . $localIssues->divers->spent . "h |  | | \n";
 
-$totalEstimated += (float)$localIssues->divers->estimated;
 $totalSpent += (float)$localIssues->divers->spent;
 
-echo "| | |  | **Totaux** | **" . $totalEstimated . "** | **" . $totalSpent . "** |  | | \n";
+echo "| | |  | **Totaux** | **" . $totalEstimated . "h** | **" . $totalSpent . "h** |  | | \n";
 echo "\n";
 echo "\n";
 
