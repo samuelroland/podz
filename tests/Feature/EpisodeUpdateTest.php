@@ -92,7 +92,7 @@ class EpisodeUpdateTest extends TestCase
 
         //Make sure datetime is set to the released_at value
         Livewire::test('episode-update', ['episode' => $episode, 'podcast' => $podcast])
-            ->assertSet('datetime', $episode->released_at);
+            ->assertSet('datetime', $episode->released_at->format('Y-m-d H:i'));
     }
 
     public function test_update_fails_silently_if_forbidden()

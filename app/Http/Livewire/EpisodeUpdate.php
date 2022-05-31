@@ -35,7 +35,7 @@ class EpisodeUpdate extends Component
 
     public function mount()
     {
-        $this->datetime = $this->episode->released_at;
+        $this->datetime = $this->episode->released_at->format('Y-m-d H:i');
     }
 
     public function updated($field)
