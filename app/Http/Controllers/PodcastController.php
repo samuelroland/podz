@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Podcast;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 
 class PodcastController extends Controller
@@ -26,11 +27,10 @@ class PodcastController extends Controller
 
     public function store()
     {
-        //TODO: refactor logic to make it shorter (maybe with mass assignation ?)
         $data = request()->all();
 
         Validator::make($data, [
-            'title' => 'required|max:35',
+            'title' => ['required', 'max:35', Rule::unique(with(new Podcast)->getTable(), 'title')->where(fn ($query) => $query->where('user_id', auth()->id())),],
             'description' => 'required|max:2000',
         ])->validate();
 
