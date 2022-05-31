@@ -91,7 +91,7 @@ class EpisodeCreationTest extends TestCase
         $response->assertHasErrors(['episode.title', 'episode.description', 'datetime', 'file']);
     }
 
-    //TODO: refactor the test
+    //TODO: refactor the test with data providers
     public function test_audio_file_type_is_validated()
     {
         $podcast = Podcast::first();
