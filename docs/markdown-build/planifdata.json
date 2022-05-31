@@ -43,61 +43,61 @@
     },
     "5": {
         "estimated": "3",
-        "spent": "",
+        "spent": "3",
         "name": "Consultation de la liste des podcasts",
         "sprint": "2"
     },
     "6": {
         "estimated": "5",
-        "spent": "",
+        "spent": "6",
         "name": "Cr\u00e9ation d\u2019un nouveau podcast, \u00e9dition d\u2019un de ses podcasts existant",
         "sprint": "2"
     },
     "9": {
         "estimated": "4",
-        "spent": "",
+        "spent": "10",
         "name": "Affichage de la liste des \u00e9pisodes avec toutes les donn\u00e9es li\u00e9es (auteur)",
         "sprint": "2"
     },
     "7": {
         "estimated": "5",
-        "spent": "",
+        "spent": "16",
         "name": "Ajout d\u2019un nouvel \u00e9pisode",
         "sprint": "2"
     },
     "11": {
         "estimated": "4",
-        "spent": "",
+        "spent": "0",
         "name": "Documentation quotidienne Sprint 2",
         "sprint": "2"
     },
     "21": {
         "estimated": "3",
-        "spent": "",
+        "spent": "2",
         "name": "Consultation du d\u00e9tail d\u2019un podcast (visiteur)",
         "sprint": "3"
     },
     "8": {
         "estimated": "2",
-        "spent": "",
+        "spent": "8",
         "name": "Edition d\u2019un \u00e9pisode",
         "sprint": "3"
     },
     "19": {
         "estimated": "2",
-        "spent": "",
+        "spent": "2",
         "name": "Suppression d\u2019un \u00e9pisode",
         "sprint": "3"
     },
     "12": {
         "estimated": "4",
-        "spent": "",
+        "spent": "3.5",
         "name": "Documentation quotidienne Sprint 3",
         "sprint": "3"
     },
     "20": {
         "estimated": "2",
-        "spent": "",
+        "spent": "1",
         "name": "Ecoute d\u2019un \u00e9pisode d\u2019un podcast",
         "sprint": "4"
     },
@@ -109,12 +109,12 @@
     },
     "14": {
         "estimated": "8",
-        "spent": "",
+        "spent": "15.5",
         "name": "Finalisation de la documentation",
         "sprint": "4"
     },
     "13": {
-        "estimated": "4",
+        "estimated": "2",
         "spent": "",
         "name": "Documentation quotidienne Sprint 4",
         "sprint": "4"
@@ -130,5 +130,9 @@
         "spent": "",
         "name": "Pr\u00e9paration du rendu et impression documents finaux",
         "sprint": "5"
+    },
+    "divers": {
+        "estimated": "",
+        "spent": "6"
     }
 }
