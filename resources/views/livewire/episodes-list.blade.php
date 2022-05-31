@@ -3,7 +3,7 @@
     $episodes = $isAuthor ? $podcast->episodes : $podcast->publicEpisodes;
     @endphp
     @forelse($episodes as $episode)
-    <div wire:key="episode-{{ $episode->id }}" x-data="{edition: false}" class="border-l border-blue px-2 pl-3 my-5 w-full {{ $episode->hidden ? 'opacity-75' : '' }}">
+    <div wire:key="episode-{{ $episode->id }}" x-data="{edition: false}" class="border-l border-blue px-2 pl-3 my-5 w-full {{ $episode->hidden ? 'opacity-75 bg-gray-300' : '' }}">
 
         <div x-show="!edition">
             <div class="flex flex-wrap w-full">
