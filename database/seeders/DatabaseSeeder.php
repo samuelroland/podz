@@ -13,10 +13,10 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
-        //Delete all episodes files before creating new ones
-        Storage::deleteDirectory('public/episodes');
-
         $testing = app()->environment('testing');   //during testing, we want very little data in comparison to local env
+
+        //Delete all episodes files before creating new ones
+        $testing ? null : Storage::deleteDirectory('public/episodes');
 
         User::factory($testing ? 1 : 3)->has(Podcast::factory($testing ? 1 : 3)->has(Episode::factory($testing ? 2 : 5)))->create();
 
