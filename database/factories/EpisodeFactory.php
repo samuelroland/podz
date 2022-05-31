@@ -20,7 +20,6 @@ class EpisodeFactory extends Factory
         $title = Str::substr($title, 0, Str::length($title) - 1);   //remove the last "." at the end
 
         //Todo: Generate release date, and make sure an episode is always after the date of the last one
-        //TODO: make sure the release date is in the past.
 
         $testing = app()->environment('testing');   //during testing, we want to make sure episodes are publicly visible by default
 
