@@ -21,11 +21,13 @@ Vous avez besoin de:
 ### Mise en place de l'environnement
 
 Configurer votre fichier `php.ini` pour activer les extensions suivantes:
-- SQLITE
+- PDO SQLITE
 - PDO MySQL
 - Openssl
 - Curl
 - GD
+- mbstring
+- fileinfo
   
 Ces 2 paramètres dans la configuration de PHP (fichier `php.ini`) doivent être augmentées au dessus de 150MB: `upload_max_filesize` et `post_max_size`.
 
