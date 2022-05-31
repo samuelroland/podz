@@ -54,6 +54,7 @@
   - [Résultats des tests effectués](#résultats-des-tests-effectués)
     - [Couverture des tests](#couverture-des-tests)
 - [Conclusions](#conclusions)
+  - [Erreurs restantes](#erreurs-restantes)
   - [Objectifs atteints / non-atteints](#objectifs-atteints--non-atteints)
   - [Difficultés particulières](#difficultés-particulières)
   - [Points positifs / négatifs](#points-positifs--négatifs)
@@ -341,6 +342,8 @@ Je recommande de configurer un raccourci clavier dans votre IDE pour lancer les 
 ### Planification
 La liste des tâches est la même qu'au départ, les estimations n'ont pas été modifiées. Afin de comparer ce qui avait été prévu et ce qui s'est réellement passé finalement, j'ai rajouté quelques colonnes. Tout le tableau est ordré par la date d'achèvement des tâches, ce qui explique que ce n'est pas exactement le même ordre que la planification initiale. `S-d` signifie `Sprint de départ` et `S-f` signifie `Sprint final` (est différent pour les tâches achevée en retard ou en avance). Le Delta est la résultat de Temps estimé - Temps passé.
 :[fragment](markdown-build/planification-finale.md)
+
+*Tâches diverses* est le total de toutes les activités qui ne sont pas reliés à des Issues sur Github, ce comptage se base sur le journal de bord (les entrées tâches qui n'ont pas de tâche assignée). Ceci inclut les visites de M. Hurni et des experts, 
 
 **Comparaison**  
 En fait mon sprint 4 est trop long puisque le jeudi et vendredi étaient fériés. TODO.
@@ -665,10 +668,12 @@ Pour la plupart des fonctionnalités, j'ai suivi cette ordre pour décider des t
     Les tests manuels ont permis de vérifier que cela fonctionnait. Un test manuel avec un fichier mp3 de 170Mo a été fait plusieurs fois afin de vérifier la limite de 150Mo. En voici la démonstration:
 
     ![file-upload-error](imgs/file-upload-error.png)
+- Les méthodes `episodes()` et `publicEpisodes()` de `Podcast` en test unitaire
 
 <div class="page"/>
 
 ## Conclusions
+Le moment est venu de regarder comment s'est déroulé le projet et de faire une petite métaréflexion.
 <!--
 
 Développez en tous cas les points suivants:
@@ -679,6 +684,8 @@ Développez en tous cas les points suivants:
 •	Suites possibles pour le projet (évolutions & améliorations)
 
  -->
+### Erreurs restantes
+- Au lancement des tests, les fichiers audios créés ne devraient pas aller dans le dossier `storage/app/public/episodes` mais un faux dossier de stockage (avec `Storage::fake('public');`), mais cela ne marche pas vraiment et je ne sais pas pourquoi.
 
 ### Objectifs atteints / non-atteints
 
@@ -720,7 +727,7 @@ De nombreuses fonctionnalités pourraient implémentés si le projet est réutil
 Et beaucoup d'autres possibilités encore...
 
 ### Remerciements
-J'aimerai remercier M. Hurni pour les retours et les conseils techniques qu'il m'a apporté au Pré-TPI et au TPI qui m'ont permis de progresser avec Laravel en général et l'écriture de tests. J'espère avoir pu utiliser au mieux ces feedbacks et continuer de m'améliorer continuellement sur Laravel et les autres frameworks à l'avenir, pour produire du code de qualité et maîtriser de plus en plus ces technologies.
+J'aimerai remercier M. Hurni pour les retours et les conseils techniques qu'il m'a apporté au Pré-TPI et au TPI. Il a pu répondre à mes nombreuses questions et j'ai senti une vraie progression avec Laravel en général et l'écriture de tests. J'espère avoir pu utiliser au mieux ces feedbacks et continuer de m'améliorer continuellement sur Laravel et les autres frameworks à l'avenir, pour produire du code de qualité et maîtriser de plus en plus ces technologies.
 
 Je remercie aussi Gatien Jayme pour sa relecture de ma documentation.
 
@@ -742,7 +749,7 @@ Pour résoudre mes différents problèmes j'ai surtout utilisé StackOverflow et
 
 J'ai aussi utilisé le site [**Mozilla Developer Network**](https://developer.mozilla.org/fr/) comme référence pour le HTML et le CSS.
 
-- **Icônes**: les icônes ont été copié-collées (en SVG) depuis [heroicons.com](https://heroicons.com/), elle sont publiées sous licence MIT.
+- **Icônes**: les icônes ont été copié-collées (en SVG) depuis [heroicons.com](https://heroicons.com/), elles sont publiées sous licence MIT.
 
 - [Liste des Types de médias, par l'IANA](https://www.iana.org/assignments/media-types/media-types.xhtml). Cette ressource m'a été utile pour trouver les types MIME des fichiers audios .ogg, .opus, et .mp3 pour la validation lors de la création d'épisode.
 
@@ -760,9 +767,8 @@ Le journal est disponible en document séparé (voir archives) ou directement su
 Toutes les informations nécessaires à l'installation du projet se trouve dans le README disponible en document séparé (voir archives) ou sur GitHub [en Markdown](https://github.com/samuelroland/podz/blob/main/README.md).
 
 ### Archives du projet
-- `podz-code.zip`
-- `podz-documentation.pdf`
-- `podz-journal-de-travail.pdf`
-- `podz-résumé-tpi.pdf`
-- `podz-readme.pdf`
-
+- `podz-code.zip`: repository Git
+- `podz-documentation.pdf`: cette documentation
+- `podz-journal-de-travail.pdf`: journal de travail du projet
+- `podz-résumé-tpi.pdf`: résumé du TPI
+- `podz-readme.pdf`: le README avec la procédure de mise en place du projet
