@@ -10,7 +10,7 @@
     ],
     "markdown-pdf.margin.top": "1.3cm",
     "markdown-pdf.margin.bottom": "1.2cm",
-    "markdown-pdf.margin.right": "0.5cm",
-    "markdown-pdf.margin.left": "0.5cm",
+    "markdown-pdf.margin.right": "1cm",
+    "markdown-pdf.margin.left": "1cm",
     "markdown-pdf.highlightStyle": "github-gist.css",
 }
