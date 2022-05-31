@@ -17,10 +17,8 @@
 
 <div class="page"/> 
 
-
 <div style="font-size: 28px; margin-top: 20px;">Table des matières</div>
 
-<!-- toc start -->
 <div class="toc">
 
 - [Analyse préliminaire](#analyse-préliminaire)
@@ -67,8 +65,6 @@
   - [Journal de travail](#journal-de-travail)
   - [Manuel d'installation](#manuel-dinstallation)
   - [Archives du projet](#archives-du-projet)
-
-<!-- toc end -->
 
 </div>
 
@@ -137,6 +133,8 @@ Ces fonctionnalités sont implémentées par Jetstream, je n'ai donc pas besoin 
 1. Utilisation d’un SCM type git avec commits atomiques, petits et fréquents.
 1. Lecture audio du podcast bien réalisée.
 
+<div class="page">
+
 ### Planification initiale
 Le projet n'a pas de méthode de gestion de projet formel, mais plutôt une adaptation de la méthode Scrum (je travaille en Sprint et mon chef de projet vient de faire des retours 1 fois par cycle). Je ne voulais pas partir avec des gros outils comme IceScrum, j'ai préféré partir sur GitHub Projects et gérer des Issues dans des Kanbans. Les étiquettes des Issues indiquent le temps estimé (ex : `t-3` = temps estimé de 3h). Le projet se découpe en 5 sprints, la majorité durent 1 semaine, entre le 02.05.2022 et le 31.05.2022. Comme demandé par l’expert 1, une tâche de documentation quotidienne (avec 4 cases à cocher pour les 4 jours de travail) existe pour chaque sprint (ce qui donne 1h par jour).
 
@@ -151,6 +149,9 @@ Voici à quoi ressemble mes kanbans pour chaque Sprint:
 ![kanban](imgs/kanban-example.png)
 
 La planification initiale rendue le premier jour dans un document séparé avait une mise en page peu pratique, j'ai donc repris les données et j'ai changé l'affichage pour plus de lisibilité. L'ordre des tâches est le même qu'il y avait dans les colonnes Todo sur GitHub au début du projet.  
+
+<div class="page">
+
 :[fragment](markdown-build/planification-initiale.md)
 
 <div class="page"/>
@@ -164,7 +165,7 @@ J'ai choisi la stack **TALL** (*TailwindCSS - AlpineJS - Livewire - Laravel*) po
 - **[Laravel](https://laravel.com/)**: un framework PHP basé sur le modèle MVC et en POO. Laravel donne accès à beaucoup de classes et fonctions très pratiques, d'avoir une structure imposée, d'avoir des solutions simples aux problèmes récurrents (traductions, authentification, gestion des dates, ...). Tout ceci simplifie beaucoup le développement d'applications web en PHP une fois qu'on est à l'aise avec les bases.
 - **[Livewire](https://laravel-livewire.com/)**: un framework pour Laravel permettant de faire des composants fullstack réactifs. L'idée est d'utiliser la puissance de Blade et PHP pour avoir des parties réactives sur le frontend (normalement codées en Javascript) sans devoir coder des requêtes AJAX.
 - **[AlpineJS](https://alpinejs.dev/)**: un petit framework Javascript relativement simple à apprendre, utilisée ici pour gérer certaines interactions que Livewire ne permet pas, ou qui concernent des états d'affichage (là où des requêtes sur le backend seraient inutiles). Les composants s'écrivent inline (sur les balises HTML directement). Très pratique pour afficher un dropdown, faire une barre de progression, ...
-- **[TailwindCSS](https://tailwindcss.com/)**: un framework CSS, concurrent de Bootstrap mais centré autour des propriétés CSS (en ayant des classes utilitaires - "utility-first") au lieu de fournir des classes "composants". C'est très puissant pour construire rapidement des interfaces, en écrivant quasiment jamais de CSS pur. Pour faire du responsive c'est très pratique parce qu'il suffit d'utiliser un préfixe d'écran devant n'importe quelle classe pour utiliser des media queries. Par exemple, on peut utiliser `md:text-white` pour dire que le texte est blanc sur les écrans medium et au dessus.
+- **[TailwindCSS](https://tailwindcss.com/)**: un framework CSS, concurrent de Bootstrap mais centré autour des propriétés CSS (en ayant des classes utilitaires - "utility-first") au lieu de fournir des classes "composants". C'est très puissant pour construire rapidement des interfaces, en écrivant quasiment jamais de CSS pur. Pour faire du responsive c'est très pratique parce qu'il suffit d'utiliser un préfixe d'écran devant n'importe quelle classe pour utiliser des media queries. Par exemple, on peut utiliser `md:text-white` pour dire que le texte est blanc sur les écrans medium et au-dessus.
 
 Divers:
 - **[Jetstream](https://jetstream.laravel.com/2.x/introduction.html)**: Un starter Kit Laravel mettant en place les fonctionnalités d'authentification, tels que la connexion, la création de compte, la gestion du compte et beaucoup d'autres. L'option Livewire a été utilisée.
@@ -244,7 +245,7 @@ Pour pouvoir utiliser les fonctionnalités requises, voici la liste complète de
 <div class="together">
 
 **Page Liste des podcasts**  
-Cette page est visible publiquement et c'est la page par défaut de l'application, on y accède également via le bouton Podcasts en haut à gauche. On peut cliquer sur un podcast pour accéder à ses détails.
+Cette page est visible publiquement et c'est la page par défaut de l'application, on y accède également via le bouton "Podcasts" en haut à gauche. On peut cliquer sur un podcast pour accéder à ses détails.
 ![page](models/Podcasts_page.png)
 
 </div>
@@ -261,13 +262,13 @@ Les visiteurs ne voient que les épisodes qui sont visibles et ils ne voient que
 <div class="together">
 
 **Vue Détails et édition pour auteur**  
-L'auteur voit toutes les informations de ses podcasts contrairement au visiteur. L'auteur a une vue visiteur sur les podcasts qui ne lui appartiennent pas. Nous sommes le 09.05.2022 dans cette maquette, l'épisode 4 est caché et le 5 est planifié pour le 10.05.2022 à 15:08. L'épisode 4 est caché parce que l'auteur a décidé après coup de le remettre en privé. Voici l'apparance de la page quand un auteur la charge.
+L'auteur voit toutes les informations de ses podcasts contrairement au visiteur. L'auteur a une vue visiteur sur les podcasts qui ne lui appartiennent pas. Nous sommes le 09.05.2022 dans cette maquette, l'épisode 4 est caché et le 5 est planifié pour le 10.05.2022 à 15:08. L'épisode 4 est caché parce que l'auteur a décidé après coup de le remettre en privé. Voici l'apparence de la page quand un auteur la charge.
 ![page](models/Vue-auteur-podcast-details.png)
 </div>
 
 <div class="together">
 
-Quand l'auteur clique sur les icônes d'édition, des formulaires s'affichent pour les éléments sélectionnés afin de permettre l'édition ou la suppression. Quand on clique sur `Nouvel épisode...`, le formulaire de création apparaît juste en dessous. On peut éditer plusieurs éléments à la fois, il n'y aura pas de problèmes puisque la page ne se rafraîchit pas mais est découpée en plusieurs composants Livewire.
+Quand l'auteur clique sur les icônes d'édition, des formulaires s'affichent pour les éléments sélectionnés afin de permettre l'édition ou la suppression. Quand on clique sur `Nouvel épisode...` (voir maquette précédante), le formulaire de création apparaît juste en dessous. On peut éditer plusieurs éléments à la fois, il n'y aura pas de problèmes puisque la page ne se rafraîchit pas mais est découpée en plusieurs composants Livewire.
 ![page](models/Vue-auteur-podcast-details-edition.png)
 
 </div>
@@ -295,9 +296,9 @@ Tous les tests se trouvent dans le dossier `tests` à la racine du repository. L
 #### Les données de tests
 
 <!-- todo: à corriger -->
-Des factories et le seeder ont été codés pour ne pas devoir rentrer des valeurs à la main. Dans mon seeder `DatabaseSeeder` je génére peu d'éléments (minimum de 2) pour les tests automatisés, afin d'accélérer l'exécution. Je génère plus d'éléments pour l'application locale afin d'avoir une situation plus réaliste dans le navigateur. Dans `EpisodeFactory`, j'ai fait en sorte que les épisodes soient toujours visibles et publiés dans le passé (afin d'éviter des tests qui plantent à cause de cette partie aléatoire non supportée). Quand les tests doivent avoir des épisodes cachés (pour tester les cas de visibilité), ils en créent eux-mêmes quelques-uns avant.
+Des factories et le seeder ont été codés pour ne pas devoir rentrer des valeurs à la main. Dans mon seeder `DatabaseSeeder` je génère peu d'éléments (minimum de 2) pour les tests automatisés, afin d'accélérer l'exécution. Je génère plus d'éléments pour l'application locale afin d'avoir une situation plus réaliste dans le navigateur. Dans `EpisodeFactory`, j'ai fait en sorte que les épisodes soient toujours visibles et publiés dans le passé (afin d'éviter des tests qui plantent à cause de cette partie aléatoire non supportée). Quand les tests doivent avoir des épisodes cachés (pour tester les cas de visibilité), ils en créent eux-mêmes quelques-uns avant.
 
-Etant le choix par défaut dans Laravel, j'ai utilisé le paquet Faker dans mes factories pour générer différents types de données. Le texte généré est en Lorem Ipsum. Ce qui est pratique comparé à l'écriture de données manuelles, c'est qu'on peut avoir des textes très longs permettant de valider dans nos interfaces que les valeurs extrèmes sont correctement affichées.
+Etant le choix par défaut dans Laravel, j'ai utilisé le paquet Faker dans mes factories pour générer différents types de données. Le texte généré est en Lorem Ipsum. Ce qui est pratique comparé à l'écriture de données manuelles, c'est qu'on peut avoir des textes très longs permettant de valider dans nos interfaces que les valeurs extrêmes sont correctement affichées.
 
 **Exemple de données fictives générées par Faker**:
 ![faker](imgs/faker-example.png)
@@ -311,7 +312,7 @@ Afin de ne pas impacter la base de données de développement, les tests sont la
 ```
 
 #### Comment lancer les tests ?
-Il est nécessaire d'avoir mis en place le projet et d'avoir l'extension PHP SQLite tout d'arbod. Ensuite, il y a différentes manières de lancer les tests dans un terminal dans le dossier du projet:
+Il est nécessaire d'avoir mis en place le projet et d'avoir l'extension PHP SQLite tout d'abord. Ensuite, il y a différentes manières de lancer les tests dans un terminal dans le dossier du projet:
 - `php artisan test`
 - `./vendor/bin/phpunit`
 - `phpunit` (seulement si phpunit a été installé séparement/globalement)
@@ -341,26 +342,15 @@ Je recommande de configurer un raccourci clavier dans votre IDE pour lancer les 
 <div class="page"/>
 
 ### Planification
-La liste des tâches est la même qu'au départ, les estimations n'ont pas été modifiées. Afin de comparer ce qui avait été prévu et ce qui s'est réellement passé finalement, j'ai rajouté quelques colonnes. Tout le tableau est ordré par la date d'achèvement des tâches, ce qui explique que ce n'est pas exactement le même ordre que la planification initiale. `S-d` signifie `Sprint de départ` et `S-f` signifie `Sprint final` (est différent pour les tâches achevée en retard ou en avance). Le Delta est le résultat de Temps estimé - Temps passé. Ce calcul n'a pas de sens pour le tâches des "Documentation quotidienne" qui est un temps planifié et non estimé.
+La liste des tâches est la même qu'au départ, les estimations n'ont pas été modifiées. Afin de comparer ce qui avait été prévu et ce qui s'est réellement passé finalement, j'ai rajouté quelques colonnes. Tout le tableau est ordré par la date d'achèvement des tâches, ce qui explique que ce n'est pas exactement le même ordre que la planification initiale. `S-d` signifie `Sprint de départ` et `S-f` signifie `Sprint final` (est différent pour les tâches achevée en retard ou en avance). Le Delta est le résultat de Temps estimé - Temps passé. Ce calcul n'a pas été fait pour le tâches des "Documentation quotidienne" car ce n'est pas un temps estimé mais planifié.
 :[fragment](markdown-build/planification-finale.md)
 
-*Tâches diverses* contient toutes les activités qui ne sont pas reliés à des Issues sur Github, ce comptage se base sur le journal de travail (voir les entrées qui n'ont pas de tâche assignée). Ceci inclut les visites de M. Hurni et des experts et la résolution de petits bugs.
+*Tâches diverses* contient toutes les activités qui ne sont pas reliés à des Issues sur GitHub, ce comptage se base sur le journal de travail (voir les entrées qui n'ont pas de tâche assignée). Ceci inclut les visites de M. Hurni et des experts et la résolution de petits bugs.
 
 **Analyse des différences**  
 Quand on compare le temps estimé et passé on voit que j'ai sur-estimé certaines tâches simples, et que j'ai beaucoup sous-estimé les tâches plus complexes et longues. À partir du sprint 3, presque toutes les tâches ont été terminée un ou deux sprints plus tard. Les 2 tâches les plus sous-estimées sont "Ajout d'un nouvel épisode" et "Finalisation de la documentation". Je n'avais pas imaginé avoir autant de peine pour la création d'épisode, et qu'il y avait autant de choses à expliquer dans la documentation.
 
-Je m'en suis rendu compte tard, mais mon sprint 4 était prévu sur toute la semaine alors que le jeudi et vendredi étaient fériés. Si on regarde mon journal de travail, on voit que je n'ai pas réussi à faire de la documentation tous les jours. Dans ce tableau, il y a aussi des petits bouts de documentations écrits pour les fonctionnalités en tant que tels dont le temps est compté avec celles-ci. J'étais très concentré sur le code en sprint 2 et j'ai fait moins de documentation que le reste des sprints. A la fin j'avais du retard sur les finitions du code et surtout sur ma documentation, j'ai donc rattraper à la maison.
-
-<!-- ajouter heures diverses non classifiées -->
-<!-- commentaire avance et retard, et rattrapage et total, et heures diverse significations.-->
-<!--
-Révision de la planification initiale du projet :
-
-•	planning indiquant les dates de début et de fin du projet ainsi que le découpage connu des diverses phases. 
-•	partage des tâches en cas de travail à plusieurs.
-
-Il s’agit en principe de la planification définitive du projet. Elle peut être ensuite affinée (découpage des tâches). Si les délais doivent être ensuite modifiés, le responsable de projet doit être avisé, et les raisons doivent être expliquées dans l’historique.
--->
+Je m'en suis rendu compte tard, mais mon sprint 4 était prévu sur toute la semaine alors que le jeudi et vendredi étaient fériés. Si on regarde mon journal de travail, on voit que je n'ai pas réussi à faire de la documentation tous les jours. Dans ce tableau, il y a aussi des petits bouts de documentations écrits pour les fonctionnalités en tant que tels dont le temps est compté avec celles-ci. J'étais très concentré sur le code en sprint 2 et j'ai fait moins de documentation que le reste des sprints. A la fin j'avais du retard sur les finitions du code et surtout sur ma documentation, j'ai donc décidé de faire quelques heures à la maison.
 
 ### Dossier de conception
 
@@ -371,7 +361,7 @@ Sur la page Podcasts, il y a un résumé des descriptions des podcasts, qui se l
 Pour qu'un épisode soit visible publiquement il faut que sa date de publication soit dans le passé et que son état Caché soit Faux. Si cette condition n'est pas vraie, l'épisode n'est visible que par l'auteur. Si on regarde en détail le code et les routes, on s'aperçoit que les fichiers étant sur le disque public, il n'y a pas d'autorisations appliquée au chargement des fichiers audios. Ainsi si on mémorise le nom du fichier audio, et que l'épisode devient ensuite invisible, on pourra toujours accéder publiquement via le lien d'accès direct (ex: `https://podz.test/storage/episodes/UyJ7nE5TewwbnjXRAhrmWX6Ht45.ogg`). Cette sécurité n'était pas demandée donc je ne l'ai pas implémentée mais cela pourrait être une idée d'amélioration. Pour corriger ceci, il faudrait bouger les épisodes dans le disque `local` qui n'est pas publiquement accessible, et "streamer" les fichiers audio via une route dédiée de notre application, de sorte à pouvoir appliquer un contrôle des droits d'accès et bloquer l'accès du fichier audio sur un épisode caché si ce n'est pas l'auteur.
 
 #### Traduction  
-Pour que les messages d'erreurs soient en français. J'utilise le système d'internationalisation de Laravel et j'ai défini le français comme langue par défaut et l'anglais comme langue de repli ("fallback language") au cas où quelquechose n'aurait pas été traduit en français. J'ai dupliqué le fichier `lang/fr/validation.php` à partir `lang/en/validation.php` et j'ai traduit les quelques messages d'erreurs que j'utilisais.
+Pour que les messages d'erreurs soient en français. J'utilise le système d'internationalisation de Laravel et j'ai défini le français comme langue par défaut et l'anglais comme langue de repli ("fallback langage") au cas où quelque chose n'aurait pas été traduit en français. J'ai dupliqué le fichier `lang/fr/validation.php` à partir `lang/en/validation.php` et j'ai traduit les quelques messages d'erreurs que j'utilisais.
 
 #### Vues de Jetstream  
 Le `navigation-menu.blade.php` a été modifié afin d'avoir les bons boutons. Le logo de Jetstream était modifiable dans 3-4 fichiers différents, j'ai préféré regrouper le tout dans `logo.blade.php` afin de centraliser. Le logo utilise la couleur `green` définie dans `tailwind.config.js`. Le gabarit `layouts.guest` a été supprimé au profit d'un seul gabarit `layouts.app`, le menu de navigation s'adapte pour si on est connecté ou non.
@@ -379,7 +369,7 @@ Le `navigation-menu.blade.php` a été modifié afin d'avoir les bons boutons. L
 <div class="togheter">
 
 #### Routes
-J'ai suivi les conventions des noms et URLs des routes comme pour les controlleurs resources (je n'en ai pas utilisé dans ce projet).
+J'ai suivi les conventions des noms et URLs des routes comme pour les contrôleurs ressources (je n'en ai pas utilisé dans ce projet).
 
 ![laravel-doc-image](imgs/routes-convention.png)
 *Tiré de la [documentation de Laravel](https://laravel.com/docs/9.x/controllers#actions-handled-by-resource-controller)*
@@ -398,9 +388,9 @@ Fournir tous les document de conception:
 Le dossier de conception devrait permettre de sous-traiter la réalisation du projet !
 -->
 #### Upload d'un fichier audio pour la création d'un épisode
-J'ai décidé de fixer la taille maximum d'upload de fichiers à 150MB. Cette limite est fixée dans l'application, au niveau de la validation à la création d'un épisode et dans la taille maximum pour l'upload de fichiers temporaires de Livewire. Ces 2 paramètres dans la configuration de PHP (fichier `php.ini`) doivent être augmentées au dessus de 150MB: `upload_max_filesize` et `post_max_size`.
+J'ai décidé de fixer la taille maximum d'upload de fichiers à 150MB. Cette limite est fixée dans l'application, au niveau de la validation à la création d'un épisode et dans la taille maximum pour l'upload de fichiers temporaires de Livewire. Ces 2 paramètres dans la configuration de PHP (fichier `php.ini`) doivent être augmentées au-dessus de 150MB: `upload_max_filesize` et `post_max_size`.
 
-Les fichiers audios sont stockés dans `storage/app/public/episodes` c'est à dire dans le dossier `episodes` du dossier `public` avec un nom aléatoire unique.
+Les fichiers audios sont stockés dans `storage/app/public/episodes` c'est-à-dire dans le dossier `episodes` du dossier `public` avec un nom aléatoire unique.
 
 #### Suppression d'un épisode
 J'ai surchargé la méthode `delete` dans `Episode.php` afin d'ajouter la suppression du fichier en même temps que la suppression de l'enregistrement. J'ai mis le tout dans une transaction pour éviter d'avoir l'incohérence du fichier qui existe sur le disque mais il n'y a plus d'épisode lié dans la base de donnée. Cette transaction n'empêche pas d'avoir l'incohérence inverse, puisque la suppression sur le disque n'est pas une requête SQL (et ne peut pas être rollback).
@@ -427,7 +417,7 @@ Un composant Blade permettant d'abstraire les éléments communs à tous les cha
 | Nom           | Type   | Requis | Description                                                                                                           |
 | ------------- | ------ | ------ | --------------------------------------------------------------------------------------------------------------------- |
 | `name`        | String | Oui    | Le nom technique du champ, utilisé pour l'attribut `name` de l'input et par le `@error()` et par la fonction `old()`. |
-| `label`       | String | Non    | Nom du label au dessus du champ.                                                                                      |
+| `label`       | String | Non    | Nom du label au-dessus du champ.                                                                                      |
 | `type`        | String | Non    | Type de l'`<input>`. Par défaut `text`. Si `textarea` est donné, une balise `<textarea>` est utilisée à la place.     |
 | `placeholder` | String | Non    | Un placeholder qui est ajouté directement sur le champ.                                                               |
 | `cssOnField`  | String | Non    | Des classes CSS qui sont ajoutées directement sur le champ.                                                           |
@@ -580,17 +570,17 @@ NOTE : Evitez d’inclure les listings des sources, à moins que vous ne désiri
 ### Construction de la documentation
 La documentation étant écrite en Markdown, j'ai du régler plusieurs problèmes pour avoir le même résultat visuel que si j'avais travaillé dans Word.
 
-Pour l'exporter en PDF et avoir cette apparance, j'ai utilisé VSCode et une extension nommée `Markdown PDF` (id: `yzane.markdown-pdf`), de lancer la palette de commandes (Ctrl + Maj + P), puis de choisir l'action `Markdown PDF: Export (pdf)`. Le résultat sera le fichier `podz-docs.pdf` à côté de ce fichier. Même fonctionnement pour le journal de travail et le README s'il y a besoin de les exporter. J'ai du écrire du CSS `docs/markdown-build/pdf-export.css` pour améliorer le design de l'export qui n'était pas très joli. Toutes les configurations pour l'extension sont faites dans le fichier `.vscode/settings.json` (en-tête et pied de page, choix du thème du surlignage avec HighlightJS, taille des marges et feuilles de styles).
+Pour l'exporter en PDF et avoir cette apparence, j'ai utilisé VSCode et une extension nommée `Markdown PDF` (id: `yzane.markdown-pdf`), de lancer la palette de commandes (Ctrl + Maj + P), puis de choisir l'action `Markdown PDF: Export (pdf)`. Le résultat sera le fichier `podz-docs.pdf` à côté de ce fichier. Même fonctionnement pour le journal de travail et le README s'il y a besoin de les exporter. J'ai du écrire du CSS `docs/markdown-build/pdf-export.css` pour améliorer le design de l'export qui n'était pas très joli. Toutes les configurations pour l'extension sont faites dans le fichier `.vscode/settings.json` (en-tête et pied de page, choix du thème du surlignage avec HighlightJS, taille des marges et feuilles de styles).
+
+Comme j'utilise Git, je n'ai pas besoin de garder d'anciennes versions avec un numéro de version choisi, puisque tout l'historique est consultable. Pour retrouver la documentation à une date donnée, il suffit d'aller sur GitHub sous les commits, de prendre le dernier commit avant cette date, de cliquer sur Browse files puis d'aller chercher le documents dans le dossier `docs`.
 
 ### Résultats des tests effectués
 <!-- Compléter temps !! -->
 Cette capture montre le résultat des tests exécutés le 30.05.2022. Tous les tests passent.
 ![img](imgs/tests-results.png)
 
-<!-- todo: check selenium and testing tools -->
 Voici la liste complète des tests, les noms devraient permettre d'avoir une idée de ce qui est testé et quels cas sont couverts.
 
-<!-- todo: update the list and names if changed in between! -->
 1. **`Tests\Unit\EpisodeTest`**
     1. `path is well built`
 
@@ -653,7 +643,6 @@ Voici la liste complète des tests, les noms devraient permettre d'avoir une id�
     2. `the page has title and description`
     3. `all podcasts are displayed with their data`
 
-
 #### Couverture des tests
 Comme les tests sont écrits et exécutés en PHP, les tests ne peuvent que tester le comportement backend. Les interactions frontend ne peuvent pas être testées avec les outils actuels.
 
@@ -662,8 +651,6 @@ Pour la plupart des fonctionnalités, j'ai suivi cette ordre pour décider des t
 2. Ensuite tester le comportement idéal (avec toutes les données valides).
 3. Puis tester les validations des données.
 4. Et finalement valider les permissions de visibilité ou d'accès (ex: être sûr qu'un visiteur ne peut pas modifier un épisode ou ne peut pas voir d'épisode s'il est invisible).
-
-<!-- check order and reorder if needed -->
 
 **Ce que les tests ne couvrent pas**:
 - La validation de la taille maximale d'upload d'un fichier pour la création d'épisode
@@ -677,17 +664,7 @@ Pour la plupart des fonctionnalités, j'ai suivi cette ordre pour décider des t
 <div class="page"/>
 
 ## Conclusions
-Le moment est venu de regarder comment s'est déroulé le projet et de faire une petite métaréflexion.
-<!--
 
-Développez en tous cas les points suivants:
-
-•	Objectifs atteints / non-atteints
-•	Points positifs / négatifs
-•	Difficultés particulières
-•	Suites possibles pour le projet (évolutions & améliorations)
-
- -->
 ### Erreurs restantes
 - Au lancement des tests, les fichiers audios créés ne devraient pas aller dans le dossier `storage/app/public/episodes` mais un faux dossier de stockage (avec `Storage::fake('public');`), mais cela ne marche pas vraiment et je ne sais pas pourquoi.
 
@@ -708,12 +685,12 @@ Tous les objectifs fixés au départ ont été atteints.
 | <li>Edition d’un épisode.                                          </li>                      | Oui       |
 | <li>Suppression d’un épisode.                                       </li>                     | Oui       |
 
- <!-- ![podz en images](imgs/) todo -->
+<div class="together">
 
 ### Difficultés particulières
+
 - L'upload de fichiers et les tests associés ont été assez difficiles, comme expliqué dans mon journal de travail. Pour comprendre pourquoi les tests ne passaient pas alors que mon code était correct quand on faisait `UploadedFile::fake()->create('audio.m4a', 100, 'audio/mp4')` par ex., j'ai regardé dans le code de la classe `FileFactory` (dans `vendor\laravel\framework\src\Illuminate\Http\Testing\FileFactory.php`) dans mon IDE (en faisant Ctrl+click sur la méthode `create()`) et j'ai trouvé ceci:
   
-  <div class="together">
 
   ```php
   /**
@@ -736,22 +713,21 @@ Tous les objectifs fixés au départ ont été atteints.
       });
   }
   ```
-  </div>
 
   On voit que le fichier contient le résultat `tmpfile()` (fonction PHP qui crée des fichiers temporaires), en inspectant avec un éditeur hexadécimal on y trouve une vingtaine d'octets toujours les mêmes, le contenu le correspond donc ni à la bonne taille ni au bon type MIME demandé. Pour que cela fonctionne quand même avec Laravel, la taille et le type MIME - que la classe retourne quand on lui demande - sont définis dans des attributs de la classe. Le problème dans mon application, c'est probablement parce que j'utilise Livewire qui stocke les fichiers dans un dossier temporaire puis les déplacent dans le bon dossier à la sauvegarde. Ce n'est qu'une hypothèse que je n'ai pas pu le vérifier (cela aurait demandé des recherches plus longues) mais j'imagine que l'objet `UploadedFile` final est rechargé ou recréé avec le fichier sur le disque, le type MIME et la taille étant fictifs sont donc perdus durant le processus.
 
   Pour résoudre ce problème, j'ai finalement créé différents vrais fichiers de différents formats dans `storage/app/testing` avec FFmpeg, et créé des fichiers bidons (`test.pdf`), que j'utilise comme fichier à l'upload.
+  </div>
 
-- L'export PDF de mes documentations et la construction des planifications ont été complexes, avec toutes les choses à inclure à inclure et moyens de détourner les contraintes. Pour la planification finale, il y avait beaucoup de valeurs qui devaient être recopiées de Github. Au lieu de tout faire à la main j'ai préféré scripter sa génération. J'ai créé un fichier `planifdata.json` avec les infos des Issues tirées de l'API de Github dans lequel j'ai ajouté le temps passé sur chaque tâche (en calculant les sommes des temps indiqué dans mon journal de travail). Mon script fonctionne très bien et est super pratique. J'ai du faire du design de mon document en CSS et parfois écraser le style par défaut de l'extension, cela m'a pris un certain temps.
+
+- L'export PDF de mes documentations et la construction des planifications ont été complexes, avec toutes les choses à inclure à inclure et moyens de détourner les contraintes. Pour la planification finale, il y avait beaucoup de valeurs qui devaient être recopiées de GitHub. Au lieu de tout faire à la main j'ai préféré scripter sa génération. J'ai créé un fichier `planifdata.json` avec les infos des Issues tirées de l'API de GitHub dans lequel j'ai ajouté le temps passé sur chaque tâche (en calculant les sommes des temps indiqué dans mon journal de travail). Mon script fonctionne très bien et est super pratique. J'ai du faire du design de mon document en CSS et parfois écraser le style par défaut de l'extension, cela m'a pris un certain temps.
 
 ### Points positifs / négatifs
 
 Les tests automatisés sont un point positif du projet, car sont robustes et m'ont beaucoup aidé durant le développement.
 Au niveau de la planification j'aurai puis mieux gérer mon temps en classe. Parfois je suis resté bloqué sur l'écriture de tests que j'aurai pu outrepasser et d'autres fois j'étais déconcentré et/ou j'aidais des collègues sur Laravel. Mieux avancer et être un peu plus concentré aurait peut-être permis de ne pas avoir trop de retard à la fin. J'aurai aussi pu faire les calculs des totals de temps de travail pour me rendre compte de mon avance ou retard.
 
-Au niveau de la documentation, faire de la documentation plus régulièrement aurait permis de varier un peu le travail final. Je pense avoir fait une documentation assez qualitative et soignée. J'ai mis plus de détails et de soin dans cette documentation que d'habitude, c'était important pour moi de rendre des documents soignés.
-
-Un autre point positif est d'avoir réussi à tout finir les fonctionnalités demandées.
+Au niveau de la documentation, faire de la documentation plus régulièrement aurait permis de varier un peu le travail final. Je pense avoir fait une documentation assez qualitative et soignée. J'ai mis plus de détails et de soin dans cette documentation que d'habitude, c'était important pour moi de rendre des documents soignés. Un autre point positif est d'avoir réussi finir toutes les fonctionnalités demandées.
 
 ### Bilan personnel
 
@@ -775,9 +751,8 @@ Je remercie aussi Gatien Jayme pour sa relecture de ma documentation.
 <div class="page"/>
 
 ## Annexes
-<!-- todo: document séparé ?? -->
 ### Résumé du rapport du TPI
-Le résumé est disponible en document séparé (voir archives) ou directement sur Github [en Markdown](https://github.com/samuelroland/podz/blob/main/docs/podz-résumé-tpi.md).
+Le résumé est disponible en document séparé (voir archives) ou directement sur GitHub [en Markdown](https://github.com/samuelroland/podz/blob/main/docs/podz-résumé-tpi.md).
 
 ### Sources – Bibliographie
 Pour résoudre mes différents problèmes j'ai surtout utilisé StackOverflow et les documentations officielles des 4 frameworks que j'utilise:
@@ -800,7 +775,7 @@ J'ai aussi utilisé le site [**Mozilla Developer Network**](https://developer.mo
 Liste des livres utilisés (Titre, auteur, date), des sites Internet (URL) consultés, des articles (Revue, date, titre, auteur)… Et de toutes les aides externes (noms)   
 -->
 ### Journal de travail
-Le journal est disponible en document séparé (voir archives) ou directement sur Github [en Markdown](https://github.com/samuelroland/podz/blob/main/docs/podz-journal.md) ou [en PDF](https://github.com/samuelroland/podz/blob/main/docs/podz-journal.md).
+Le journal est disponible en document séparé (voir archives) ou directement sur GitHub [en Markdown](https://github.com/samuelroland/podz/blob/main/docs/podz-journal.md) ou [en PDF](https://github.com/samuelroland/podz/blob/main/docs/podz-journal.md).
 
 ### Manuel d'installation
 Toutes les informations nécessaires à l'installation du projet se trouve dans le README disponible en document séparé (voir archives) ou sur GitHub [en Markdown](https://github.com/samuelroland/podz/blob/main/README.md).
