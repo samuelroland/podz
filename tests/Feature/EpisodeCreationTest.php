@@ -48,7 +48,7 @@ class EpisodeCreationTest extends TestCase
         $this->actingAs($user);
         $episode = Episode::factory()->make(['podcast_id' => $podcast->id]);
         Storage::fake('public');
-        $fakeFile = UploadedFile::fake()->create('audio.mp3');
+        $fakeFile = File::createWithContent('audiotest.mp3', Storage::get('testing/audio-sample.mp3'));
 
         Livewire::test('episode-creation', ['podcast' => $podcast])
             ->set('episode.title', $episode->title)
@@ -85,7 +85,7 @@ class EpisodeCreationTest extends TestCase
             ->set('episode.title', Str::random(70)) //above 60
             ->set('episode.description', Str::random(2500)) //above 2000
             ->set('datetime', 'not a datetime')
-            ->set('file', UploadedFile::fake()->create('audio.m4a', 10))
+            ->set('file', null)
             ->call('publish');
 
         $response->assertHasErrors(['episode.title', 'episode.description', 'datetime', 'file']);
