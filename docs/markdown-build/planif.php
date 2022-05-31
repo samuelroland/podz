@@ -80,7 +80,7 @@ foreach ($issues as $issue) {
     echo $issue->title . " | ";
     echo substr($issue->labels[0]->name, 2) . "h" . " | ";
     echo $localIssues->{$issue->number}->spent . "h | ";
-    echo (float)substr($issue->labels[0]->name, 2) - (float)$localIssues->{$issue->number}->spent . "h | ";
+    echo str_starts_with($issue->title, "Documentation quotidienne") ? ' | ' : (float)substr($issue->labels[0]->name, 2) - (float)$localIssues->{$issue->number}->spent . "h | ";
     echo ($issue->closed_at != null ? date("d.m.Y", strtotime($issue->closed_at))  : '-') . " | ";
     echo "\n";
 
