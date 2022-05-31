@@ -21,50 +21,50 @@
 
 <div class="toc">
 
-- [Analyse préliminaire](#analyse-préliminaire)
-  - [Introduction](#introduction)
-  - [Glossaire](#glossaire)
-  - [Objectifs](#objectifs)
-  - [Planification initiale](#planification-initiale)
-- [Analyse / Conception](#analyse--conception)
-    - [Technologies utilisées](#technologies-utilisées)
-    - [Outils d'aide](#outils-daide)
-    - [Modèle Conceptuel de Données](#modèle-conceptuel-de-données)
-    - [Modèle Logique de Données](#modèle-logique-de-données)
-    - [Maquettes](#maquettes)
-  - [Stratégie de test](#stratégie-de-test)
-    - [Où sont écrits les tests ?](#où-sont-écrits-les-tests-)
-    - [Les données de tests](#les-données-de-tests)
-    - [Comment lancer les tests ?](#comment-lancer-les-tests-)
-  - [Planification](#planification)
-  - [Dossier de conception](#dossier-de-conception)
-    - [Résumé des podcasts](#résumé-des-podcasts)
-    - [Visibilité des épisodes](#visibilité-des-épisodes)
-    - [Traduction](#traduction)
-    - [Vues de Jetstream](#vues-de-jetstream)
-    - [Routes](#routes)
-    - [Upload d'un fichier audio pour la création d'un épisode](#upload-dun-fichier-audio-pour-la-création-dun-épisode)
-    - [Suppression d'un épisode](#suppression-dun-épisode)
-    - [Éléments réutilisables](#éléments-réutilisables)
-- [Réalisation](#réalisation)
-  - [Dossier de réalisation](#dossier-de-réalisation)
-  - [Construction de la documentation](#construction-de-la-documentation)
-  - [Résultats des tests effectués](#résultats-des-tests-effectués)
-    - [Couverture des tests](#couverture-des-tests)
-- [Conclusions](#conclusions)
-  - [Erreurs restantes](#erreurs-restantes)
-  - [Objectifs atteints / non-atteints](#objectifs-atteints--non-atteints)
-  - [Difficultés particulières](#difficultés-particulières)
-  - [Points positifs / négatifs](#points-positifs--négatifs)
-  - [Bilan personnel](#bilan-personnel)
-  - [Suites possibles pour le projet](#suites-possibles-pour-le-projet)
-  - [Remerciements](#remerciements)
-- [Annexes](#annexes)
-  - [Résumé du rapport du TPI](#résumé-du-rapport-du-tpi)
-  - [Sources – Bibliographie](#sources--bibliographie)
-  - [Journal de travail](#journal-de-travail)
-  - [Manuel d'installation](#manuel-dinstallation)
-  - [Archives du projet](#archives-du-projet)
+- [Analyse préliminaire](#analyse-préliminaire)<span class="atright">3</span>
+  - [Introduction](#introduction)<span class="atright">3</span>
+  - [Glossaire](#glossaire)<span class="atright">3</span>
+  - [Objectifs](#objectifs)<span class="atright">4</span>
+  - [Planification initiale](#planification-initiale)<span class="atright">5</span>
+- [Analyse / Conception](#analyse--conception)<span class="atright">7</span>
+    - [Technologies utilisées](#technologies-utilisées)<span class="atright">7</span>
+    - [Outils d'aide](#outils-daide)<span class="atright">8</span>
+    - [Modèle Conceptuel de Données](#modèle-conceptuel-de-données)<span class="atright">9</span>
+    - [Modèle Logique de Données](#modèle-logique-de-données)<span class="atright">11</span>
+    - [Maquettes](#maquettes)<span class="atright">12</span>
+  - [Stratégie de test](#stratégie-de-test)<span class="atright">19</span>
+    - [Où sont écrits les tests ?](#où-sont-écrits-les-tests-)<span class="atright">19</span>
+    - [Les données de tests](#les-données-de-tests)<span class="atright">19</span>
+    - [Comment lancer les tests ?](#comment-lancer-les-tests-)<span class="atright">21</span>
+  - [Planification](#planification)<span class="atright">22</span>
+  - [Dossier de conception](#dossier-de-conception)<span class="atright">24</span>
+    - [Résumé des podcasts](#résumé-des-podcasts)<span class="atright">24</span>
+    - [Visibilité des épisodes](#visibilité-des-épisodes)<span class="atright">24</span>
+    - [Traduction](#traduction)<span class="atright">24</span>
+    - [Vues de Jetstream](#vues-de-jetstream)<span class="atright">24</span>
+    - [Routes](#routes)<span class="atright">24</span>
+    - [Upload d'un fichier audio pour la création d'un épisode](#upload-dun-fichier-audio-pour-la-création-dun-épisode)<span class="atright">25</span>
+    - [Suppression d'un épisode](#suppression-dun-épisode)<span class="atright">26</span>
+    - [Éléments réutilisables](#éléments-réutilisables)<span class="atright">26</span>
+- [Réalisation](#réalisation)<span class="atright">28</span>
+  - [Dossier de réalisation](#dossier-de-réalisation)<span class="atright">28</span>
+  - [Construction de la documentation](#construction-de-la-documentation)<span class="atright">29</span>
+  - [Résultats des tests effectués](#résultats-des-tests-effectués)<span class="atright">30</span>
+    - [Couverture des tests](#couverture-des-tests)<span class="atright">31</span>
+- [Conclusions](#conclusions)<span class="atright">33</span>
+  - [Erreurs restantes](#erreurs-restantes)<span class="atright">33</span>
+  - [Objectifs atteints / non-atteints](#objectifs-atteints--non-atteints)<span class="atright">33</span>
+  - [Difficultés particulières](#difficultés-particulières)<span class="atright">34</span>
+  - [Points positifs / négatifs](#points-positifs--négatifs)<span class="atright">35</span>
+  - [Bilan personnel](#bilan-personnel)<span class="atright">35</span>
+  - [Suites possibles pour le projet](#suites-possibles-pour-le-projet)<span class="atright">36</span>
+  - [Remerciements](#remerciements)<span class="atright">36</span>
+- [Annexes](#annexes)<span class="atright">37</span>
+  - [Résumé du rapport du TPI](#résumé-du-rapport-du-tpi)<span class="atright">37</span>
+  - [Sources – Bibliographie](#sources--bibliographie)<span class="atright">37</span>
+  - [Journal de travail](#journal-de-travail)<span class="atright">37</span>
+  - [Manuel d'installation](#manuel-dinstallation)<span class="atright">37</span>
+  - [Archives du projet](#archives-du-projet)<span class="atright">37</span>
 
 </div>
 
@@ -311,6 +311,8 @@ Afin de ne pas impacter la base de données de développement, les tests sont la
 <env name="DB_CONNECTION" value="sqlite"/>
 ```
 
+<div class="page">
+
 #### Comment lancer les tests ?
 Il est nécessaire d'avoir mis en place le projet et d'avoir l'extension PHP SQLite tout d'abord. Ensuite, il y a différentes manières de lancer les tests dans un terminal dans le dossier du projet:
 - `php artisan test`
@@ -352,6 +354,8 @@ Quand on compare le temps estimé et passé on voit que j'ai sur-estimé certain
 
 Je m'en suis rendu compte tard, mais mon sprint 4 était prévu sur toute la semaine alors que le jeudi et vendredi étaient fériés. Si on regarde mon journal de travail, on voit que je n'ai pas réussi à faire de la documentation tous les jours. Dans ce tableau, il y a aussi des petits bouts de documentations écrits pour les fonctionnalités en tant que tels dont le temps est compté avec celles-ci. J'étais très concentré sur le code en sprint 2 et j'ai fait moins de documentation que le reste des sprints. A la fin j'avais du retard sur les finitions du code et surtout sur ma documentation, j'ai donc décidé de faire quelques heures à la maison.
 
+<div class="page">
+
 ### Dossier de conception
 
 #### Résumé des podcasts  
@@ -392,8 +396,11 @@ J'ai décidé de fixer la taille maximum d'upload de fichiers à 150MB. Cette li
 
 Les fichiers audios sont stockés dans `storage/app/public/episodes` c'est-à-dire dans le dossier `episodes` du dossier `public` avec un nom aléatoire unique.
 
+<div class="together">
+
 #### Suppression d'un épisode
 J'ai surchargé la méthode `delete` dans `Episode.php` afin d'ajouter la suppression du fichier en même temps que la suppression de l'enregistrement. J'ai mis le tout dans une transaction pour éviter d'avoir l'incohérence du fichier qui existe sur le disque mais il n'y a plus d'épisode lié dans la base de donnée. Cette transaction n'empêche pas d'avoir l'incohérence inverse, puisque la suppression sur le disque n'est pas une requête SQL (et ne peut pas être rollback).
+
 
 ```php
 public function delete()
@@ -407,6 +414,7 @@ public function delete()
     });
 }
 ```
+</div>
 
 #### Éléments réutilisables
 
@@ -424,6 +432,8 @@ Un composant Blade permettant d'abstraire les éléments communs à tous les cha
 
 Tous les autres attributs non reconnus sont transférés à la `div` racine du composant, ce qui permet d'ajouter du style ou d'autres attributs HTML pour tout le composant. Tous les attributs commençant par `wire:model` sont ajoutés au champ pour permettre l'utilisation de ce composant avec Livewire.
 
+<div class="together">
+
 Exemple d'utilisation:
 ```html
 <form action="{{ route('podcasts.store') }}" method="POST">
@@ -435,6 +445,7 @@ Exemple d'utilisation:
 ```
 
 Un autre exemple d'utilisation dans le cas d'un formulaire géré par Livewire:
+
 ```html
 <div>
     <x-field 
@@ -451,6 +462,7 @@ Un autre exemple d'utilisation dans le cas d'un formulaire géré par Livewire:
     <button wire:click.prevent="update" class="btn mt-1">Enregistrer</button>
 </div>
 ```
+</div>
 
 **Classes CSS et couleurs**  
 J'ai défini 3 nouvelles couleurs Tailwind, qu'on peut utiliser partout où les couleurs fonctionnent avec TailwindCSS (`border-green`, `text-lightblue`, `bg-blue`, ...)
@@ -733,6 +745,8 @@ Au niveau de la documentation, faire de la documentation plus régulièrement au
 
 J'ai eu beaucoup de plaisir à développer Podz, surtout avec l'écriture des tests. Contrairement à mon Pré-TPI où je n'avais pas pu terminer le développement et la documentation, je suis plutôt content d'avoir réussi à finir toutes les fonctionnalités demandées dans les temps et d'avoir pu faire correctement la documentation. Je me sens encore plus à l'aise qu'avant pour écrire des tests, même pour des cas plus complexe pour gérer des fichiers et des erreurs. J'ai compris les stratégies de base pour savoir ce qu'on peut tester ou pas, quand je dois en écrire un nouveau je sais donc rapidement quels sont les éléments à inclure. Au passage, j'ai appris que tous les navigateurs ne supportent pas tous les fichiers audio (surtout s'ils sont propriétaires), Firefox par ex. a quelques difficultés avec les fichiers `.m4a`.
 Comme durant mon Pré-TPI, j'ai eu de la peine avec l'upload de fichiers parce que je n'arrivais pas à écrire des tests corrects. Donc j'ai beaucoup testé à la main et cela devenait vite chronophage. Grâce à l'aide M. Hurni mon chef de projet, j'ai pu changer de stratégie pour ces tests, je serai comment m'y prendre à l'avenir.
+
+<div class="page">
 
 ### Suites possibles pour le projet
 De nombreuses fonctionnalités pourraient implémentés si le projet est réutilisé par quelqu'un d'autre. Voici une petite liste d'idées:
