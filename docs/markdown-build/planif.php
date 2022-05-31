@@ -64,6 +64,8 @@ file_put_contents('planification-initiale.md', $content);
 
 //Step 3: generate final planning
 ob_start();
+$totalEstimated = 0;
+$totalSpent = 0;
 
 echo "| ID | S-d | S-f | Titre      | Estimé | Passé | Delta | Fin | \n";
 echo "| ------ | --- | --- | ------ | ------ | ----- | ----- | --- | \n";
@@ -78,7 +80,16 @@ foreach ($issues as $issue) {
     echo (float)substr($issue->labels[0]->name, 2) - (float)$localIssues->{$issue->number}->spent . "h | ";
     echo ($issue->closed_at != null ? date("d.m.Y", strtotime($issue->closed_at))  : '-') . " | ";
     echo "\n";
+
+    $totalEstimated += (float)substr($issue->labels[0]->name, 2);
+    $totalSpent += (float)$localIssues->{$issue->number}->spent;
 }
+echo "| | |  | *Tâches diverses* | " . $localIssues->divers->estimated . " | " . $localIssues->divers->spent . " |  | | \n";
+
+$totalEstimated += (float)$localIssues->divers->estimated;
+$totalSpent += (float)$localIssues->divers->spent;
+
+echo "| | |  | **Totaux** | **" . $totalEstimated . "** | **" . $totalSpent . "** |  | | \n";
 echo "\n";
 echo "\n";
 
