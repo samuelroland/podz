@@ -95,6 +95,7 @@ Podz est une application web de publication de podcasts, développée pour le TP
 - **PHP**: PHP Hypertext Preprocessor
 - **POO**: Programmation orientée objet
 - **RSS**: RDF Site Summary ou Really Simple Syndication: système de flux web pour diffuser du contenu (articles, podcasts, ...)
+- **Sprint**: court cycle de travail (1-4 semaines) avec une revue du travail à la fin du cycle, généralement utilisé dans la méthode Scrum.
 - **SQL**: Structured Query Language
 - **Stack**: ensemble cohérent de technologies pour un but donné
 - **Starter kit**: kit de démarrage permettant de sauter les premières étapes
@@ -340,13 +341,15 @@ Je recommande de configurer un raccourci clavier dans votre IDE pour lancer les 
 <div class="page"/>
 
 ### Planification
-La liste des tâches est la même qu'au départ, les estimations n'ont pas été modifiées. Afin de comparer ce qui avait été prévu et ce qui s'est réellement passé finalement, j'ai rajouté quelques colonnes. Tout le tableau est ordré par la date d'achèvement des tâches, ce qui explique que ce n'est pas exactement le même ordre que la planification initiale. `S-d` signifie `Sprint de départ` et `S-f` signifie `Sprint final` (est différent pour les tâches achevée en retard ou en avance). Le Delta est la résultat de Temps estimé - Temps passé.
+La liste des tâches est la même qu'au départ, les estimations n'ont pas été modifiées. Afin de comparer ce qui avait été prévu et ce qui s'est réellement passé finalement, j'ai rajouté quelques colonnes. Tout le tableau est ordré par la date d'achèvement des tâches, ce qui explique que ce n'est pas exactement le même ordre que la planification initiale. `S-d` signifie `Sprint de départ` et `S-f` signifie `Sprint final` (est différent pour les tâches achevée en retard ou en avance). Le Delta est le résultat de Temps estimé - Temps passé. Ce calcul n'a pas de sens pour le tâches des "Documentation quotidienne" qui est un temps planifié et non estimé.
 :[fragment](markdown-build/planification-finale.md)
 
-*Tâches diverses* est le total de toutes les activités qui ne sont pas reliés à des Issues sur Github, ce comptage se base sur le journal de bord (les entrées tâches qui n'ont pas de tâche assignée). Ceci inclut les visites de M. Hurni et des experts, 
+*Tâches diverses* contient toutes les activités qui ne sont pas reliés à des Issues sur Github, ce comptage se base sur le journal de travail (voir les entrées qui n'ont pas de tâche assignée). Ceci inclut les visites de M. Hurni et des experts et la résolution de petits bugs.
 
-**Comparaison**  
-En fait mon sprint 4 est trop long puisque le jeudi et vendredi étaient fériés. TODO.
+**Analyse des différences**  
+Quand on compare le temps estimé et passé on voit que j'ai sur-estimé certaines tâches simples, et que j'ai beaucoup sous-estimé les tâches plus complexes et longues. À partir du sprint 3, presque toutes les tâches ont été terminée un ou deux sprints plus tard. Les 2 tâches les plus sous-estimées sont "Ajout d'un nouvel épisode" et "Finalisation de la documentation". Je n'avais pas imaginé avoir autant de peine pour la création d'épisode, et qu'il y avait autant de choses à expliquer dans la documentation.
+
+Je m'en suis rendu compte tard, mais mon sprint 4 était prévu sur toute la semaine alors que le jeudi et vendredi étaient fériés. Si on regarde mon journal de travail, on voit que je n'ai pas réussi à faire de la documentation tous les jours. Dans ce tableau, il y a aussi des petits bouts de documentations écrits pour les fonctionnalités en tant que tels dont le temps est compté avec celles-ci. J'étais très concentré sur le code en sprint 2 et j'ai fait moins de documentation que le reste des sprints. A la fin j'avais du retard sur les finitions du code et surtout sur ma documentation, j'ai donc rattraper à la maison.
 
 <!-- ajouter heures diverses non classifiées -->
 <!-- commentaire avance et retard, et rattrapage et total, et heures diverse significations.-->
@@ -362,10 +365,10 @@ Il s’agit en principe de la planification définitive du projet. Elle peut êt
 ### Dossier de conception
 
 #### Résumé des podcasts  
-Sur la page Podcasts, il y a un résumé des descriptions des podcasts, qui se limitent à 150 caractères (+3 petits points), puisque la description est trop longue pour être affichée entièrement et l'utilisation de `text-overflow: ellipsis` en CSS sur plusieurs lignes n'est pas très simple. Raccourcir en PHP était donc l'autre solution. Un attribute `summary` de la classe `Podcast` permet de récuperer facilement ce résumé. Si la description est plus courte que la limite, la description est utilisée.
+Sur la page Podcasts, il y a un résumé des descriptions des podcasts, qui se limitent à 150 caractères (+3 petits points), puisque la description est trop longue pour être affichée entièrement et l'utilisation de `text-overflow: ellipsis` en CSS sur plusieurs lignes n'est pas très simple. Raccourcir en PHP était donc l'autre solution. Un attribut `summary` de la classe `Podcast` permet de récupérer facilement ce résumé. Si la description est plus courte que la limite, la description est utilisée.
 
 #### Visibilité des épisodes
-Pour qu'un épisode soit visible publiquement il faut que sa date de publication soit dans le passé et que son état Caché soit Faux. Si cette condition n'est pas vraie, l'épisode n'est visible que par l'auteur. Si on regarde en détail le code et les routes, on s'aperçoit que les fichiers étant sur le disque public, il n'y a pas d'autorisations appliquée au chargement des fichiers audios. Ainsi si on mémorise le nom du fichier audio, et que l'épisode devient ensuite invisible, on pourra toujours accéder publiquement via le lien d'accès direct (ex: `https://podz.test/storage/episodes/UyJ7nE5TewwbnjXRAhrmWX6Ht45.ogg`). Cette sécurité n'était pas demandée donc je ne l'ai pas implémentée mais cela pourrait être une idée d'amélioration. Pour corriger ceci, il faudrait bouger les épisodes dans le disque `app` qui n'est pas publiquement accessibles, et "streamer" les fichiers audio via une route dédiée de notre application, de sorte à pouvoir appliquer un contrôle des droits d'accès et bloquer l'accès du fichier audio sur un épisode caché si ce n'est pas l'auteur.
+Pour qu'un épisode soit visible publiquement il faut que sa date de publication soit dans le passé et que son état Caché soit Faux. Si cette condition n'est pas vraie, l'épisode n'est visible que par l'auteur. Si on regarde en détail le code et les routes, on s'aperçoit que les fichiers étant sur le disque public, il n'y a pas d'autorisations appliquée au chargement des fichiers audios. Ainsi si on mémorise le nom du fichier audio, et que l'épisode devient ensuite invisible, on pourra toujours accéder publiquement via le lien d'accès direct (ex: `https://podz.test/storage/episodes/UyJ7nE5TewwbnjXRAhrmWX6Ht45.ogg`). Cette sécurité n'était pas demandée donc je ne l'ai pas implémentée mais cela pourrait être une idée d'amélioration. Pour corriger ceci, il faudrait bouger les épisodes dans le disque `local` qui n'est pas publiquement accessible, et "streamer" les fichiers audio via une route dédiée de notre application, de sorte à pouvoir appliquer un contrôle des droits d'accès et bloquer l'accès du fichier audio sur un épisode caché si ce n'est pas l'auteur.
 
 #### Traduction  
 Pour que les messages d'erreurs soient en français. J'utilise le système d'internationalisation de Laravel et j'ai défini le français comme langue par défaut et l'anglais comme langue de repli ("fallback language") au cas où quelquechose n'aurait pas été traduit en français. J'ai dupliqué le fichier `lang/fr/validation.php` à partir `lang/en/validation.php` et j'ai traduit les quelques messages d'erreurs que j'utilisais.
@@ -669,6 +672,7 @@ Pour la plupart des fonctionnalités, j'ai suivi cette ordre pour décider des t
 
     ![file-upload-error](imgs/file-upload-error.png)
 - Les méthodes `episodes()` et `publicEpisodes()` de `Podcast` en test unitaire
+- La présence des icônes, selon la personne connectée (puisqu'ils sont en SVG ils n'ont pas de nom et c'est difficile de les identifier)
 
 <div class="page"/>
 
@@ -707,15 +711,52 @@ Tous les objectifs fixés au départ ont été atteints.
  <!-- ![podz en images](imgs/) todo -->
 
 ### Difficultés particulières
+- L'upload de fichiers et les tests associés ont été assez difficiles, comme expliqué dans mon journal de travail. Pour comprendre pourquoi les tests ne passaient pas alors que mon code était correct quand on faisait `UploadedFile::fake()->create('audio.m4a', 100, 'audio/mp4')` par ex., j'ai regardé dans le code de la classe `FileFactory` (dans `vendor\laravel\framework\src\Illuminate\Http\Testing\FileFactory.php`) dans mon IDE (en faisant Ctrl+click sur la méthode `create()`) et j'ai trouvé ceci:
+  
+  <div class="together">
 
+  ```php
+  /**
+   * Create a new fake file.
+   *
+   * @param  string  $name
+   * @param  string|int  $kilobytes
+   * @param  string|null  $mimeType
+   * @return \Illuminate\Http\Testing\File
+   */
+  public function create($name, $kilobytes = 0, $mimeType = null)
+  {
+      if (is_string($kilobytes)) {
+          return $this->createWithContent($name, $kilobytes);
+      }
+
+      return tap(new File($name, tmpfile()), function ($file) use ($kilobytes, $mimeType) {
+          $file->sizeToReport = $kilobytes * 1024;
+          $file->mimeTypeToReport = $mimeType;
+      });
+  }
+  ```
+  </div>
+
+  On voit que le fichier contient le résultat `tmpfile()` (fonction PHP qui crée des fichiers temporaires), en inspectant avec un éditeur hexadécimal on y trouve une vingtaine d'octets toujours les mêmes, le contenu le correspond donc ni à la bonne taille ni au bon type MIME demandé. Pour que cela fonctionne quand même avec Laravel, la taille et le type MIME - que la classe retourne quand on lui demande - sont définis dans des attributs de la classe. Le problème dans mon application, c'est probablement parce que j'utilise Livewire qui stocke les fichiers dans un dossier temporaire puis les déplacent dans le bon dossier à la sauvegarde. Ce n'est qu'une hypothèse que je n'ai pas pu le vérifier (cela aurait demandé des recherches plus longues) mais j'imagine que l'objet `UploadedFile` final est rechargé ou recréé avec le fichier sur le disque, le type MIME et la taille étant fictifs sont donc perdus durant le processus.
+
+  Pour résoudre ce problème, j'ai finalement créé différents vrais fichiers de différents formats dans `storage/app/testing` avec FFmpeg, et créé des fichiers bidons (`test.pdf`), que j'utilise comme fichier à l'upload.
+
+- L'export PDF de mes documentations et la construction des planifications ont été complexes, avec toutes les choses à inclure à inclure et moyens de détourner les contraintes. Pour la planification finale, il y avait beaucoup de valeurs qui devaient être recopiées de Github. Au lieu de tout faire à la main j'ai préféré scripter sa génération. J'ai créé un fichier `planifdata.json` avec les infos des Issues tirées de l'API de Github dans lequel j'ai ajouté le temps passé sur chaque tâche (en calculant les sommes des temps indiqué dans mon journal de travail). Mon script fonctionne très bien et est super pratique. J'ai du faire du design de mon document en CSS et parfois écraser le style par défaut de l'extension, cela m'a pris un certain temps.
 
 ### Points positifs / négatifs
 
+Les tests automatisés sont un point positif du projet, car sont robustes et m'ont beaucoup aidé durant le développement.
+Au niveau de la planification j'aurai puis mieux gérer mon temps en classe. Parfois je suis resté bloqué sur l'écriture de tests que j'aurai pu outrepasser et d'autres fois j'étais déconcentré et/ou j'aidais des collègues sur Laravel. Mieux avancer et être un peu plus concentré aurait peut-être permis de ne pas avoir trop de retard à la fin. J'aurai aussi pu faire les calculs des totals de temps de travail pour me rendre compte de mon avance ou retard.
+
+Au niveau de la documentation, faire de la documentation plus régulièrement aurait permis de varier un peu le travail final. Je pense avoir fait une documentation assez qualitative et soignée. J'ai mis plus de détails et de soin dans cette documentation que d'habitude, c'était important pour moi de rendre des documents soignés.
+
+Un autre point positif est d'avoir réussi à tout finir les fonctionnalités demandées.
 
 ### Bilan personnel
 
 J'ai eu beaucoup de plaisir à développer Podz, surtout avec l'écriture des tests. Contrairement à mon Pré-TPI où je n'avais pas pu terminer le développement et la documentation, je suis plutôt content d'avoir réussi à finir toutes les fonctionnalités demandées dans les temps et d'avoir pu faire correctement la documentation. Je me sens encore plus à l'aise qu'avant pour écrire des tests, même pour des cas plus complexe pour gérer des fichiers et des erreurs. J'ai compris les stratégies de base pour savoir ce qu'on peut tester ou pas, quand je dois en écrire un nouveau je sais donc rapidement quels sont les éléments à inclure. Au passage, j'ai appris que tous les navigateurs ne supportent pas tous les fichiers audio (surtout s'ils sont propriétaires), Firefox par ex. a quelques difficultés avec les fichiers `.m4a`.
-Comme durant mon Pré-TPI, j'ai eu de la peine avec l'upload de fichiers parce que je n'arrivais pas à écrire des tests corrects. Donc j'ai beaucoup testé à la main et cela devenait vite chronophage. Grâce à l'aide M. Hurni mon chef de projet, j'ai pu changer de stratégie pour ces tests.
+Comme durant mon Pré-TPI, j'ai eu de la peine avec l'upload de fichiers parce que je n'arrivais pas à écrire des tests corrects. Donc j'ai beaucoup testé à la main et cela devenait vite chronophage. Grâce à l'aide M. Hurni mon chef de projet, j'ai pu changer de stratégie pour ces tests, je serai comment m'y prendre à l'avenir.
 
 ### Suites possibles pour le projet
 De nombreuses fonctionnalités pourraient implémentés si le projet est réutilisé par quelqu'un d'autre. Voici une petite liste d'idées:
@@ -737,8 +778,6 @@ Je remercie aussi Gatien Jayme pour sa relecture de ma documentation.
 <!-- todo: document séparé ?? -->
 ### Résumé du rapport du TPI
 Le résumé est disponible en document séparé (voir archives) ou directement sur Github [en Markdown](https://github.com/samuelroland/podz/blob/main/docs/podz-résumé-tpi.md).
-
-<div class="page"/>
 
 ### Sources – Bibliographie
 Pour résoudre mes différents problèmes j'ai surtout utilisé StackOverflow et les documentations officielles des 4 frameworks que j'utilise:
