@@ -50,6 +50,7 @@ class EpisodeCreation extends Component
         $this->reset(['episode', 'datetime', 'file']);
         $this->episode = Episode::make();
         $this->episode->hidden = false; //false by default
+        $this->datetime = now()->format('Y-m-d H:i');    //now by default
         $this->episode->number = $this->podcast->getNextEpisodeNumber();    //already set the number for the display
     }
 
@@ -66,7 +67,6 @@ class EpisodeCreation extends Component
     public function updatingDatetime()
     {
         $this->episode->released_at = Carbon::parse($this->datetime);
-        //todo: fix this. not working.
     }
 
     public function publish()
